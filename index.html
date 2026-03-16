@@ -459,6 +459,146 @@
             color: var(--primary-dark);
         }
         
+        /* Contact Form */
+        .contact-form-wrapper {
+            max-width: 700px;
+            margin: 0 auto;
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 40px;
+        }
+        
+        .contact-form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        
+        .form-group.full-width {
+            grid-column: 1 / -1;
+        }
+        
+        .form-group label {
+            font-size: 0.9rem;
+            color: var(--text-light);
+            font-weight: 500;
+        }
+        
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            padding: 14px 16px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            color: var(--text-light);
+            font-size: 1rem;
+            font-family: inherit;
+            transition: all 0.3s;
+        }
+        
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--accent-teal);
+            box-shadow: 0 0 0 3px rgba(100,181,160,0.1);
+        }
+        
+        .form-group input::placeholder,
+        .form-group textarea::placeholder {
+            color: var(--text-muted);
+        }
+        
+        .form-group select {
+            cursor: pointer;
+        }
+        
+        .form-group select option {
+            background: var(--primary-dark);
+            color: var(--text-light);
+        }
+        
+        .submit-btn {
+            width: 100%;
+            padding: 16px;
+            font-size: 1.1rem;
+            margin-top: 10px;
+        }
+        
+        .submit-btn .btn-loading {
+            display: none;
+        }
+        
+        .submit-btn.loading .btn-text {
+            display: none;
+        }
+        
+        .submit-btn.loading .btn-loading {
+            display: inline;
+        }
+        
+        .form-success,
+        .form-error {
+            display: none;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+        
+        .form-success {
+            background: rgba(100, 181, 160, 0.15);
+            border: 1px solid var(--accent-teal);
+        }
+        
+        .form-success .success-icon {
+            font-size: 2rem;
+            color: var(--accent-teal);
+            display: block;
+            margin-bottom: 10px;
+        }
+        
+        .form-success p {
+            color: var(--accent-teal);
+            font-size: 1.1rem;
+        }
+        
+        .form-error {
+            background: rgba(255, 100, 100, 0.15);
+            border: 1px solid #ff6464;
+        }
+        
+        .form-error p {
+            color: #ff6464;
+        }
+        
+        .form-success.show,
+        .form-error.show {
+            display: block;
+        }
+        
+        @media (max-width: 600px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+            .contact-form-wrapper {
+                padding: 25px;
+            }
+        }
+        
         /* Footer */
         footer {
             background: var(--primary-dark);
@@ -555,13 +695,14 @@
 <body>
     <nav>
         <div class="container">
-            <div class="logo">intelliGrowth by MiRA by MiRA</div>
+            <div class="logo">intelliGrowth by MiRA</div>
             <ul class="nav-links">
                 <li><a href="#about">About</a></li>
                 <li><a href="#skills">Skills</a></li>
                 <li><a href="#projects">Projects</a></li>
                 <li><a href="#ideas">Ideas</a></li>
                 <li><a href="#content">Content</a></li>
+                <li><a href="#contact">Contact</a></li>
             </ul>
         </div>
     </nav>
@@ -582,7 +723,7 @@
         <div class="container">
             <div class="section-header">
                 <h2>About Me</h2>
-                <p>Business Analyst turned AI Developer - bridging the gap between technical capability and business value</p>
+                <p>AI Inventor & Systems Builder - creating the intelligence layer businesses need</p>
             </div>
             <div class="about-grid">
                 <div class="about-image">
@@ -590,37 +731,92 @@
                 </div>
                 <div class="about-text">
                     <h3>Randolph Vusi Dube</h3>
-                    <p>I'm a Business Analyst and AI Developer based in Yorkshire, UK, with a unique background that combines deep technical knowledge with practical business acumen.</p>
-                    <p>After years in business analysis, I realized AI was missing something - the contextual understanding that comes from human experience. That's why I built <strong>MiRA (Memory mesh with Reasoning Agents)</strong> - my ACCT framework that gives AI systems persistent memory, learning capability, and business judgment.</p>
-                    <p>I don't just build AI tools. I solve business problems using AI as the enabler.</p>
+                    <p>I build AI systems that solve real business problems. After years in business analysis, I realized AI was missing something - the contextual understanding that comes from human experience.</p>
+                    <p>That's why I built <strong>MiRA</strong> - my ACCT framework (Artificial Contextual Cognitive Thinking) that gives AI systems persistent memory, learning capability, and business judgment.</p>
+                    <p>I don't just build AI tools. I invent systems that think, remember, and deliver results.</p>
                     
                     <div class="about-stats">
                         <div class="stat-card">
                             <div class="number">10+</div>
-                            <div class="label">Years Experience</div>
+                            <div class="label">Years Building</div>
                         </div>
                         <div class="stat-card">
                             <div class="number">40+</div>
-                            <div class="label">Projects Built</div>
+                            <div class="label">AI Systems</div>
                         </div>
                         <div class="stat-card">
                             <div class="number">20+</div>
-                            <div class="label">AI Skills Created</div>
+                            <div class="label">Skills Created</div>
                         </div>
                     </div>
                     
                     <div class="tech-proof">
-                        <h3>Technical Proof Points</h3>
+                        <h3>Built With</h3>
                         <div class="proof-items">
-                            <div class="proof-item"><span>✓</span> Clean, documented code</div>
-                            <div class="proof-item"><span>✓</span> Git version control</div>
-                            <div class="proof-item"><span>✓</span> Automated workflows</div>
-                            <div class="proof-item"><span>✓</span> CI/CD pipelines</div>
-                            <div class="proof-item"><span>✓</span> Local-first AI systems</div>
-                            <div class="proof-item"><span>✓</span> Production-ready code</div>
+                            <div class="proof-item"><span>✓</span> Persistent memory systems</div>
+                            <div class="proof-item"><span>✓</span> Autonomous agents</div>
+                            <div class="proof-item"><span>✓</span> Local-first AI infrastructure</div>
+                            <div class="proof-item"><span>✓</span> Business automation</div>
+                            <div class="proof-item"><span>✓</span> Revenue tracking systems</div>
+                            <div class="proof-item"><span>✓</span> Custom web applications</div>
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact">
+        <div class="container">
+            <div class="section-header">
+                <h2>Let's Connect</h2>
+                <p>Interested in what I'm building? Want to collaborate? Drop your details below.</p>
+            </div>
+            <div class="contact-form-wrapper">
+                <form id="contact-form" class="contact-form" action="https://formspree.io/f/your-form-id" method="POST">
+                    <!-- Note: Replace 'your-form-id' with your Formspree form ID after creating one at formspree.io -->
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input type="text" id="name" name="name" required placeholder="Your name">
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email" required placeholder="your@email.com">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="company">Company (optional)</label>
+                            <input type="text" id="company" name="company" placeholder="Your company">
+                        </div>
+                        <div class="form-group">
+                            <label for="interest">I'm interested in</label>
+                            <select id="interest" name="interest">
+                                <option value="collaboration">Collaboration</option>
+                                <option value="consulting">Consulting</option>
+                                <option value="just-browsing">Just Browsing</option>
+                                <option value="other">Something Else</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group full-width">
+                        <label for="message">Message (optional)</label>
+                        <textarea id="message" name="message" rows="3" placeholder="Tell me a bit about what you're working on..."></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary submit-btn">
+                        <span class="btn-text">Send Message</span>
+                        <span class="btn-loading">Sending...</span>
+                    </button>
+                    <div class="form-success" id="form-success">
+                        <span class="success-icon">✓</span>
+                        <p>Thanks! I'll be in touch soon.</p>
+                    </div>
+                    <div class="form-error" id="form-error">
+                        <p>Something went wrong. Please try again or email me directly.</p>
+                    </div>
+                </form>
             </div>
         </div>
     </section>
@@ -822,7 +1018,7 @@
         <div class="container">
             <div class="footer-grid">
                 <div class="footer-brand">
-                    <div class="logo">intelliGrowth by MiRA by MiRA</div>
+                    <div class="logo">intelliGrowth by MiRA</div>
                     <p>Building AI systems that solve real business problems. ACCT - bridging the gap between AI capability and business value.</p>
                 </div>
                 <div class="footer-links">
@@ -832,6 +1028,7 @@
                         <li><a href="#skills">Skills</a></li>
                         <li><a href="#projects">Projects</a></li>
                         <li><a href="#ideas">Ideas</a></li>
+                        <li><a href="#contact">Contact</a></li>
                     </ul>
                 </div>
                 <div class="footer-links">
