@@ -1,4 +1,4 @@
-# intelliGrowth by MiRA by MiRA
+# intelliGrowth by MiRA
 
 > ACCT - AI's Missing Pieces...
 > 
