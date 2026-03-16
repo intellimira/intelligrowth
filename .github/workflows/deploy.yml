@@ -31,7 +31,7 @@ jobs:
       - name: Check links
         run: |
           # Check for common issues
-          grep -q "intelliGroth" README.md
+          grep -q "intelliGrowth" README.md
           echo "Content check passed"
       
       - name: Setup Pages
