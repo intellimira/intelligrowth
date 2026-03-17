@@ -280,8 +280,20 @@ def generate_portfolio():
     # Check if projects directory exists (required for generation)
     if not PROJECTS_DIR.exists():
         print(f"⚠️  Projects directory not found: {PROJECTS_DIR}")
-        print("📦 Using existing index.html instead")
-        return  # Exit gracefully, use existing HTML
+
+        # Check if there's an existing index.html to use
+        root_index = PROJECTS_DIR.parent / "index.html"
+        output_index = OUTPUT_DIR / "index.html"
+
+        if root_index.exists():
+            print(f"📦 Copying existing index.html to output")
+            import shutil
+
+            shutil.copy(root_index, output_index)
+            return
+
+        print("⚠️  No index.html found, skipping generation")
+        return  # Exit gracefully
 
     publish_flags = get_publish_flags()
     section_projects = {k: [] for k in SECTIONS}
