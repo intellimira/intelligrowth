@@ -7,6 +7,12 @@
 credentials.json
 token*.json
 
+# GPG/Vault (NEVER COMMIT)
+.gnupg/
+.mira/secrets/
+*.gpg
+!*.gpg.example
+
 # IDE & Editor
 .vscode/
 .idea/
