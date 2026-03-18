@@ -1,0 +1,31 @@
+Vibe Graphing Intent: Shadow Ops SaaS (Problem-Led Solutions)
+
+Model Configuration:
+- Build Model (Architect): Gemini 2.0 Flash
+- Invoke Model (Worker): opencode:ollama
+
+Design Intent:
+Construct an autonomous pipeline for identifying SaaS opportunities through high-signal Reddit mining. 
+The system will harvest pain points, qualify them as viable SaaS solutions (Problem-Led Solutions), 
+and deliver tailored pitches via NotebookLM.
+
+Structural Constraints (Topology):
+START -> [B-Line_Hunter] -> [Diagnostic_Agent] -> [Solution_Architect] -> [Pitch_Agent] -> END
+B-Line_Hunter: Scans Reddit (r/GrowthOperating, r/SaaS, etc.) for high-signal "Revenue Leaks" or "Operational Fragility."
+Diagnostic_Agent: Performs automated audits on the harvested pain points to qualify market demand.
+Solution_Architect: Synthesizes findings into a SaaS MVP Blueprint and generates the NotebookLM pitch asset.
+Pitch_Agent: Executes targeted outreach and monitors for engagement triggers.
+
+Data Contracts:
+- PULL: skills/knowledge-base/references/memory_mesh/Zettels/SHADOW_OPS_WEAVE.md, skills/b_line_arsenal/SKILL.md
+- PUSH: .brain/outputs/saas_mvp_blueprint.json, .mira/scores/pls_traction.json
+
+Context Adapters:
+- PathRAG: Access historical "Battle-Testing" logs from Reddit research.
+- MCP: Utilize B-Line Arsenal tools and Neural Relay scripts.
+
+Role Assignment:
+- Hunter: ⚛️ First Principles + 🔬 Scientific Method
+- Diagnostic: 🔬 Scientific Method + ⚙️ Pragmatic Application
+- Architect: ✨ Creative Synthesis + 🤔 Philosophical Inquiry
+- Pitch: ⚙️ Pragmatic Application + 🌑 The Dark Passenger

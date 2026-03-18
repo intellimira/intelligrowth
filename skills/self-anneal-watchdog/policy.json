@@ -1,0 +1,6 @@
+{
+  "self-anneal-watchdog": {
+    "allowed_tools": ["sqlite_read", "read_file", "write_file", "ollama_infer"],
+    "deny_tools":    ["gemini_call", "send_email", "http_post", "delete_file", "git_push", "deploy", "run_scrapy"]
+  }
+}

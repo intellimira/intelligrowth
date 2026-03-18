@@ -1,0 +1,32 @@
+nohup: ignoring input
+/home/sir-v/MiRA/.venv/lib/python3.12/site-packages/requests/__init__.py:113: RequestsDependencyWarning: urllib3 (2.6.3) or chardet (7.1.0)/charset_normalizer (3.4.5) doesn't match a supported version!
+  warnings.warn(
+
+--- SHADOW OPERATOR: PRODUCTION ENGINE START ---
+ [S-RANK] Multi-Phase Assets Sealed: ghost_kitchen_delivery
+ [S-RANK] Multi-Phase Assets Sealed: fractional_cfo_reporting
+ [S-RANK] Multi-Phase Assets Sealed: ai_safety_compliance
+ [S-RANK] Multi-Phase Assets Sealed: vet_clinic_inventory
+
+--- PRODUCTION CYCLE COMPLETE ---
+
+[CHAT] Fri Mar 13 17:04:23 2026
+USER: hi
+MIRA: Hello! How can I assist you today?
+----------------------------------------
+
+[CHAT] Fri Mar 13 17:04:33 2026
+USER: what do we have in our pipelines?
+MIRA: We have a pipeline for revenue generation and optimization. Here's a summary:
+
+- **Pipeline MRR (target):** £1993.00
+- **Deals:** 13 deals with varying MRR targets.
+- **Revenue:** £0.00 (total MRR, actual revenue), £-0.31 (total profit).
+
+Each deal has a specific status and cost, and we use Ollama for processing and gemini for calling. The revenue tracker agent is responsible for tracking deals in the deals table.
+----------------------------------------
+
+[CHAT] Sat Mar 14 00:35:59 2026
+USER: hi
+MIRA: Hello! How can I assist you today?
+----------------------------------------

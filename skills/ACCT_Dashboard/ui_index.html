@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ACCT Sovereign Dashboard v2.3 - THE GO COLUMN</title>
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'JetBrains Mono', monospace; background-color: #050505; color: #00ff41; overflow: hidden; }
+        .neon-border { border: 1px solid #00ff41; box-shadow: 0 0 10px rgba(0, 255, 65, 0.1); }
+        .neon-text { text-shadow: 0 0 5px rgba(0, 255, 65, 0.5); }
+        .bg-card { background-color: #0c0c0c; }
+        .asset-row { border-left: 2px solid #3b82f6; background: rgba(59, 130, 246, 0.05); cursor: grab; transition: all 0.2s; }
+        .asset-active { border-left-width: 6px; background: rgba(59, 130, 246, 0.2); }
+        .go-row { border-left: 2px solid #00ff41; background: rgba(0, 255, 65, 0.05); }
+        .category-header { font-size: 8px; font-weight: bold; padding: 4px 8px; border-radius: 2px; margin-top: 1rem; margin-bottom: 0.5rem; text-transform: uppercase; }
+        ::-webkit-scrollbar { width: 4px; }
+        ::-webkit-scrollbar-thumb { background: #00ff41; }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect, useRef } = React;
+
+        const Dashboard = () => {
+            const [assets, setAssets] = useState([]);
+            const [authorizedPaths, setAuthorizedPaths] = useState([]);
+            const [selectedAsset, setSelectedAsset] = useState(null);
+            const [selectedContent, setSelectedContent] = useState("");
+            const [pulses, setPulses] = useState([]);
+            const [decision, setDecision] = useState("");
+            const [isDragging, setIsDragging] = useState(false);
+            const ws = useRef(null);
+
+            const fetchAssets = () => {
+                fetch('/api/business/packs').then(res => res.json()).then(setAssets);
+                // Fetch ledger to see what is authorized
+                fetch('/api/history').then(res => res.json()).then(history => {
+                    const authorized = history
+                        .filter(item => item.type === "INTERACT_RESPONSE" && item.content.includes("GO"))
+                        .map(item => item.requestId);
+                    setAuthorizedPaths([...new Set(authorized)]);
+                });
+            };
+
+            const viewAsset = (asset) => {
+                setSelectedAsset(asset);
+                fetch(`/api/business/pack/content?path=${encodeURIComponent(asset.path)}`)
+                    .then(res => res.json())
+                    .then(data => {
+                        let content = data.content;
+                        if (content.includes("{'") || content.includes('{"')) {
+                            content = content.replace(/[{}']/g, "").replace(/\\n/g, "\n");
+                        }
+                        setSelectedContent(content);
+                    });
+            };
+
+            const authorize = (path) => {
+                fetch('/api/interact', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ requestId: path, content: "GO: Drag-and-Drop Authorized" })
+                }).then(() => fetchAssets());
+            };
+
+            const transmitInstruction = () => {
+                if (!decision) return;
+                fetch('/api/interact', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ requestId: selectedAsset?.path || "global", content: `INSTRUCTION: ${decision}` })
+                }).then(() => {
+                    setDecision("");
+                    fetchAssets();
+                });
+            };
+
+            useEffect(() => {
+                const connect = () => {
+                    const host = window.location.host || '127.0.0.1:4000';
+                    ws.current = new WebSocket(`ws://${host}/ws`);
+                    ws.current.onmessage = (event) => {
+                        const data = JSON.parse(event.data);
+                        if (data.type === 'PULSE_EVENT') setPulses(prev => [data, ...prev].slice(0, 20));
+                        fetchAssets();
+                    };
+                    ws.current.onclose = () => setTimeout(connect, 3000);
+                };
+                fetchAssets();
+                connect();
+                return () => ws.current?.close();
+            }, []);
+
+            const groups = assets.reduce((acc, asset) => {
+                const cluster = asset.cluster || "UNKNOWN";
+                if (!acc[cluster]) acc[cluster] = [];
+                acc[cluster].push(asset);
+                return acc;
+            }, {});
+
+            const clusterColors = {
+                'LOCAL_SENTRY': 'bg-orange-500 text-black',
+                'SHADOW_SYNC': 'bg-cyan-500 text-black',
+                'INTELLIGENCE_GUARDRAIL': 'bg-pink-500 text-black',
+                'BROWSER_AUTOMATOR': 'bg-yellow-500 text-black'
+            };
+
+            return (
+                <div className="p-6 h-screen flex flex-col gap-6">
+                    <header className="flex justify-between items-center border-b border-green-500/30 pb-4">
+                        <h1 className="text-xl font-bold tracking-tighter neon-text uppercase text-green-400 italic">ACCT // SOVEREIGN COMMAND v2.3</h1>
+                    </header>
+
+                    <div className="flex flex-1 gap-6 overflow-hidden">
+                        {/* 1. PIPELINE INVENTORY */}
+                        <div className="w-1/5 flex flex-col gap-6">
+                            <section className="bg-card neon-border p-4 flex-1 flex flex-col overflow-hidden">
+                                <h2 className="text-[10px] font-bold mb-2 border-b border-white/10 pb-2 uppercase tracking-widest">Inventory</h2>
+                                <div className="flex-1 overflow-y-auto pr-2">
+                                    {Object.keys(groups).map(cluster => (
+                                        <div key={cluster} className="mb-4">
+                                            <div className={`category-header ${clusterColors[cluster] || 'bg-gray-700'}`}>{cluster}</div>
+                                            {groups[cluster].filter(a => !authorizedPaths.includes(a.path)).map(asset => (
+                                                <div 
+                                                    key={asset.path} 
+                                                    draggable
+                                                    onDragStart={(e) => { e.dataTransfer.setData("path", asset.path); setIsDragging(true); }}
+                                                    onDragEnd={() => setIsDragging(false)}
+                                                    onClick={() => viewAsset(asset)}
+                                                    className={`asset-row p-2 text-[8px] mb-1 ${selectedAsset?.path === asset.path ? 'asset-active' : ''}`}
+                                                >
+                                                    <span className="truncate uppercase font-bold text-white/80">{asset.name.replace("outreach_", "")}</span>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    ))}
+                                </div>
+                            </section>
+                        </div>
+
+                        {/* 2. INTERROGATOR */}
+                        <div className="flex-1 flex flex-col bg-card neon-border overflow-hidden">
+                            <h2 className="text-xs font-bold p-4 border-b border-green-500/20 uppercase text-green-400 tracking-tighter bg-black/40">Interrogation Center</h2>
+                            <div className="flex-1 overflow-y-auto p-10 pack-viewer">
+                                {selectedContent ? <div dangerouslySetInnerHTML={{ __html: marked.parse(selectedContent) }} /> : <div className="h-full flex items-center justify-center opacity-20 italic text-xs">Select asset to interrogate</div>}
+                            </div>
+                            <div className="h-24 border-t border-green-500/20 p-4 bg-black/60 flex flex-col gap-2">
+                                <div className="flex gap-4">
+                                    <input 
+                                        value={decision}
+                                        onChange={(e) => setDecision(e.target.value)}
+                                        onKeyDown={(e) => e.key === 'Enter' && transmitInstruction()}
+                                        placeholder="Issue instructions..."
+                                        className="flex-1 bg-black border border-green-500/30 p-2 text-xs text-green-400 focus:outline-none focus:border-green-500"
+                                    />
+                                    <button onClick={transmitInstruction} className="bg-green-500 text-black px-6 text-xs font-bold hover:bg-white">TRANSMIT</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* 3. AUTHORIZED / GO COLUMN */}
+                        <div className="w-1/5 flex flex-col gap-6">
+                            <section 
+                                onDragOver={(e) => e.preventDefault()}
+                                onDrop={(e) => authorize(e.dataTransfer.getData("path"))}
+                                className={`bg-card neon-border p-4 flex-1 flex flex-col overflow-hidden ${isDragging ? 'border-green-500 bg-green-500/10' : ''}`}
+                            >
+                                <h2 className="text-[10px] font-bold mb-4 border-b border-green-500/20 pb-2 text-green-500 uppercase tracking-widest italic">
+                                    {isDragging ? "DROP TO AUTHORIZE" : "Authorized (GO)"}
+                                </h2>
+                                <div className="flex-1 overflow-y-auto space-y-2">
+                                    {assets.filter(a => authorizedPaths.includes(a.path)).map(asset => (
+                                        <div 
+                                            key={asset.path} 
+                                            onClick={() => viewAsset(asset)}
+                                            className="go-row p-3 text-[8px] flex flex-col gap-1 cursor-pointer"
+                                        >
+                                            <span className="font-bold text-green-400 truncate uppercase">{asset.name.replace("outreach_", "")}</span>
+                                            <span className="text-[6px] opacity-40 uppercase">Actioning Phase 6...</span>
+                                        </div>
+                                    ))}
+                                </div>
+                            </section>
+                        </div>
+                    </div>
+                </div>
+            );
+        };
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<Dashboard />);
+    </script>
+</body>
+</html>

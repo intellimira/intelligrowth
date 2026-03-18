@@ -1,0 +1,6 @@
+{
+  "revenue-tracker": {
+    "allowed_tools": ["sqlite_read", "sqlite_write", "read_file", "write_file"],
+    "deny_tools":    ["gemini_call", "send_email", "http_post", "delete_file", "git_push", "deploy"]
+  }
+}

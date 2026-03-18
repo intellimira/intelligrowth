@@ -1,0 +1,336 @@
+/* Metaforce Labs - Dark Theme Styles */
+/* Color Palette from colors.jpeg */
+
+:root {
+    /* Primary Colors from Image */
+    --primary-dark: #000032;
+    --primary: #003232;
+    --primary-light: #003264;
+    --secondary: #323264;
+    --accent: #64b5a0;
+    --accent-gold: #c9a227;
+    
+    /* Neutrals */
+    --background: #0a0a12;
+    --surface: #12121f;
+    --surface-light: #1a1a2e;
+    --text-primary: #e8e8f0;
+    --text-secondary: #a0a0b8;
+    --border: #2a2a40;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', sans-serif;
+    background: var(--background);
+    color: var(--text-primary);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* Header */
+header {
+    background: rgba(0, 0, 50, 0.95);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--border);
+    padding: 1rem 0;
+    position: fixed;
+    width: 100%;
+    z-index: 1000;
+    top: 0;
+}
+
+header .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-size: 1.75rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, var(--accent) 0%, var(--accent-gold) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    letter-spacing: -0.5px;
+}
+
+nav ul {
+    display: flex;
+    list-style: none;
+    gap: 2rem;
+}
+
+nav a {
+    color: var(--text-secondary);
+    text-decoration: none;
+    transition: color 0.2s ease;
+    font-weight: 500;
+    font-size: 0.95rem;
+}
+
+nav a:hover {
+    color: var(--accent);
+}
+
+/* Hero */
+.hero {
+    background: linear-gradient(180deg, var(--primary-dark) 0%, var(--background) 100%);
+    padding: 10rem 0 6rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    min-height: 80vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+        radial-gradient(ellipse at 20% 20%, rgba(0, 50, 50, 0.4) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 80%, rgba(50, 50, 100, 0.2) 0%, transparent 50%);
+    pointer-events: none;
+}
+
+.hero .container {
+    position: relative;
+    z-index: 1;
+}
+
+.hero h1 {
+    font-size: 3.5rem;
+    font-weight: 800;
+    margin-bottom: 1.5rem;
+    line-height: 1.2;
+    background: linear-gradient(135deg, var(--text-primary) 0%, var(--accent) 50%, var(--accent-gold) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.hero p {
+    font-size: 1.25rem;
+    color: var(--text-secondary);
+    max-width: 600px;
+    margin: 0 auto 2.5rem;
+}
+
+.cta-button {
+    display: inline-block;
+    background: linear-gradient(135deg, var(--accent) 0%, #4a9a80 100%);
+    color: var(--primary-dark);
+    padding: 1rem 2.5rem;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 1.1rem;
+    transition: all 0.3s ease;
+    border: none;
+    cursor: pointer;
+}
+
+.cta-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 15px 40px rgba(100, 181, 160, 0.35);
+}
+
+/* Sections */
+section {
+    padding: 5rem 0;
+}
+
+section h2 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 1rem;
+    color: var(--text-primary);
+}
+
+section > .container > p {
+    text-align: center;
+    color: var(--text-secondary);
+    max-width: 600px;
+    margin: 0 auto 3rem;
+}
+
+/* Products Grid */
+#products {
+    background: var(--background);
+}
+
+.products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.product-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 2rem;
+    transition: all 0.3s ease;
+}
+
+.product-card:hover {
+    transform: translateY(-8px);
+    border-color: var(--accent);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+}
+
+.product-card h3 {
+    color: var(--accent);
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+.product-card p {
+    color: var(--text-secondary);
+    font-size: 1rem;
+}
+
+/* About Section */
+.about {
+    background: var(--surface);
+}
+
+.about p {
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+    color: var(--text-secondary);
+    font-size: 1.1rem;
+    line-height: 1.8;
+}
+
+/* QR Section */
+.qr-section {
+    background: var(--surface-light);
+    text-align: center;
+}
+
+.qr-section img {
+    max-width: 200px;
+    border-radius: 12px;
+    margin-top: 1.5rem;
+    border: 2px solid var(--border);
+}
+
+/* CTA Section */
+.cta-section {
+    background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 50%, var(--secondary) 100%);
+    text-align: center;
+    padding: 6rem 0;
+}
+
+.cta-section h2 {
+    color: white;
+}
+
+.cta-section p {
+    color: rgba(255,255,255,0.85);
+    margin-bottom: 2rem;
+}
+
+/* Footer */
+footer {
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+    padding: 4rem 0 2rem;
+    text-align: center;
+}
+
+footer .brand {
+    font-size: 1.75rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, var(--accent) 0%, var(--accent-gold) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 1rem;
+}
+
+footer p {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+}
+
+/* Utility */
+.text-accent {
+    color: var(--accent);
+}
+
+.text-gold {
+    color: var(--accent-gold);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .hero h1 {
+        font-size: 2.5rem;
+    }
+    
+    .hero p {
+        font-size: 1.1rem;
+    }
+    
+    nav ul {
+        gap: 1rem;
+    }
+    
+    nav {
+        display: none; /* Would need hamburger menu for mobile */
+    }
+    
+    .products-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    section h2 {
+        font-size: 2rem;
+    }
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.hero h1, .hero p, .hero .cta-button {
+    animation: fadeIn 0.8s ease forwards;
+}
+
+.hero p {
+    animation-delay: 0.2s;
+    opacity: 0;
+}
+
+.hero .cta-button {
+    animation-delay: 0.4s;
+    opacity: 0;
+}

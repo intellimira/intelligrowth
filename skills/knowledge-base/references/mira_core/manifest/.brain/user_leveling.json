@@ -1,0 +1,13 @@
+{
+    "level": 2,
+    "current_exp": 70,
+    "exp_to_next_level": 120,
+    "ascension_tier": 0,
+    "total_exp_gained": 170,
+    "unlocked_capabilities": [
+        "Basic Query",
+        "Knowledge Retrieval"
+    ],
+    "achievements": [],
+    "last_updated": "2026-02-07T03:01:22.592726"
+}

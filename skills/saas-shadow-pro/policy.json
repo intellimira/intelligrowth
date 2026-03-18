@@ -1,0 +1,25 @@
+{
+  "saas-shadow-pro": {
+    "allowed_tools": [
+      "read_file",
+      "list_directory",
+      "grep_search",
+      "run_shell_command",
+      "google_web_search",
+      "web_fetch",
+      "write_file",
+      "slip_stream_audit"
+    ],
+    "deny_tools": [
+      "delete_file"
+    ]
+  },
+  "default": {
+    "allowed_tools": [
+      "read_file"
+    ],
+    "deny_tools": [
+      "delete_file"
+    ]
+  }
+}

@@ -1,0 +1,103 @@
+{
+  "name": "Shadow_Ops_Client_Delivery",
+  "metadata": {
+    "vibe": "Professional Client Engagement & Delivery",
+    "blueprint_v": "4.4.0"
+  },
+  "nodes": [
+    {
+      "id": "package_generator",
+      "type": "Agent",
+      "metadata": {
+        "role": "Generator",
+        "description": "Generates personalized HTML delivery packages",
+        "personas": ["✨ Creative Synthesis", "⚙️ Pragmatic Application"]
+      },
+      "config": {
+        "skill": "client-delivery",
+        "tools": ["generate_delivery_packages"],
+        "instructions": "Execute package generation for the 6 target clients. Use the branding template to ensure S-Rank professional quality."
+      },
+      "edges": [
+        {
+          "to": "portal_linker",
+          "adapter": "json"
+        }
+      ]
+    },
+    {
+      "id": "portal_linker",
+      "type": "Agent",
+      "metadata": {
+        "role": "Linker",
+        "description": "Maps NotebookLM and Google Doc links",
+        "personas": ["⚛️ First Principles", "🔬 Scientific Method"]
+      },
+      "config": {
+        "skill": "client-delivery",
+        "tools": ["grep_search", "read_file"],
+        "instructions": "Verify the NotebookLM and Google Doc links for each client. Ensure the 'Portal' links are correctly mapped in the generated packages."
+      },
+      "edges": [
+        {
+          "to": "delivery_relay",
+          "adapter": "json"
+        }
+      ]
+    },
+    {
+      "id": "delivery_relay",
+      "type": "Agent",
+      "metadata": {
+        "role": "Relay",
+        "description": "Delivers the engagement packages",
+        "personas": ["⚙️ Pragmatic Application", "🌑 The Dark Passenger"]
+      },
+      "config": {
+        "skill": "shadow-ops-prover",
+        "tools": ["relay_node"],
+        "instructions": "Execute the delivery of the final engagement packages from 'intellimira@gmail.com'. Use the GAS Bridge for guaranteed delivery."
+      },
+      "edges": [
+        {
+          "to": "vault_archiver",
+          "adapter": "json"
+        }
+      ]
+    },
+    {
+      "id": "vault_archiver",
+      "type": "Agent",
+      "metadata": {
+        "role": "Archiver",
+        "description": "Archives deliverables and logs lineage",
+        "personas": ["🔬 Scientific Method", "⚙️ Pragmatic Application"]
+      },
+      "config": {
+        "skill": "base-worker",
+        "tools": ["run_shell_command"],
+        "instructions": "Consolidate all delivered assets into '.brain/outputs/client_packages/'. Log final delivery status to '.mira/scores/delivery_lineage.json'."
+      },
+      "edges": [
+        {
+          "to": "end_evaluator",
+          "adapter": "markdown"
+        }
+      ]
+    },
+    {
+      "id": "end_evaluator",
+      "type": "Agent",
+      "metadata": {
+        "role": "Sentinel",
+        "description": "Final quality gate",
+        "personas": ["🔬 Scientific Method"]
+      },
+      "config": {
+        "skill": "base-worker",
+        "tools": ["read_file"],
+        "instructions": "Validate the final delivery packages for professional integrity. Confirm all 6 clients have a vaulted 'S-Rank' package."
+      }
+    }
+  ]
+}

@@ -1,0 +1,33 @@
+Vibe Graphing Intent: SaaS Shadow Pro (Problem-Led Solutions)
+
+Model Configuration:
+- Build Model (Architect): Gemini 2.0 Flash
+- Invoke Model (Worker): opencode:ollama
+
+Design Intent:
+Construct an autonomous system for the SaaS Shadow Entrepreneur arm of the business. 
+The focus is on identifying high-impact business "pain points" (e.g., HMRC processes, administrative friction) 
+and delivering professional "Engagement Prospectives" that include detailed plans, costs, instructions, and legal documentation. 
+The system must test the real-world ability to build solutions while qualifying engagement.
+
+Structural Constraints (Topology):
+START -> [Pain_Miner] -> [Solution_Architect] -> [Prospective_Author] -> [Engagement_Qualifier] -> END
+
+Pain_Miner: Scans beyond Reddit to reputable platforms (LinkedIn, Upwork, Govt Portals) for procedural pain points.
+Solution_Architect: Designs and tests modular SaaS or automated solutions (e.g., SlipStream HMRC Automator).
+Prospective_Author: Generates branded engagement packages (HTML/PDF) containing Plans, Costs, Instructions, and Legal docs.
+Engagement_Qualifier: Monitors client interactions via email and qualificies leads based on data-driven intent.
+
+Data Contracts:
+- PULL: .mira/scores/saas_pro_fidelity.json, industry compliance docs, previous Antigravity session logs.
+- PUSH: .brain/outputs/saas_pro_workspaces/client_report.html, .mira/scores/engagement_qualification.json.
+
+Context Adapters:
+- PathRAG: Access "SlipStream" audit logic and historical "Battle-Testing" logs from HMRC-related tasks.
+- MCP: Utilize 'saas-shadow-pro' skill and 'client-delivery' for professional handoffs.
+
+Role Assignment:
+- Miner: 🔬 Scientific Method + ⚛️ First Principles
+- Architect: ✨ Creative Synthesis + ⚙️ Pragmatic Application
+- Author: ✨ Creative Synthesis + 🤔 Philosophical Inquiry
+- Qualifier: ⚙️ Pragmatic Application + 🌑 The Dark Passenger

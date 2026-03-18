@@ -1,0 +1,12 @@
+{
+  "global_deny": ["rm -rf", "DROP TABLE", "curl | bash", "eval(", "exec("],
+  "pain-sentry":          { "allowed": ["run_scrapy","praw_fetch","imap_read","sqlite_write","read_file"], "deny": ["gemini_call","send_email","http_post","delete_file","git_push","deploy"] },
+  "pain-scorer":          { "allowed": ["sqlite_read","sqlite_write","ollama_infer","score_signal","write_file","read_file"], "deny": ["gemini_call","send_email","http_post","delete_file","git_push"] },
+  "arch-synthesiser":     { "allowed": ["gemini_call","ollama_infer","sqlite_write","write_file","pathrag_query","read_file"], "deny": ["send_email","http_post","delete_file","git_push","deploy"] },
+  "hostile-grounding":    { "allowed": ["gemini_call","sqlite_write","write_file","read_file"], "deny": ["send_email","http_post","delete_file","git_push","deploy","run_scrapy"] },
+  "srank-pack-generator": { "allowed": ["gemini_call","ollama_infer","sqlite_write","write_file","read_file"], "deny": ["send_email","http_post","delete_file","git_push","deploy"] },
+  "opencode-builder":     { "allowed": ["opencode_run","ollama_infer","read_file","write_file","run_tests"], "deny": ["send_email","http_post","git_push","deploy","delete_file","gemini_call"] },
+  "revenue-tracker":      { "allowed": ["sqlite_read","sqlite_write","read_file","write_file"], "deny": ["gemini_call","send_email","http_post","delete_file","git_push","deploy"] },
+  "self-anneal-watchdog": { "allowed": ["sqlite_read","read_file","write_file","ollama_infer"], "deny": ["gemini_call","send_email","http_post","delete_file","git_push","deploy","run_scrapy"] },
+  "default":              { "allowed": ["read_file"], "deny": ["delete_file","send_email","git_push","deploy","drop_table"] }
+}

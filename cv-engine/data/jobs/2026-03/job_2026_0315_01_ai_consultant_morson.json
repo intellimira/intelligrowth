@@ -1,0 +1,54 @@
+{
+  "id": "job_2026_0315_01",
+  "source": "jobs.jobsite.co.uk",
+  "source_email_id": 4027,
+  "date_discovered": "2026-03-15",
+  "job": {
+    "title": "AI Consultant (Urgent)",
+    "company": "Morson Edge",
+    "location": "St James, South West London (SW1)",
+    "type": "Contract",
+    "salary": "Market related",
+    "posted_days_ago": 41,
+    "apply_url": "https://click.jobsite.co.uk/f/a/-S0mkmkvB2yEyOta9Oi7dA~~/AAAmIhA~/oFx34hcoLwyzqbZuyareMolS9RkOxcBMn7SYvkxmhZHWrL9MAOTNxaBmkefJ_THE9mp6URUt2ezn0qf2HDtO"
+  },
+  "requirements": {
+    "required": [
+      "Hands-on AI/ML technical expertise",
+      "Solution architecture skills",
+      "Ability to engage with business stakeholders",
+      "Full project lifecycle leadership",
+      "Requirements gathering",
+      "Solution design",
+      "Development",
+      "Testing",
+      "Deployment",
+      "Maintenance of AI applications"
+    ],
+    "preferred": [
+      "Automation experience (Automation Anywhere)",
+      "Microsoft Power Platform experience"
+    ],
+    "skills_mentioned": [
+      "AI",
+      "Machine Learning",
+      "Solution Architecture",
+      "Automation",
+      "Business Stakeholder Management",
+      "Project Management"
+    ]
+  },
+  "responsibilities": [
+    "Lead full lifecycle of AI projects",
+    "Gather requirements",
+    "Design solutions",
+    "Develop AI applications",
+    "Test and deploy",
+    "Maintain AI-driven applications",
+    "Collaborate with business analysts",
+    "Work with process owners",
+    "Engage stakeholders"
+  ],
+  "raw_description": "We are seeking a highly skilled and hands-on AI Consultant to join on a contract basis, leading the design, development, and delivery of AI-driven solutions across global operations. This role will oversee projects from ideation through to build, testing, and deployment into production, ensuring solutions deliver tangible business value.",
+  "notes": "Urgent requirement - flagged in subject"
+}

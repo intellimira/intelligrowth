@@ -1,0 +1,103 @@
+{
+  "name": "Shadow_Ops_Proof_of_Work",
+  "metadata": {
+    "vibe": "Consolidated Monetization Prover",
+    "blueprint_v": "4.3.0"
+  },
+  "nodes": [
+    {
+      "id": "shadow_ops_scout",
+      "type": "Agent",
+      "metadata": {
+        "role": "Scout",
+        "description": "Harvests high-signal prospects from multiple sources",
+        "personas": ["🔬 Scientific Method", "✨ Creative Synthesis"]
+      },
+      "config": {
+        "skill": "shadow-ops-prover",
+        "tools": ["scout_node"],
+        "instructions": "Execute Stage 1: FIND & VET. Scrape Instagram and Reddit for micro-creators in the 10k-100k range with business emails in bio. Filter by ER > 3%."
+      },
+      "edges": [
+        {
+          "to": "shadow_ops_dna",
+          "adapter": "json"
+        }
+      ]
+    },
+    {
+      "id": "shadow_ops_dna",
+      "type": "Agent",
+      "metadata": {
+        "role": "Analyst",
+        "description": "Builds Creator DNA and calculates profit potential",
+        "personas": ["⚛️ First Principles", "⚙️ Pragmatic Application"]
+      },
+      "config": {
+        "skill": "shadow-ops-prover",
+        "tools": ["dna_node"],
+        "instructions": "Execute Stage 2: ASSIMILATION. Build Personality, Audience, and Product DNA profiles. Calculate the 1% Factual Rule potential for each qualified lead."
+      },
+      "edges": [
+        {
+          "to": "shadow_ops_delivery",
+          "adapter": "json"
+        }
+      ]
+    },
+    {
+      "id": "shadow_ops_delivery",
+      "type": "Agent",
+      "metadata": {
+        "role": "Architect",
+        "description": "Generates and delivers 'Value Bribe' assets",
+        "personas": ["✨ Creative Synthesis", "🤔 Philosophical Inquiry"]
+      },
+      "config": {
+        "skill": "shadow-ops-prover",
+        "tools": ["report_node", "relay_node"],
+        "instructions": "Execute Stages 3-5: APPROACH & DELIVERY. Generate the 6-Section HTML Monetization Gameplan using the template in 'assets/'. Deliver the asset from 'intellimira@gmail.com' via the GAS Bridge."
+      },
+      "edges": [
+        {
+          "to": "shadow_ops_vault",
+          "adapter": "json"
+        }
+      ]
+    },
+    {
+      "id": "shadow_ops_vault",
+      "type": "Agent",
+      "metadata": {
+        "role": "Vault",
+        "description": "Consolidates and archives all project solutions",
+        "personas": ["⚙️ Pragmatic Application"]
+      },
+      "config": {
+        "skill": "base-worker",
+        "tools": ["run_shell_command"],
+        "instructions": "Consolidate all generated assets (Gameplans, Audits, CRM logs) into '.brain/outputs/shadow_ops_proof/'. Ensure the solution is 'available within the folders' for easy retrieval and audit."
+      },
+      "edges": [
+        {
+          "to": "end_evaluator",
+          "adapter": "markdown"
+        }
+      ]
+    },
+    {
+      "id": "end_evaluator",
+      "type": "Agent",
+      "metadata": {
+        "role": "Sentinel",
+        "description": "Final quality gate and lineage logger",
+        "personas": ["🔬 Scientific Method"]
+      },
+      "config": {
+        "skill": "base-worker",
+        "tools": ["read_file", "run_shell_command"],
+        "instructions": "Log final lineage and DM scores to '.mira/scores/shadow_ops_proof_lineage.json'. Validate the 'Proof of Work' against the £300 target."
+      }
+    }
+  ]
+}

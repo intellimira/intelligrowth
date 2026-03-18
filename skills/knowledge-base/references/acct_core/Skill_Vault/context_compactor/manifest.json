@@ -1,0 +1,10 @@
+{
+  "skill_identifier": "context_compactor",
+  "version": "1.0",
+  "description": "Reduces Memory Mesh footprint by summarizing folders into single Semantic Nodes.",
+  "parameters": {
+    "target_folder": "string",
+    "retention_policy": "string"
+  },
+  "return_type": "boolean (success)"
+}

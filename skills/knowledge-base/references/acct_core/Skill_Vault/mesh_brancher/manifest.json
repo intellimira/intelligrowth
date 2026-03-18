@@ -1,0 +1,10 @@
+{
+  "skill_identifier": "mesh_brancher",
+  "version": "1.0",
+  "description": "Enables non-linear reasoning by creating child Zettels from historical UIDs.",
+  "parameters": {
+    "parent_uid": "string",
+    "branch_reason": "string"
+  },
+  "return_type": "string (new_uid)"
+}

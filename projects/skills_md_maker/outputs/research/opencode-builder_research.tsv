@@ -1,0 +1,21 @@
+iteration	commit	score	delta	status	description
+1	20260315110237	45	+0	discard	expand tools: 0 → 4
+2	20260315110237	45	+0	discard	align persona: ⚙️ Pragmatic Applica... → ⚙️ Pragmatic Applica...
+3	20260315110237	45	+0	discard	
+4	20260315110237	45	+0	discard	
+5	20260315110237	45	+0	discard	expand triggers: 0 → 5
+1	20260315125716	45	+0	discard	expand tools: 0 → 6
+2	20260315125716	45	+0	discard	align persona: ⚙️ Pragmatic Applica... → ⚙️ Pragmatic Applica...
+3	20260315125716	45	+0	discard	add hard rules section
+4	20260315125716	45	+0	discard	refine workflow steps
+5	20260315125716	45	+0	discard	expand triggers: 0 → 6
+6	20260315125716	45	+0	discard	expand tools: 0 → 6
+7	20260315125716	45	+0	discard	align persona: ⚙️ Pragmatic Applica... → ⚙️ Pragmatic Applica...
+8	20260315125717	45	+0	discard	add hard rules section
+9	20260315125717	45	+0	discard	refine workflow steps
+10	20260315125717	45	+0	discard	expand triggers: 0 → 6
+1	20260315130506	70	+25	keep	expand tools: 0 → 6
+2	20260315130506	70	-5	discard	align persona: ⚙️ Pragmatic Applica... → ⚙️ Pragmatic Applica...
+3	20260315130506	70	+0	discard	add hard rules section
+4	20260315130506	70	+0	discard	refine workflow steps
+5	20260315130506	87	+17	keep	expand triggers: 0 → 6

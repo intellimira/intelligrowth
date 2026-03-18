@@ -1,0 +1,21 @@
+{
+  "Vector_Mesh": {
+    "allowed_tools": [
+      "read_file",
+      "list_directory",
+      "grep_search",
+      "run_shell_command"
+    ],
+    "deny_tools": [
+      "delete_file"
+    ]
+  },
+  "default": {
+    "allowed_tools": [
+      "read_file"
+    ],
+    "deny_tools": [
+      "delete_file"
+    ]
+  }
+}

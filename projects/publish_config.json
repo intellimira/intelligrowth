@@ -1,0 +1,7 @@
+{
+  "_comment": "Set publish: true to surface on portfolio. Override project-level publish flag.",
+  "_instructions": "Add project folder name as key with true/false value to control publishing.",
+  "ABDO-Metaforce-Labs": true,
+  "skills_md_maker": true,
+  "website-builder": true
+}

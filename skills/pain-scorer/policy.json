@@ -1,0 +1,6 @@
+{
+  "pain-scorer": {
+    "allowed_tools": ["sqlite_read", "sqlite_write", "ollama_infer", "score_signal", "write_file", "read_file"],
+    "deny_tools":    ["gemini_call", "run_scrapy", "praw_fetch", "send_email", "http_post", "delete_file", "git_push"]
+  }
+}

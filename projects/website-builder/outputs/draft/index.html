@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Metaforce Labs - Unlock Your Peak Potential</title>
+    <meta name="description" content="Premium health oils, supplements, and biohacking solutions for optimal wellness">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        :root {
+            /* Dark Theme Colors from colors.jpeg */
+            --primary-dark: #000032;
+            --primary: #003232;
+            --primary-light: #003264;
+            --secondary: #323264;
+            --accent: #64b5a0;
+            --accent-gold: #c9a227;
+            
+            /* Neutrals */
+            --background: #0a0a12;
+            --surface: #12121f;
+            --surface-light: #1a1a2e;
+            --text-primary: #e8e8f0;
+            --text-secondary: #a0a0b8;
+            --border: #2a2a40;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--background);
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header */
+        header {
+            background: rgba(0, 0, 50, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border);
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            z-index: 1000;
+        }
+        
+        header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.75rem;
+            font-weight: bold;
+            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-gold) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+        
+        nav a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.2s;
+            font-weight: 500;
+        }
+        
+        nav a:hover {
+            color: var(--accent);
+        }
+        
+        /* Hero */
+        .hero {
+            background: linear-gradient(180deg, var(--primary-dark) 0%, var(--background) 100%);
+            padding: 10rem 0 6rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(ellipse at center, rgba(0, 50, 50, 0.3) 0%, transparent 70%);
+            pointer-events: none;
+        }
+        
+        .hero .container {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, var(--text-primary) 0%, var(--accent) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .hero p {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto 2.5rem;
+        }
+        
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--accent) 0%, #4a9a80 100%);
+            color: var(--primary-dark);
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.1rem;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(100, 181, 160, 0.3);
+        }
+        
+        /* Sections */
+        section {
+            padding: 5rem 0;
+        }
+        
+        section h2 {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 3rem;
+            color: var(--text-primary);
+        }
+        
+        /* Products Grid */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        
+        .product-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 2rem;
+            transition: transform 0.3s, border-color 0.3s;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent);
+        }
+        
+        .product-card h3 {
+            color: var(--accent);
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+        
+        .product-card p {
+            color: var(--text-secondary);
+        }
+        
+        /* About */
+        .about {
+            background: var(--surface);
+        }
+        
+        .about p {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+        }
+        
+        /* CTA Section */
+        .cta-section {
+            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%);
+            text-align: center;
+        }
+        
+        .cta-section h2 {
+            color: white;
+        }
+        
+        .cta-section p {
+            color: rgba(255,255,255,0.8);
+            margin-bottom: 2rem;
+        }
+        
+        /* Footer */
+        footer {
+            background: var(--surface);
+            border-top: 1px solid var(--border);
+            padding: 3rem 0;
+            text-align: center;
+        }
+        
+        footer p {
+            color: var(--text-secondary);
+        }
+        
+        footer .brand {
+            font-size: 1.5rem;
+            font-weight: bold;
+            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-gold) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+        }
+        
+        /* QR Section */
+        .qr-section {
+            background: var(--surface-light);
+            padding: 3rem 0;
+            text-align: center;
+        }
+        
+        .qr-section img {
+            max-width: 200px;
+            border-radius: 12px;
+            margin-top: 1rem;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            nav ul {
+                gap: 1rem;
+            }
+            
+            .products-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo">Metaforce Labs</div>
+            <nav>
+                <ul>
+                    <li><a href="#products">Products</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#wholesale">Wholesale</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <h1>Unlock Your Peak Potential</h1>
+            <p>Premium health oils, supplements, and biohacking solutions designed to optimize your mind, body, and performance.</p>
+            <a href="#products" class="cta-button">Explore Products</a>
+        </div>
+    </section>
+
+    <section id="products">
+        <div class="container">
+            <h2>Our Products</h2>
+            <div class="products-grid">
+                <div class="product-card">
+                    <h3>Health Oils</h3>
+                    <p>Premium essential oils and wellness oils for physical and mental optimization.</p>
+                </div>
+                <div class="product-card">
+                    <h3>Supplements</h3>
+                    <p>High-quality supplements designed for peak performance and wellness.</p>
+                </div>
+                <div class="product-card">
+                    <h3>Biohacking</h3>
+                    <p>Cutting-edge products for those who want to optimize their biology.</p>
+                </div>
+                <div class="product-card">
+                    <h3>Wellness Packages</h3>
+                    <p>Curated bundles for complete wellness transformation.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="about" class="about">
+        <div class="container">
+            <h2>About Metaforce Labs</h2>
+            <p>Metaforce Labs is dedicated to providing premium health and wellness products for the conscious consumer. We curate the finest oils, supplements, and biohacking solutions to help you achieve your optimal state of health.</p>
+        </div>
+    </section>
+
+    <section id="wholesale" class="qr-section">
+        <div class="container">
+            <h2>Wholesale Inquiries</h2>
+            <p>Interested in carrying Metaforce Labs products? Scan our QR code to connect.</p>
+            <img src="media/QR_code.jpeg" alt="QR Code for Wholesale Inquiries">
+            <p style="margin-top: 1rem; color: var(--text-secondary);">Or email: wholesale@metaforcelabs.com</p>
+        </div>
+    </section>
+
+    <section id="contact" class="cta-section">
+        <div class="container">
+            <h2>Start Your Transformation</h2>
+            <p>Join thousands of health-conscious individuals who have unlocked their potential with Metaforce Labs.</p>
+            <a href="mailto:info@metaforcelabs.com" class="cta-button">Get In Touch</a>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="brand">Metaforce Labs</div>
+            <p>Premium Health & Wellness Products</p>
+            <p style="margin-top: 1rem; font-size: 0.875rem;">&copy; 2026 Metaforce Labs. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>

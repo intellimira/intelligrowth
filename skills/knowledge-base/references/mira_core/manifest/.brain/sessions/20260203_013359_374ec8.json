@@ -1,0 +1,35 @@
+{
+  "session_id": "20260203_013359_374ec8",
+  "started": "2026-02-03T01:33:59.526103",
+  "last_updated": "2026-02-07T02:34:45.231839",
+  "status": "completed",
+  "working_directory": "C:\\Users\\rando\\Documents\\Ai\\MIRA3.0\\MIRA_ARCH",
+  "query_count": 5,
+  "history": [
+    {
+      "time": "2026-02-03T01:34:08.825939",
+      "query": "what can you see?",
+      "response_preview": ""
+    },
+    {
+      "time": "2026-02-03T01:36:48.041917",
+      "query": "hi",
+      "response_preview": ""
+    },
+    {
+      "time": "2026-02-03T01:40:50.855198",
+      "query": "hi",
+      "response_preview": "*** LEVEL UP! You have reached Level 2! ***\n\n"
+    },
+    {
+      "time": "2026-02-03T01:42:45.036600",
+      "query": "hi",
+      "response_preview": ""
+    },
+    {
+      "time": "2026-02-03T01:45:51.113619",
+      "query": "/data",
+      "response_preview": ""
+    }
+  ]
+}

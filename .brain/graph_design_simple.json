@@ -1,0 +1,35 @@
+{
+  "meta": {
+    "version": "4.0",
+    "name": "ShadowOpsWeaveSimple",
+    "build_model": "mock-model",
+    "invoke_model": "mock-model",
+    "mira_tier": 1,
+    "intent_file": ".gemini/shadow_ops_intent.gemini",
+    "blueprint_path": ".brain/graph_design_simple.json",
+    "c_and_c_grounded": true,
+    "grounding_date": "2026-03-13"
+  },
+  "nodes": [
+    {
+      "id": "pain_sentry",
+      "type": "Action",
+      "label": "Sentry",
+      "agent": "pain-sentry",
+      "instructions": "SENTRY ROLE",
+      "invoke_model": "mock-model",
+      "message_adapter": "json",
+      "input_keys": ["raw_text", "platform"],
+      "output_keys": ["signal_id", "signal_type", "icp_hint"]
+    }
+  ],
+  "edges": [
+    {"source": "ENTRY", "target": "pain_sentry", "keys": {"raw_text": "raw_text", "platform": "platform"}},
+    {"source": "pain_sentry", "target": "EXIT", "keys": {"signal_id": "signal_id", "signal_type": "signal_type", "icp_hint": "icp_hint"}}
+  ],
+  "state": {
+    "shared_keys": ["signal_id"],
+    "backed_by": "sqlite",
+    "db_path": ".brain/shadow_ops.db"
+  }
+}

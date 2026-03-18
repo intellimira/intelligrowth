@@ -1,0 +1,13 @@
+{
+  "name": "awesome-opencode-curator",
+  "version": "1.0.0",
+  "description": "Curated access to awesome-opencode plugins and resources",
+  "data_path": "/home/sir-v/MiRA/projects/awesome-opencode",
+  "categories": ["official", "plugins", "themes", "agents", "projects", "resources"],
+  "triggers": [
+    "opencode plugins",
+    "opencode resources",
+    "awesome-opencode",
+    "find opencode"
+  ]
+}

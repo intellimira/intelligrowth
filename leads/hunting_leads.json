@@ -1,0 +1,49 @@
+{
+  "ADHD_Dopamine_Task_Orchestrator": [
+    {"name": "Reddit_ADHD_Paralysis_User", "context": "Notion/Motion feels like 'another task' to avoid; paying $30/mo for a shame spiral.", "source": "r/ADHD"},
+    {"name": "Executive_Function_Dropout", "context": "Stuck in setup phase of Sunsama; paid for a year but haven't moved past organizing.", "source": "r/adhdwomen"}
+  ],
+  "Ghost_Kitchen_Inventory_Sync": [
+    {"name": "MultiBrand_Ghost_Op", "context": "Juggling 5 brands on 5 tablets; phantom stockouts causing cancellations mid-rush.", "source": "r/restaurateur"},
+    {"name": "Manual_Spreadsheet_Survivor", "context": "Google Sheet inventory doesn't talk to UberEats; 4-week delay in seeing food costs.", "source": "r/KitchenConfidential"}
+  ],
+  "VET_CLINIC_INVENTORY_Strategy_Fix": [
+    {"name": "MultiDept_Hospital_Manager", "context": "EzyVet fails at department-level tracking; staff forced back to manual counts.", "source": "r/Veterinary"},
+    {"name": "Legacy_Switch_Regret", "context": "Moved from server-license to cloud; feeling nickeled-and-dimed by per-user fees.", "source": "r/VetTech"}
+  ],
+  "INSURTECH_CLAIMS_Strategy_Fix": [
+    {"name": "Claims_Adjuster_Overload", "context": "Friction spikes when AI handoff fails; manual review queue is 2 weeks backlogged.", "source": "r/adjusters"},
+    {"name": "Repair_Network_Friction", "context": "Integration nightmare between carrier and body shop; manual data re-entry from PDFs.", "source": "r/InsurTech"}
+  ],
+  "FINTECH_KYC_Strategy_Fix": [
+    {"name": "Onboarding_Dropout_Scale", "context": "70% dropout at 'Identity Wall'; OCR glitches causing users to quit.", "source": "r/fintech"},
+    {"name": "Transparency_Gap_Victim", "context": "User stuck on 'Processing...' for 3 days without update; trust eroded, app deleted.", "source": "r/fintech"}
+  ],
+  "AI_SAFETY_COMPLIANCE_Strategy_Fix": [
+    {"name": "Compliance_Officer_Theater", "context": "Vanta/Drata treat AI as a bolt-on; nightmare to handle actual Annex IV LLM governance.", "source": "r/cybersecurity"},
+    {"name": "SysAdmin_Shadow_AI", "context": "Unauthorized AI usage causing silent data leaks; current GRC tools can't detect it.", "source": "r/cybersecurity"}
+  ],
+  "FRACTIONAL_CFO_REPORTING_Strategy_Fix": [
+    {"name": "Outdated_Forecast_Survivor", "context": "Manual 12-week cash flow takes weeks to update; by the time it's done, it's a historical record.", "source": "r/FractionalCFO"},
+    {"name": "Puzzle_Piece_Integrator", "context": "Manual integration of QBO, HubSpot, and Payroll feels like a 1,000-piece puzzle; high margin compression.", "source": "r/FractionalCFO"}
+  ],
+  "Zappier_Spaghetti_Untangler": [
+    {"name": "Integration_Babysitter", "context": "Spending 4 hours/week fixing 'Silent Failures' in App A -> App B -> App C chains.", "source": "r/Zapier"},
+    {"name": "Task_Burn_Victim", "context": "Linear chains consuming 50k tasks/mo due to inefficient branching; expensive and brittle.", "source": "r/Zapier"}
+  ],
+  "GHOST_KITCHEN_MARGIN_Strategy_Fix": [
+    {"name": "30_Percent_Trap_Victim", "context": "Losing all profit to 30% delivery app commissions; hidden fees causing net losses.", "source": "r/KitchenConfidential"},
+    {"name": "Packaging_Cost_Anxiety", "context": "High-quality packaging eating the remaining 5% margin; need zero-overhead tracking.", "source": "r/restaurateur"}
+  ],
+  "AI_Safety_PII_Guardrail": [
+    {"name": "Double_Inference_Tax_Victim", "context": "Paying the 'LLM-watching-LLM' tax; safety guardrails doubling token spend and latency.", "source": "r/PromptEngineering"},
+    {"name": "Fifty_K_Weekend_Survivor", "context": "Woke up to $50k bill from recursive PII-scanning loop; need deterministic guardrails.", "source": "r/SaaS"}
+  ],
+  "PROPTECH_YIELD_Strategy_Fix": [
+    {"name": "Gross_Yield_Trap_Investor", "context": "Beginner ignoring 2.5% non-recoverable costs; spreadsheet says 8%, reality is 4%.", "source": "r/RealEstateInvesting"},
+    {"name": "Formula_Error_Victim", "context": "Distorted portfolio yield due to cell reference error in manual tracking sheet.", "source": "r/AusPropertyChat"}
+  ],
+  "Last_Mile_Warehouse_Sync": [
+    {"name": "SubContractor_Blind_Spot", "context": "No visibility on van drivers once they leave the hub; expensive software overkill.", "source": "r/Logistics"}
+  ]
+}

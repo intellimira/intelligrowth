@@ -1,0 +1,15 @@
+{
+  "session_id": "20260203_005217_5ab827",
+  "started": "2026-02-03T00:52:17.252600",
+  "last_updated": "2026-02-03T00:55:29.835565",
+  "status": "completed",
+  "working_directory": "C:\\Users\\rando\\Documents\\Ai\\MIRA3.0\\MIRA_ARCH",
+  "query_count": 1,
+  "history": [
+    {
+      "time": "2026-02-03T00:53:31.430327",
+      "query": "What is MIRA?",
+      "response_preview": ""
+    }
+  ]
+}

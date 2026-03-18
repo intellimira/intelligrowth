@@ -1,0 +1,71 @@
+{
+  "applications": [
+    {
+      "id": "app_001",
+      "date_applied": "2026-03-15",
+      "job_title": "AI Consultant (Urgent)",
+      "company": "Morson Edge",
+      "source": "Jobsite (CWJobs)",
+      "cv_used": "Randolph_Dube_AI_Consultant.pdf",
+      "apply_url": "https://click.jobsite.co.uk/f/a/-S0mkmkvB2yEyOta9Oi7dA~~/AAAmIhA~/oFx34hcoLwyzqbZuyareMolS9RkOxcBMn7SYvkxmhZHWrL9MAOTNxaBmkefJ_THE9mp6URUt2ezn0qf2HDtO",
+      "stage": "applied",
+      "notes": "Applied via Jobsite portal"
+    },
+    {
+      "id": "app_002", 
+      "date_applied": "2026-03-15",
+      "job_title": "ML & AI Engineer",
+      "company": "Various",
+      "source": "Jobsite/CWJobs",
+      "cv_used": "Randolph_Dube_ML_AI_Engineer.pdf",
+      "apply_url": "",
+      "stage": "ready",
+      "notes": "CV ready - waiting for user to provide specific job link"
+    },
+    {
+      "id": "app_003",
+      "date_applied": "2026-03-15", 
+      "job_title": "Data Engineer (SC Cleared)",
+      "company": "Various",
+      "source": "Jobsite",
+      "cv_used": "Randolph_Dube_Data_Engineer_SC.pdf",
+      "apply_url": "",
+      "stage": "ready",
+      "notes": "CV ready - waiting for user to provide specific job link"
+    },
+    {
+      "id": "app_004",
+      "date_applied": "2026-03-15",
+      "job_title": "Business Analyst",
+      "company": "Various",
+      "source": "CWJobs/Indeed",
+      "cv_used": "Randolph_Dube_Business_Analyst.pdf",
+      "apply_url": "",
+      "stage": "ready", 
+      "notes": "CV ready - waiting for user to provide specific job links"
+    },
+    {
+      "id": "app_005",
+      "date_applied": "2026-03-15",
+      "job_title": "Solutions Architect", 
+      "company": "Various",
+      "source": "Adzuna",
+      "cv_used": "Randolph_Dube_Solutions_Architect.pdf",
+      "apply_url": "",
+      "stage": "ready",
+      "notes": "CV ready - waiting for user to provide specific job links"
+    },
+    {
+      "id": "app_006",
+      "date_applied": "2026-03-15",
+      "job_title": "AWS Data Engineer",
+      "company": "Various",
+      "source": "Adzuna/Hays",
+      "cv_used": "Randolph_Dube_Data_Engineer.pdf",
+      "apply_url": "",
+      "stage": "ready",
+      "notes": "CV ready - waiting for user to provide specific job links"
+    }
+  ],
+  "last_updated": "2026-03-15"
+}

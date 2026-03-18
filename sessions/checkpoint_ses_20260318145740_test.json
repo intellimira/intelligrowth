@@ -1,0 +1,16 @@
+{
+  "checkpoint_id": "ses_20260318145740_test_cp_0",
+  "session_id": "ses_20260318145740_test",
+  "timestamp": "2026-03-18T14:57:40.386261",
+  "action_count": 1,
+  "last_action": "Testing",
+  "files_modified": [
+    "test.py"
+  ],
+  "checkpoint_hash": "e762d773",
+  "recovery_data": {
+    "project": "test",
+    "pending_work": [],
+    "decisions": []
+  }
+}

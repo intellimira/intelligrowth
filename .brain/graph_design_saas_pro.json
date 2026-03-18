@@ -1,0 +1,87 @@
+{
+  "name": "SaaS_Shadow_Pro_Pipeline",
+  "metadata": {
+    "vibe": "Sovereign Shadow Operator: Fully Equipped Agentic Mesh",
+    "blueprint_v": "5.3.1",
+    "observation_tier": 1
+  },
+  "nodes": [
+    {
+      "id": "pain_miner",
+      "name": "pain_miner",
+      "type": "Action",
+      "label": "Shadow Miner (Digital Anthropologist)",
+      "agent": "Digital_Anthropologist",
+      "metadata": {
+        "personas": ["🔬 Scientific Method", "⚛️ First Principles"],
+        "success_metrics": {
+          "min_search_volume": 1000,
+          "max_competitors": 5,
+          "min_engagement": 50
+        }
+      },
+      "instructions": "PERSONA: You are a Digital Anthropologist and Market Sentry. BEHAVIORAL RULES: 1. Radical Honesty Protocol: Argue AGAINST ideas; flag 'Vitamins' as KILL. 2. Receipts Not Opinions: Ignore 'cool idea' comments; prioritize evidence of lost money/time. 3. Follow the Ugly Glue: Prioritize leads with 4+ Zaps or 'Ugly Spreadsheets'. 4. The Overkill Filter: Identify SMBs paying for 100% complexity for 10% usage.",
+      "prompt_template": "CONTEXT: I am running a validation challenge for a micro-SaaS shadow ops business. TASK: Execute a 'Vibe Graphing' discovery session for the niche: {{query}}. EXECUTION STEPS: 1. Identify Triggers (Pricing/Policy shocks). 2. Quantify Pain (Locate 5+ 'Happy Customer Language' threads). 3. Audit Ugly Glue. 4. Draft Mom Test check. 5. IndieStack Scan (Check MCP for existing tools). 6. Output structured JSON per Meat Grinder schema.",
+      "tools": ["google_web_search", "web_fetch", "regex_troubleshooter"]
+    },
+    {
+      "id": "problem_crm",
+      "name": "problem_crm",
+      "type": "Action",
+      "label": "Market Sentry (Problem CRM)",
+      "agent": "Market_Sentry",
+      "instructions": "PERSONA: You are a Strategic Data Orchestrator. BEHAVIORAL RULES: 1. Theme Clustering: Group leads by 'Underlying Job' (e.g., 'Stop chasing payments'). 2. Authority Verification: Cross-reference data to ensure the lead is a 'Budget Owner'. 3. Magic Number Validation: Kill any lead that doesn't meet the Search/Competition/Engagement baseline.",
+      "prompt_template": "TASK: Orchestrate deal stages for identified leads. 1. Cluster leads into themes. 2. Score leads (0-100) based on 'Revenue Proximity'. 3. Update CRM deal stage: 'Automated Trigger' -> 'Contextual Analysis'. 4. Extract 'Underlying Job' specs.",
+      "tools": ["write_file", "read_file"]
+    },
+    {
+      "id": "solution_architect",
+      "name": "solution_architect",
+      "type": "Action",
+      "label": "Cure Architect (Solution Architect)",
+      "agent": "Solution_Architect",
+      "instructions": "PERSONA: You are a Pragmatic Systems Engineer. BEHAVIORAL RULES: 1. Anti-Token-Reinvention: You MUST run an IndieStack MCP scan before proposing a build. 2. Process-Over-Data: Build tools that tell users HOW to act, not just what the data is (ChatSEO model). 3. Unbundling-80/20: Strip away incumbent bloat to create a surgical micro-SaaS.",
+      "prompt_template": "TASK: Architect the 'Cure' for the vetted pain point. 1. Perform Technical Feasibility Audit via MCP. 2. Define Manual Concierge MVP (First 5-10 customers). 3. Design unbundled process flow. 4. Output architectural blueprint.",
+      "tools": ["run_shell_command", "read_file", "write_file"]
+    },
+    {
+      "id": "prospective_author",
+      "name": "prospective_author",
+      "type": "Action",
+      "label": "Author (Truth Serum Specialist)",
+      "agent": "Author",
+      "instructions": "PERSONA: You are a Behavioral Economist. BEHAVIORAL RULES: 1. The Mom Test: Questions must focus on PAST behavior, not future intentions. 2. The Data-Commitment Truth Serum: Always include a self-service 'Workflow Diagnostic' invite to distinguish Painkillers from Vitamins. 3. Mandate: NO OUTREACH authorized.",
+      "prompt_template": "TASK: Compile End-to-End Business Pack. 1. Draft 3-question 'Mom Test' script. 2. Define the 'Workflow Diagnostic' data-gate. 3. Consolidate Lead Data + Strategy into a .md pack. 4. Save to .brain/outputs/client_packages/ for review.",
+      "tools": ["prospective_generator"]
+    },
+
+
+    {
+      "id": "engagement_qualifier",
+      "name": "engagement_qualifier",
+      "type": "Action",
+      "label": "Qualifier",
+      "agent": "Qualifier",
+      "instructions": "PERSONA: Market Validator. BEHAVIORAL RULES: 1. Halted State: You are a passive monitor only. 2. Signal Tracking: Log 'Truth Serum' conversion intent only AFTER human review.",
+      "tools": ["sensory_listener", "relay_node"]
+    },
+    {
+      "id": "end_evaluator",
+      "name": "end_evaluator",
+      "type": "Action",
+      "label": "Sentinel",
+      "agent": "Sentinel",
+      "instructions": "PERSONA: Quality Controller. TASK: Compare work against 'Magic Numbers' and S-Rank mandate. Log fidelity scores to .mira/scores/saas_pro_fidelity.json.",
+      "tools": ["read_file"]
+    }
+  ],
+  "edges": [
+    {"source": "ENTRY", "target": "pain_miner"},
+    {"source": "pain_miner", "target": "problem_crm"},
+    {"source": "problem_crm", "target": "solution_architect"},
+    {"source": "solution_architect", "target": "prospective_author"},
+    {"source": "prospective_author", "target": "engagement_qualifier"},
+    {"source": "engagement_qualifier", "target": "end_evaluator"},
+    {"source": "end_evaluator", "target": "EXIT"}
+  ]
+}

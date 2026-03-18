@@ -1,0 +1,24 @@
+{
+  "shadow-ops-prover": {
+    "allowed_tools": [
+      "read_file",
+      "list_directory",
+      "grep_search",
+      "run_shell_command",
+      "google_web_search",
+      "web_fetch",
+      "write_file"
+    ],
+    "deny_tools": [
+      "delete_file"
+    ]
+  },
+  "default": {
+    "allowed_tools": [
+      "read_file"
+    ],
+    "deny_tools": [
+      "delete_file"
+    ]
+  }
+}

@@ -1,0 +1,32 @@
+Vibe Graphing Intent: Shadow Ops Pipeline-B
+
+Model Configuration:
+- Build Model (Architect): Gemini 2.0 Flash
+- Invoke Model (Worker): opencode:ollama
+
+Design Intent:
+Construct an autonomous multi-agent pipeline for "Shadow Ops" monetization. 
+The goal is to identify micro-creators (10k-100k followers), analyze their "Creator DNA", 
+and execute a deterministic outreach and conversion sequence (7-Stage Pipeline) 
+to secure 70/30 revenue share partnerships.
+
+Structural Constraints (Topology):
+START -> [Hunter_Agent] -> [Analyst_Agent] -> [Architect_Agent] -> [Operator_Agent] -> END
+Hunter_Agent: Stage 1 (Find & Vet) - Scrapes and filters prospects.
+Analyst_Agent: Stage 2 (Assimilation) - Builds Creator DNA and calculates profit potential.
+Architect_Agent: Stage 3-5 (Approach & Delivery) - Generates "Informed Hooks" and Gameplan assets.
+Operator_Agent: Stage 6-7 (Monetize) - Handles Whop setup and partnership management.
+
+Data Contracts:
+- PULL: .mira/scores/lineage.json, skills/knowledge-base/references/memory_mesh/Zettels/SHADOW_OPS_WEAVE.md
+- PUSH: .brain/outputs/shadow_ops_pipeline_b.json, .mira/scores/pipeline_b_performance.json
+
+Context Adapters:
+- PathRAG: Access deep insights from SHADOW_OPS_WEAVE.md and historical mission logs.
+- MCP: Utilize scripts in skills/sovereign_shadow_operator/scripts/ and skills/lab-utility/scripts/.
+
+Role Assignment:
+- Hunter: ⚛️ First Principles + 🔬 Scientific Method
+- Analyst: ✨ Creative Synthesis + ⚙️ Pragmatic Application
+- Architect: ✨ Creative Synthesis + 🤔 Philosophical Inquiry
+- Operator: ⚙️ Pragmatic Application + 🌑 The Dark Passenger

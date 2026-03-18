@@ -1,0 +1,22 @@
+# CV Link Fixer - Sample Configuration
+# Copy to config.yaml and customize
+
+# Example configurations for common use cases
+
+portfolio_link_fix:
+  folder: "/home/user/Documents/CV/Master"
+  old_url: "old-portfolio.com"
+  new_url: "linkedin.com/company/newportfolio"
+  regenerate_pdf: true
+
+company_rebrand:
+  folder: "/home/user/Documents/CV"
+  old_url: "OldCompany Ltd"
+  new_url: "NewCompany Inc"
+  regenerate_pdf: true
+
+url_normalization:
+  folder: "/home/user/Documents/CV/2026"
+  old_url: "https://www.example.com"
+  new_url: "example.com"
+  regenerate_pdf: false

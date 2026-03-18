@@ -1,0 +1,1874 @@
+<!DOCTYPE html>
+<!-- saved from url=(0022)http://127.0.0.1:4000/ -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shadow Ops C&amp;C — Command Centre</title>
+<style>
+:root{
+  --bg:#090b0e;--bg2:#10131a;--bg3:#171c25;--bg4:#1d2230;
+  --border:rgba(255,255,255,0.055);--border2:rgba(255,255,255,0.11);--border3:rgba(255,255,255,0.18);
+  --text:#dedad0;--text2:#8a8880;--text3:#505050;
+  --purple:#7F77DD;--purple-l:#AFA9EC;--purple-d:#3C3489;
+  --teal:#1D9E75;--teal-l:#5DCAA5;
+  --amber:#EF9F27;--amber-d:#BA7517;
+  --coral:#D85A30;--coral-l:#F09975;
+  --blue:#378ADD;--blue-l:#85B7EB;
+  --green:#639922;--green-l:#97C459;
+  --red:#E24B4A;--pink:#D4537E;--pink-l:#ED93B1;
+  --gold:#F5C842;
+  --font:'SF Mono','Fira Code','Cascadia Code',monospace;
+  --sans:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);font-family:var(--sans);font-size:13px;line-height:1.6;}
+
+/* TOPBAR */
+.topbar{height:48px;border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 18px;gap:14px;flex-shrink:0;position:relative;z-index:10;}
+.logo{width:26px;height:26px;border-radius:6px;background:linear-gradient(135deg,var(--purple) 0%,var(--teal) 100%);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:900;color:#fff;letter-spacing:-1px;}
+.tb-title{font-size:13px;font-weight:600;letter-spacing:-.3px;}
+.tb-sub{color:var(--text3);font-size:10px;font-family:var(--font);}
+.tb-right{margin-left:auto;display:flex;align-items:center;gap:10px;}
+.tpill{padding:2px 9px;border-radius:20px;font-size:9px;font-family:var(--font);letter-spacing:.3px;}
+.tp-build{background:rgba(127,119,221,.13);border:1px solid rgba(127,119,221,.28);color:var(--purple-l);}
+.tp-invoke{background:rgba(29,158,117,.1);border:1px solid rgba(29,158,117,.25);color:var(--teal-l);}
+.tp-mira{background:rgba(212,83,126,.1);border:1px solid rgba(212,83,126,.25);color:var(--pink-l);}
+.tp-status{background:rgba(29,158,117,.1);border:1px solid rgba(29,158,117,.25);color:var(--teal-l);cursor:pointer;}
+
+/* SHELL */
+.shell{display:grid;grid-template-columns:200px 1fr 300px;grid-template-rows:calc(100vh - 48px);overflow:hidden;}
+
+/* LEFT SIDEBAR */
+.sidebar{border-right:1px solid var(--border);display:flex;flex-direction:column;overflow:hidden;}
+.sb-scroll{flex:1;overflow-y:auto;}
+.nav-grp{padding:10px 0;}
+.ng-label{padding:7px 13px 3px;font-size:8px;letter-spacing:1.1px;text-transform:uppercase;color:var(--text3);font-family:var(--font);}
+.nitem{padding:6px 13px;display:flex;align-items:center;gap:8px;cursor:pointer;transition:background .1s;border-left:2px solid transparent;}
+.nitem:hover{background:var(--bg2);}
+.nitem.on{background:var(--bg2);border-left-color:var(--purple);}
+.ni-dot{width:16px;height:16px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:7px;font-weight:700;font-family:var(--font);flex-shrink:0;}
+.d-ok{background:rgba(29,158,117,.16);color:var(--teal-l);border:1px solid rgba(29,158,117,.28);}
+.d-run{background:rgba(127,119,221,.16);color:var(--purple-l);border:1px solid rgba(127,119,221,.3);}
+.d-pend{background:var(--bg3);color:var(--text3);border:1px solid var(--border);}
+.d-warn{background:rgba(239,159,39,.12);color:var(--amber);border:1px solid rgba(239,159,39,.25);}
+.d-crit{background:rgba(226,75,74,.12);color:var(--red);border:1px solid rgba(226,75,74,.25);}
+.ni-name{font-size:11px;color:var(--text2);}
+.nitem.on .ni-name{color:var(--text);font-weight:500;}
+.ni-badge{margin-left:auto;font-size:8px;font-family:var(--font);color:var(--text3);}
+.nitem.on .ni-badge{color:var(--amber);}
+
+/* ANNEAL STATUS */
+.anneal-box{padding:10px 13px;border-top:1px solid var(--border);}
+.ab-hd{font-size:8px;letter-spacing:1px;text-transform:uppercase;color:var(--text3);font-family:var(--font);margin-bottom:7px;}
+.ab-row{display:flex;align-items:center;gap:6px;margin-bottom:5px;font-size:10px;}
+.ab-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0;}
+.dot-ok{background:var(--teal);}
+.dot-warn{background:var(--amber);}
+.dot-crit{background:var(--red);}
+.ab-name{color:var(--text2);flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:90px;}
+.ab-fix{font-size:8px;font-family:var(--font);color:var(--text3);}
+
+/* CENTRE */
+.centre{display:flex;flex-direction:column;overflow:hidden;}
+
+/* TABS */
+.tabs{display:flex;border-bottom:1px solid var(--border);flex-shrink:0;background:var(--bg);}
+.tab{padding:9px 16px;font-size:11px;cursor:pointer;color:var(--text3);border-bottom:2px solid transparent;transition:all .12s;white-space:nowrap;}
+.tab:hover{color:var(--text2);}
+.tab.on{color:var(--purple-l);border-bottom-color:var(--purple);}
+
+/* PANEL AREA */
+.panels{flex:1;overflow:hidden;}
+.panel{display:none;height:100%;overflow-y:auto;padding:18px 20px;}
+.panel.on{display:block;}
+
+/* REVENUE DASHBOARD */
+.kpi-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:16px;}
+.kpi{background:var(--bg2);border:1px solid var(--border);border-radius:9px;padding:12px;}
+.kpi-lbl{font-size:8px;letter-spacing:.9px;text-transform:uppercase;color:var(--text3);font-family:var(--font);margin-bottom:6px;}
+.kpi-val{font-size:22px;font-weight:700;font-family:var(--font);line-height:1;}
+.kpi-sub{font-size:9px;color:var(--text3);margin-top:3px;}
+.kpi-trend{font-size:9px;font-family:var(--font);margin-top:4px;}
+.trend-up{color:var(--teal-l);}
+.trend-dn{color:var(--red);}
+
+/* DEAL TABLE */
+.dtbl-wrap{background:var(--bg2);border:1px solid var(--border);border-radius:9px;overflow:hidden;margin-bottom:16px;}
+.dtbl-hd{padding:11px 14px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border);}
+.dtbl-title{font-size:10px;font-weight:600;letter-spacing:.3px;}
+.dtbl-action{font-size:9px;color:var(--purple-l);cursor:pointer;border:1px solid rgba(127,119,221,.25);padding:2px 9px;border-radius:3px;background:rgba(127,119,221,.06);}
+.dtbl-action:hover{background:rgba(127,119,221,.14);}
+table{width:100%;border-collapse:collapse;}
+th{padding:8px 12px;text-align:left;font-size:8px;letter-spacing:.7px;text-transform:uppercase;color:var(--text3);font-family:var(--font);font-weight:500;border-bottom:1px solid var(--border);}
+td{padding:8px 12px;font-size:11px;border-bottom:1px solid var(--border);}
+tr:last-child td{border-bottom:none;}
+tr:hover td{background:var(--bg3);}
+.deal-name{font-weight:500;color:var(--text);cursor:pointer;}
+.deal-name:hover{color:var(--purple-l);}
+.stat-badge{padding:2px 7px;border-radius:3px;font-size:8px;font-family:var(--font);font-weight:600;letter-spacing:.3px;white-space:nowrap;}
+.sb-prospect{background:var(--bg3);color:var(--text3);border:1px solid var(--border);}
+.sb-arch{background:rgba(239,159,39,.1);color:var(--amber);border:1px solid rgba(239,159,39,.2);}
+.sb-hitl{background:rgba(216,90,48,.1);color:var(--coral-l);border:1px solid rgba(216,90,48,.2);}
+.sb-build{background:rgba(55,138,221,.1);color:var(--blue-l);border:1px solid rgba(55,138,221,.2);}
+.sb-live{background:rgba(29,158,117,.1);color:var(--teal-l);border:1px solid rgba(29,158,117,.2);}
+.sb-churned{background:rgba(226,75,74,.08);color:var(--red);border:1px solid rgba(226,75,74,.18);}
+.profit-pos{color:var(--teal-l);font-family:var(--font);}
+.profit-neg{color:var(--red);font-family:var(--font);}
+.profit-zero{color:var(--text3);font-family:var(--font);}
+.num{font-family:var(--font);}
+
+/* ADD DEAL MODAL */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.7);display:none;align-items:center;justify-content:center;z-index:100;}
+.modal-overlay.show{display:flex;}
+.modal{background:var(--bg2);border:1px solid var(--border2);border-radius:12px;padding:22px;width:480px;max-height:80vh;overflow-y:auto;}
+.modal-title{font-size:14px;font-weight:600;margin-bottom:18px;}
+.field{margin-bottom:12px;}
+.field-lbl{font-size:10px;color:var(--text3);font-family:var(--font);letter-spacing:.5px;text-transform:uppercase;margin-bottom:4px;}
+input[type=text],input[type=number],select,textarea{width:100%;background:var(--bg3);border:1px solid var(--border2);border-radius:6px;padding:8px 10px;color:var(--text);font-size:12px;font-family:var(--sans);outline:none;transition:border-color .12s;}
+input:focus,select:focus,textarea:focus{border-color:rgba(127,119,221,.4);}
+select option{background:var(--bg3);}
+.modal-btns{display:flex;gap:9px;margin-top:16px;}
+.btn-save{flex:1;padding:9px;border-radius:7px;border:none;cursor:pointer;background:rgba(127,119,221,.2);color:var(--purple-l);border:1px solid rgba(127,119,221,.35);font-size:12px;font-weight:600;font-family:var(--font);transition:background .12s;}
+.btn-save:hover{background:rgba(127,119,221,.3);}
+.btn-cancel{flex:1;padding:9px;border-radius:7px;border:none;cursor:pointer;background:var(--bg3);color:var(--text2);border:1px solid var(--border2);font-size:12px;font-family:var(--font);transition:background .12s;}
+.btn-cancel:hover{background:var(--bg4);}
+
+/* P&L CHART AREA */
+.chart-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px;}
+.chart-card{background:var(--bg2);border:1px solid var(--border);border-radius:9px;padding:14px;}
+.cc-title{font-size:10px;font-weight:600;color:var(--text2);margin-bottom:12px;}
+.bar-chart{display:flex;flex-direction:column;gap:7px;}
+.bc-row{display:flex;align-items:center;gap:9px;}
+.bc-label{font-size:10px;color:var(--text2);width:110px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;flex-shrink:0;}
+.bc-track{flex:1;height:8px;background:var(--bg3);border-radius:4px;overflow:hidden;}
+.bc-fill{height:100%;border-radius:4px;transition:width .4s;}
+.bc-val{font-size:9px;font-family:var(--font);min-width:45px;text-align:right;}
+
+/* GEMINI CHAT */
+.chat-wrap{display:flex;flex-direction:column;height:100%;}
+.chat-hd{padding:12px 16px;border-bottom:1px solid var(--border);flex-shrink:0;display:flex;align-items:center;gap:10px;}
+.chat-title{font-size:12px;font-weight:600;}
+.chat-model{font-size:9px;color:var(--text3);font-family:var(--font);}
+.context-pills{display:flex;gap:6px;margin-left:auto;}
+.cpill{padding:2px 8px;border-radius:3px;font-size:8px;font-family:var(--font);cursor:pointer;border:1px solid var(--border);color:var(--text3);transition:all .12s;}
+.cpill:hover,.cpill.on{background:rgba(127,119,221,.1);border-color:rgba(127,119,221,.3);color:var(--purple-l);}
+.chat-msgs{flex:1;overflow-y:auto;padding:14px 16px;display:flex;flex-direction:column;gap:12px;}
+.msg{display:flex;flex-direction:column;gap:4px;max-width:90%;}
+.msg-user{align-self:flex-end;}
+.msg-agent{align-self:flex-start;}
+.msg-bubble{padding:9px 13px;border-radius:8px;font-size:12px;line-height:1.6;}
+.mb-user{background:rgba(127,119,221,.18);border:1px solid rgba(127,119,221,.25);color:var(--text);border-radius:8px 8px 2px 8px;}
+.mb-agent{background:var(--bg2);border:1px solid var(--border2);color:var(--text);border-radius:2px 8px 8px 8px;}
+.mb-system{background:rgba(29,158,117,.07);border:1px solid rgba(29,158,117,.18);color:var(--text2);border-radius:8px;font-family:var(--font);font-size:10px;}
+.msg-label{font-size:8px;color:var(--text3);font-family:var(--font);}
+.msg-label-right{text-align:right;}
+.typing{display:flex;gap:4px;align-items:center;padding:8px 12px;background:var(--bg2);border:1px solid var(--border2);border-radius:8px;width:fit-content;}
+.typing span{width:5px;height:5px;border-radius:50%;background:var(--text3);animation:bounce .8s infinite;}
+.typing span:nth-child(2){animation-delay:.15s;}
+.typing span:nth-child(3){animation-delay:.3s;}
+@keyframes bounce{0%,60%,100%{transform:translateY(0);}30%{transform:translateY(-4px);}}
+.chat-input-area{padding:12px 16px;border-top:1px solid var(--border);flex-shrink:0;}
+.chat-input-row{display:flex;gap:8px;align-items:flex-end;}
+.chat-input{flex:1;background:var(--bg3);border:1px solid var(--border2);border-radius:8px;padding:9px 12px;color:var(--text);font-size:12px;font-family:var(--sans);outline:none;resize:none;max-height:80px;transition:border-color .12s;line-height:1.5;}
+.chat-input:focus{border-color:rgba(127,119,221,.4);}
+.chat-send{width:36px;height:36px;border-radius:8px;border:none;cursor:pointer;background:rgba(127,119,221,.2);color:var(--purple-l);border:1px solid rgba(127,119,221,.3);font-size:16px;display:flex;align-items:center;justify-content:center;transition:background .12s;flex-shrink:0;}
+.chat-send:hover{background:rgba(127,119,221,.35);}
+.quick-cmds{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:8px;}
+.qcmd{padding:3px 9px;border-radius:4px;font-size:9px;font-family:var(--font);cursor:pointer;background:var(--bg3);border:1px solid var(--border);color:var(--text3);transition:all .12s;white-space:nowrap;}
+.qcmd:hover{background:var(--bg4);border-color:var(--border2);color:var(--text2);}
+
+/* SELF-ANNEAL PANEL */
+.anneal-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px;}
+.acard{background:var(--bg2);border:1px solid var(--border);border-radius:9px;padding:13px;}
+.ac-hd{display:flex;align-items:center;gap:7px;margin-bottom:10px;}
+.ac-title{font-size:11px;font-weight:600;}
+.ac-badge{margin-left:auto;font-size:8px;font-family:var(--font);padding:2px 7px;border-radius:3px;}
+.bottleneck-list{display:flex;flex-direction:column;gap:7px;}
+.bn-item{background:var(--bg3);border:1px solid var(--border);border-radius:6px;padding:9px 11px;}
+.bn-top{display:flex;align-items:center;gap:7px;margin-bottom:4px;}
+.bn-node{font-size:10px;font-weight:600;font-family:var(--font);}
+.bn-type{font-size:8px;font-family:var(--font);padding:1px 6px;border-radius:3px;}
+.bt-score{background:rgba(226,75,74,.1);color:var(--red);border:1px solid rgba(226,75,74,.2);}
+.bt-latency{background:rgba(239,159,39,.1);color:var(--amber);border:1px solid rgba(239,159,39,.2);}
+.bt-model{background:rgba(127,119,221,.1);color:var(--purple-l);border:1px solid rgba(127,119,221,.2);}
+.bt-budget{background:rgba(239,159,39,.1);color:var(--amber);border:1px solid rgba(239,159,39,.2);}
+.bt-ok{background:rgba(29,158,117,.1);color:var(--teal-l);border:1px solid rgba(29,158,117,.2);}
+.bn-sev{margin-left:auto;font-size:7px;font-family:var(--font);padding:1px 5px;border-radius:2px;}
+.sev-ok{background:rgba(29,158,117,.1);color:var(--teal-l);}
+.sev-med{background:rgba(239,159,39,.1);color:var(--amber);}
+.sev-high{background:rgba(216,90,48,.1);color:var(--coral-l);}
+.sev-crit{background:rgba(226,75,74,.1);color:var(--red);}
+.bn-desc{font-size:10px;color:var(--text2);margin-bottom:4px;}
+.bn-fix{font-size:10px;color:var(--teal-l);font-family:var(--font);}
+.resolve-btn{font-size:8px;font-family:var(--font);padding:2px 7px;border-radius:3px;cursor:pointer;background:rgba(29,158,117,.1);color:var(--teal-l);border:1px solid rgba(29,158,117,.2);margin-top:5px;transition:background .12s;}
+.resolve-btn:hover{background:rgba(29,158,117,.2);}
+
+/* UPGRADE SUGGESTIONS */
+.upgrade-list{display:flex;flex-direction:column;gap:7px;margin-bottom:16px;}
+.up-item{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:12px;}
+.up-hd{display:flex;align-items:center;gap:8px;margin-bottom:6px;}
+.up-node{font-size:11px;font-weight:600;}
+.up-priority{font-size:8px;font-family:var(--font);padding:1px 6px;border-radius:3px;}
+.up-p1{background:rgba(226,75,74,.1);color:var(--red);border:1px solid rgba(226,75,74,.2);}
+.up-p2{background:rgba(239,159,39,.1);color:var(--amber);border:1px solid rgba(239,159,39,.2);}
+.up-p3{background:var(--bg3);color:var(--text3);border:1px solid var(--border);}
+.up-desc{font-size:11px;color:var(--text2);margin-bottom:6px;}
+.up-cmd{font-family:var(--font);font-size:10px;color:var(--teal-l);background:var(--bg3);padding:5px 8px;border-radius:4px;margin-top:4px;}
+
+/* AGENT PACK PANEL */
+.agent-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.ag-card{background:var(--bg2);border:1px solid var(--border);border-radius:9px;padding:13px;cursor:pointer;transition:border-color .12s;}
+.ag-card:hover{border-color:var(--border2);}
+.ag-card.sel{border-color:rgba(127,119,221,.4);background:rgba(127,119,221,.04);}
+.ag-hd{display:flex;align-items:center;gap:8px;margin-bottom:8px;}
+.ag-persona{font-size:12px;}
+.ag-name{font-size:11px;font-weight:600;}
+.ag-model{font-size:8px;font-family:var(--font);padding:2px 7px;border-radius:3px;margin-left:auto;}
+.ag-tools{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:7px;}
+.ag-tool{font-size:8px;font-family:var(--font);padding:1px 6px;border-radius:3px;background:var(--bg3);color:var(--text3);border:1px solid var(--border);}
+.ag-policy-allow{font-size:9px;color:var(--teal-l);}
+.ag-policy-deny{font-size:9px;color:var(--red);}
+.ag-cc{font-size:9px;color:var(--text3);margin-top:5px;font-family:var(--font);}
+
+/* RIGHT PANEL */
+.right-col{border-left:1px solid var(--border);display:flex;flex-direction:column;overflow:hidden;}
+.rp-tabs{display:flex;border-bottom:1px solid var(--border);flex-shrink:0;}
+.rp-tab{flex:1;padding:8px;font-size:10px;text-align:center;cursor:pointer;color:var(--text3);border-bottom:2px solid transparent;transition:all .12s;}
+.rp-tab:hover{color:var(--text2);}
+.rp-tab.on{color:var(--purple-l);border-bottom-color:var(--purple);}
+.rp-panel{display:none;flex:1;overflow-y:auto;padding:12px 14px;}
+.rp-panel.on{display:block;}
+
+/* DEAL DETAIL ENHANCEMENTS */
+.dd-pack-title{font-family:var(--font);font-size:9px;color:var(--purple-l);text-transform:uppercase;letter-spacing:1px;margin-bottom:4px;}
+.dd-name{font-size:16px;font-weight:700;line-height:1.2;margin-bottom:12px;letter-spacing:-0.5px;}
+.dd-sec{margin-bottom:16px;}
+.dd-lbl{font-size:8px;text-transform:uppercase;letter-spacing:1px;color:var(--text3);margin-bottom:6px;font-weight:600;font-family:var(--font);}
+.dd-val{font-size:11px;color:var(--text2);line-height:1.5;}
+.dd-num{font-size:18px;font-weight:700;font-family:var(--font);}
+
+/* MEAT GRINDER STYLE */
+.grinder-card{background:rgba(127,119,221,0.05);border:1px solid rgba(127,119,221,0.15);border-radius:8px;padding:12px;margin-bottom:16px;}
+.grinder-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+.grinder-item{display:flex;flex-direction:column;}
+.grinder-lbl{font-size:7px;color:var(--text3);text-transform:uppercase;font-family:var(--font);letter-spacing:0.5px;}
+.grinder-val{font-family:var(--font);font-size:10px;font-weight:600;color:var(--purple-l);}
+
+.dd-story-sec{border-left:2px solid var(--purple-d);padding-left:12px;margin-bottom:16px;}
+.dd-story-hd{font-size:10px;font-weight:700;color:var(--text);margin-bottom:4px;display:flex;align-items:center;gap:6px;text-transform:uppercase;letter-spacing:0.5px;}
+
+.mom-test{background:rgba(29,158,117,0.04);border:1px dashed rgba(29,158,117,0.2);border-radius:6px;padding:10px;font-size:11px;color:var(--teal-l);font-style:italic;line-height:1.4;}
+
+.fin-row{display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid var(--border);font-size:11px;}
+.fin-row:last-child{border:none;}
+.edit-deal{width:100%;margin-top:10px;padding:8px;border-radius:7px;border:none;cursor:pointer;background:rgba(127,119,221,.15);color:var(--purple-l);border:1px solid rgba(127,119,221,.28);font-size:11px;font-weight:600;font-family:var(--font);transition:all .12s;}
+.edit-deal:hover{background:rgba(127,119,221,.25);color:var(--text);}
+
+/* AUTHORIZATION BUTTONS */
+.auth-btns{display:flex;gap:10px;margin-top:12px;}
+.btn-go{flex:1;padding:10px;background:rgba(29,158,117,0.15);border:1px solid rgba(29,158,117,0.3);color:var(--teal-l);border-radius:6px;cursor:pointer;font-weight:700;font-family:var(--font);transition:all .12s;}
+.btn-go:hover{background:rgba(29,158,117,0.25);color:#fff;box-shadow:0 0 12px rgba(29,158,117,0.2);}
+.btn-nogo{flex:1;padding:10px;background:rgba(226,75,74,0.1);border:1px solid rgba(226,75,74,0.25);color:var(--red);border-radius:6px;cursor:pointer;font-weight:700;font-family:var(--font);transition:all .12s;}
+.btn-nogo:hover{background:rgba(226,75,74,0.2);color:#fff;}
+
+/* PORTFOLIO SCREEN */
+.portfolio-col{display:flex;flex-direction:column;gap:10px;background:var(--bg);border-radius:10px;border:1px solid var(--border);overflow:hidden;}
+.pc-hd{padding:10px 14px;background:var(--bg2);border-bottom:1px solid var(--border);font-size:9px;font-weight:700;font-family:var(--font);letter-spacing:1px;color:var(--text3);display:flex;align-items:center;gap:8px;}
+.pc-list{flex:1;padding:10px;overflow-y:auto;display:flex;flex-direction:column;gap:8px;}
+.pc-card{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:10px;cursor:pointer;transition:all .12s;}
+.pc-card:hover{border-color:var(--border3);background:var(--bg3);}
+.pc-name{font-size:11px;font-weight:600;margin-bottom:4px;color:var(--text);}
+.pc-meta{font-size:9px;color:var(--text3);font-family:var(--font);}
+
+.method-item{display:flex;align-items:center;gap:10px;font-size:11px;color:var(--text2);}
+.method-item b{color:var(--text);font-weight:600;}
+
+/* MIRA SCORES */
+.score-row{background:var(--bg2);border:1px solid var(--border);border-radius:7px;padding:10px 12px;margin-bottom:7px;}
+.sr-top{display:flex;align-items:center;gap:7px;margin-bottom:5px;}
+.sr-node{font-size:10px;font-weight:600;font-family:var(--font);}
+.sr-model{font-size:8px;color:var(--text3);font-family:var(--font);}
+.sr-dims{display:flex;gap:12px;}
+.sr-d{font-size:10px;}
+.sr-d span{font-family:var(--font);font-size:10px;}
+.sr-bar{height:2px;border-radius:1px;background:var(--bg3);margin:3px 0 6px;}
+.sr-fill{height:100%;border-radius:1px;background:var(--purple);}
+
+/* SCROLLBAR */
+::-webkit-scrollbar{width:3px;height:3px;}
+::-webkit-scrollbar-track{background:transparent;}
+::-webkit-scrollbar-thumb{background:var(--border2);border-radius:2px;}
+</style>
+</head>
+<body>
+
+<!-- TOPBAR -->
+<div class="topbar">
+  <div class="logo">SO</div>
+  <div>
+    <div class="tb-title">Shadow Ops C&amp;C — Command Centre</div>
+    <div class="tb-sub">Weave v4.0 · Hybrid Model · £0 Cost</div>
+  </div>
+  <div class="tb-right">
+    <span class="tpill tp-build">BUILD: hybrid</span>
+    <span class="tpill tp-invoke">INVOKE: hybrid</span>
+    <span class="tpill tp-mira" id="dmScorePill">QWEN3:8B + Q2.5-CODER</span>
+    <span class="tpill" id="modelIndicator" style="background:rgba(127,119,221,.13);border:1px solid rgba(127,119,221,.28);color:var(--purple-l);">⚡</span>
+    <span class="tpill tp-status" id="sysStatus">● ACTIVE</span>
+  </div>
+</div>
+
+<div class="shell">
+
+<!-- LEFT SIDEBAR -->
+<div class="sidebar">
+  <div class="sb-scroll">
+    <div class="nav-grp">
+      <div class="ng-label">Dashboards</div>
+      <div class="nitem on" onclick="goTab(this,&#39;revenue&#39;)"><div class="ni-dot d-ok">£</div><div class="ni-name">Revenue &amp; P&amp;L</div><div class="ni-badge">9 deals</div></div>
+      <div class="nitem" onclick="goTab(this,&#39;gemini&#39;)"><div class="ni-dot d-run">AI</div><div class="ni-name">Gemini CLI Chat</div><div class="ni-badge">live</div></div>
+      <div class="nitem" onclick="goTab(this,&#39;anneal&#39;)"><div class="ni-dot d-warn" id="annealDot">⚡</div><div class="ni-name">Self-Anneal</div><div class="ni-badge" id="annealBadge">2 warns</div></div>
+      <div class="nitem" onclick="goTab(this,&#39;agents&#39;)"><div class="ni-dot d-pend">8</div><div class="ni-name">Agent Pack</div><div class="ni-badge">C&amp;C grounded</div></div>
+      <div class="nitem" onclick="goTab(this,&#39;portfolio&#39;)"><div class="ni-dot d-run">P</div><div class="ni-name">Portfolio</div><div class="ni-badge">LIFECYCLE</div></div>
+      <div class="nitem" onclick="goTab(this,&#39;methodology&#39;)"><div class="ni-dot d-ok">M</div><div class="ni-name">Methodology</div><div class="ni-badge">PAINFUL</div></div>
+    </div>
+    <div class="nav-grp">
+      <div class="ng-label">Pipeline</div>
+      <div class="nitem" onclick="goTab(this,&#39;graph&#39;)"><div class="ni-dot d-run">▶</div><div class="ni-name">Graph Inspector</div><div class="ni-badge">DAG</div></div>
+      <div class="nitem" onclick="goTab(this,&#39;lineage&#39;)"><div class="ni-dot d-ok">LG</div><div class="ni-name">Lineage Chain</div><div class="ni-badge">MIRA</div></div>
+    </div>
+  </div>
+  <!-- SELF-ANNEAL STATUS -->
+  <div class="anneal-box">
+    <div class="ab-hd">Watchdog · Live</div>
+    <div class="ab-row"><div class="ab-dot dot-ok"></div><div class="ab-name">pain-sentry</div><div class="ab-fix">dm:0.91</div></div>
+    <div class="ab-row"><div class="ab-dot dot-ok"></div><div class="ab-name">pain-scorer</div><div class="ab-fix">dm:0.88</div></div>
+    <div class="ab-row"><div class="ab-dot dot-warn"></div><div class="ab-name">arch-synth</div><div class="ab-fix">latency↑</div></div>
+    <div class="ab-row"><div class="ab-dot dot-warn"></div><div class="ab-name">hostile-ground</div><div class="ab-fix">dm:0.64</div></div>
+    <div class="ab-row"><div class="ab-dot dot-ok"></div><div class="ab-name">opencode-build</div><div class="ab-fix">dm:0.85</div></div>
+  </div>
+</div>
+
+<!-- CENTRE CONTENT -->
+<div class="centre">
+  <div class="tabs">
+    <div class="tab" id="ttab-revenue" onclick="setTab(&#39;revenue&#39;,this)">Revenue &amp; P&amp;L</div>
+    <div class="tab on" id="ttab-gemini" onclick="setTab(&#39;gemini&#39;,this)">Gemini CLI Chat</div>
+    <div class="tab" id="ttab-anneal" onclick="setTab(&#39;anneal&#39;,this)">Self-Anneal Monitor</div>
+    <div class="tab" id="ttab-agents" onclick="setTab(&#39;agents&#39;,this)">Agent Pack</div>
+    <div class="tab" id="ttab-graph" onclick="setTab(&#39;graph&#39;,this)">Graph</div>
+    <div class="tab" id="ttab-lineage" onclick="setTab(&#39;lineage&#39;,this)">Lineage</div>
+    <div class="tab" id="ttab-portfolio" onclick="setTab(&#39;portfolio&#39;,this)">Portfolio</div>
+    <div class="tab" id="ttab-methodology" onclick="setTab(&#39;methodology&#39;,this)">Methodology</div>
+  </div>
+  <div class="panels">
+
+    <!-- ══════════════ REVENUE TAB ══════════════ -->
+    <div class="panel" id="panel-revenue">
+
+      <!-- KPI STRIP -->
+      <div class="kpi-strip">
+        <div class="kpi">
+          <div class="kpi-lbl">Total MRR</div>
+          <div class="kpi-val" style="color:var(--teal-l)" id="kpiMrr">£0</div>
+          <div class="kpi-sub" id="kpiMrrSub">0 active deals</div>
+          <div class="kpi-trend trend-up" id="kpiMrrTrend">↑ £0 this month</div>
+        </div>
+        <div class="kpi">
+          <div class="kpi-lbl">Total Revenue</div>
+          <div class="kpi-val" style="color:var(--amber)" id="kpiRev">£0</div>
+          <div class="kpi-sub">all time</div>
+          <div class="kpi-trend" id="kpiRevTrend" style="color:var(--text3)">—</div>
+        </div>
+        <div class="kpi">
+          <div class="kpi-lbl">Total Profit</div>
+          <div class="kpi-val" id="kpiProfit" style="color: var(--red);">£0.31</div>
+          <div class="kpi-sub" id="kpiProfitSub">rev − all costs</div>
+          <div class="kpi-trend" id="kpiRoi" style="color:var(--text3)">ROI: -100%</div>
+        </div>
+        <div class="kpi">
+          <div class="kpi-lbl">Pipeline Value</div>
+          <div class="kpi-val" style="color:var(--purple-l)" id="kpiPipeline">£1,993.00</div>
+          <div class="kpi-sub">target MRR</div>
+          <div class="kpi-trend" id="kpiDeals" style="color:var(--text3)">8 deals tracked</div>
+        </div>
+      </div>
+
+      <!-- MINI CHARTS -->
+      <div class="chart-grid">
+        <div class="chart-card">
+          <div class="cc-title">MRR by Deal</div>
+          <div class="bar-chart" id="mrrChart">
+    <div class="bc-row">
+      <span class="bc-label" title="LOGISTICS FREIGHT STRATEGY FIX">LOGISTICS FREIGH…</span>
+      <div class="bc-track"><div class="bc-fill" style="width:100%;background:var(--teal)"></div></div>
+      <span class="bc-val" style="color:var(--teal-l)">£750.00</span>
+    </div>
+    <div class="bc-row">
+      <span class="bc-label" title="GDPR Friction Zero Shield">GDPR Friction Ze…</span>
+      <div class="bc-track"><div class="bc-fill" style="width:40%;background:var(--teal)"></div></div>
+      <span class="bc-val" style="color:var(--teal-l)">£299.00</span>
+    </div>
+    <div class="bc-row">
+      <span class="bc-label" title="Contract Clause Interrogator">Contract Clause …</span>
+      <div class="bc-track"><div class="bc-fill" style="width:20%;background:var(--teal)"></div></div>
+      <span class="bc-val" style="color:var(--teal-l)">£149.00</span>
+    </div>
+    <div class="bc-row">
+      <span class="bc-label" title="Expiry First Stock Sentry">Expiry First Sto…</span>
+      <div class="bc-track"><div class="bc-fill" style="width:27%;background:var(--teal)"></div></div>
+      <span class="bc-val" style="color:var(--teal-l)">£199.00</span>
+    </div>
+    <div class="bc-row">
+      <span class="bc-label" title="Ugly Glue CRM Simplifier">Ugly Glue CRM Si…</span>
+      <div class="bc-track"><div class="bc-fill" style="width:13%;background:var(--teal)"></div></div>
+      <span class="bc-val" style="color:var(--teal-l)">£99.00</span>
+    </div>
+    <div class="bc-row">
+      <span class="bc-label" title="Manual Ledger Audit Auto">Manual Ledger Au…</span>
+      <div class="bc-track"><div class="bc-fill" style="width:33%;background:var(--teal)"></div></div>
+      <span class="bc-val" style="color:var(--teal-l)">£249.00</span>
+    </div>
+    <div class="bc-row">
+      <span class="bc-label" title="Last Mile Warehouse Sync">Last Mile Wareho…</span>
+      <div class="bc-track"><div class="bc-fill" style="width:20%;background:var(--teal)"></div></div>
+      <span class="bc-val" style="color:var(--teal-l)">£149.00</span>
+    </div>
+    <div class="bc-row">
+      <span class="bc-label" title="Property Portal Trust Shield">Property Portal …</span>
+      <div class="bc-track"><div class="bc-fill" style="width:13%;background:var(--teal)"></div></div>
+      <span class="bc-val" style="color:var(--teal-l)">£99.00</span>
+    </div></div>
+        </div>
+        <div class="chart-card">
+          <div class="cc-title">Profit by Deal</div>
+          <div class="bar-chart" id="profitChart"><div class="bc-row">
+      <span class="bc-label" title="LOGISTICS FREIGHT STRATEGY FIX">LOGISTICS FREIGH…</span>
+      <div class="bc-track"><div class="bc-fill" style="width:0%;background:var(--text3)"></div></div>
+      <span class="bc-val" style="color:var(--text3)">—</span>
+    </div><div class="bc-row">
+      <span class="bc-label" title="GDPR Friction Zero Shield">GDPR Friction Ze…</span>
+      <div class="bc-track"><div class="bc-fill" style="width:8%;background:var(--red)"></div></div>
+      <span class="bc-val" style="color:var(--red)">−£0.08</span>
+    </div><div class="bc-row">
+      <span class="bc-label" title="Contract Clause Interrogator">Contract Clause …</span>
+      <div class="bc-track"><div class="bc-fill" style="width:10%;background:var(--red)"></div></div>
+      <span class="bc-val" style="color:var(--red)">−£0.10</span>
+    </div><div class="bc-row">
+      <span class="bc-label" title="Expiry First Stock Sentry">Expiry First Sto…</span>
+      <div class="bc-track"><div class="bc-fill" style="width:5%;background:var(--red)"></div></div>
+      <span class="bc-val" style="color:var(--red)">−£0.05</span>
+    </div><div class="bc-row">
+      <span class="bc-label" title="Ugly Glue CRM Simplifier">Ugly Glue CRM Si…</span>
+      <div class="bc-track"><div class="bc-fill" style="width:8%;background:var(--red)"></div></div>
+      <span class="bc-val" style="color:var(--red)">−£0.08</span>
+    </div><div class="bc-row">
+      <span class="bc-label" title="Manual Ledger Audit Auto">Manual Ledger Au…</span>
+      <div class="bc-track"><div class="bc-fill" style="width:0%;background:var(--text3)"></div></div>
+      <span class="bc-val" style="color:var(--text3)">—</span>
+    </div><div class="bc-row">
+      <span class="bc-label" title="Last Mile Warehouse Sync">Last Mile Wareho…</span>
+      <div class="bc-track"><div class="bc-fill" style="width:0%;background:var(--text3)"></div></div>
+      <span class="bc-val" style="color:var(--text3)">—</span>
+    </div><div class="bc-row">
+      <span class="bc-label" title="Property Portal Trust Shield">Property Portal …</span>
+      <div class="bc-track"><div class="bc-fill" style="width:0%;background:var(--text3)"></div></div>
+      <span class="bc-val" style="color:var(--text3)">—</span>
+    </div></div>
+        </div>
+      </div>
+
+      <!-- DEAL TABLE -->
+      <div class="dtbl-wrap">
+        <div class="dtbl-hd">
+          <div class="dtbl-title">Deal Pipeline</div>
+          <div style="display:flex;gap:8px;">
+            <div class="dtbl-action" onclick="showModal()">+ Add Deal</div>
+            <div class="dtbl-action" onclick="exportCSV()">↓ Export</div>
+          </div>
+        </div>
+        <div style="overflow-x:auto;">
+          <table id="dealTable">
+            <thead>
+              <tr>
+                <th>Project</th><th>Status</th><th>MRR Target</th><th>MRR Actual</th>
+                <th>Revenue</th><th>Cost</th><th>Profit</th><th>ROI</th><th>S-Rank</th>
+              </tr>
+            </thead>
+            <tbody id="dealTbody"><tr>
+      <td><span class="deal-name" onclick="selectDeal(&#39;d0&#39;)">LOGISTICS FREIGHT STRATEGY FIX</span></td>
+      <td><span class="stat-badge sb-prospect">READY FOR AUTHORIZATION</span></td>
+      <td class="num" style="color:var(--text2)">£750.00</td>
+      <td class="num" style="color:var(--text3)">£0</td>
+      <td class="num">£0</td>
+      <td class="num" style="color:var(--amber)">£0</td>
+      <td class="num profit-zero">—</td>
+      <td class="num" style="color:var(--text2)">—</td>
+      <td class="num" style="color:var(--amber)">99</td>
+    </tr><tr>
+      <td><span class="deal-name" onclick="selectDeal(&#39;d1&#39;)">GDPR Friction Zero Shield</span></td>
+      <td><span class="stat-badge sb-hitl">HITL_PENDING</span></td>
+      <td class="num" style="color:var(--text2)">£299.00</td>
+      <td class="num" style="color:var(--text3)">£0</td>
+      <td class="num">£0</td>
+      <td class="num" style="color:var(--amber)">£0.08</td>
+      <td class="num profit-neg">−£0.08</td>
+      <td class="num" style="color:var(--text2)">-100%</td>
+      <td class="num" style="color:var(--amber)">84</td>
+    </tr><tr>
+      <td><span class="deal-name" onclick="selectDeal(&#39;d2&#39;)">Contract Clause Interrogator</span></td>
+      <td><span class="stat-badge sb-build">BUILD_COMPLETE</span></td>
+      <td class="num" style="color:var(--text2)">£149.00</td>
+      <td class="num" style="color:var(--text3)">£0</td>
+      <td class="num">£0</td>
+      <td class="num" style="color:var(--amber)">£0.10</td>
+      <td class="num profit-neg">−£0.10</td>
+      <td class="num" style="color:var(--text2)">-100%</td>
+      <td class="num" style="color:var(--amber)">90</td>
+    </tr><tr>
+      <td><span class="deal-name" onclick="selectDeal(&#39;d3&#39;)">Expiry First Stock Sentry</span></td>
+      <td><span class="stat-badge sb-arch">ARCH_COMPLETE</span></td>
+      <td class="num" style="color:var(--text2)">£199.00</td>
+      <td class="num" style="color:var(--text3)">£0</td>
+      <td class="num">£0</td>
+      <td class="num" style="color:var(--amber)">£0.05</td>
+      <td class="num profit-neg">−£0.05</td>
+      <td class="num" style="color:var(--text2)">-100%</td>
+      <td class="num" style="color:var(--amber)">81</td>
+    </tr><tr>
+      <td><span class="deal-name" onclick="selectDeal(&#39;d4&#39;)">Ugly Glue CRM Simplifier</span></td>
+      <td><span class="stat-badge sb-arch">ARCH_COMPLETE</span></td>
+      <td class="num" style="color:var(--text2)">£99.00</td>
+      <td class="num" style="color:var(--text3)">£0</td>
+      <td class="num">£0</td>
+      <td class="num" style="color:var(--amber)">£0.08</td>
+      <td class="num profit-neg">−£0.08</td>
+      <td class="num" style="color:var(--text2)">-100%</td>
+      <td class="num" style="color:var(--amber)">75</td>
+    </tr><tr>
+      <td><span class="deal-name" onclick="selectDeal(&#39;d5&#39;)">Manual Ledger Audit Auto</span></td>
+      <td><span class="stat-badge sb-prospect">PROSPECT</span></td>
+      <td class="num" style="color:var(--text2)">£249.00</td>
+      <td class="num" style="color:var(--text3)">£0</td>
+      <td class="num">£0</td>
+      <td class="num" style="color:var(--amber)">£0</td>
+      <td class="num profit-zero">—</td>
+      <td class="num" style="color:var(--text2)">—</td>
+      <td class="num" style="color:var(--amber)">70</td>
+    </tr><tr>
+      <td><span class="deal-name" onclick="selectDeal(&#39;d6&#39;)">Last Mile Warehouse Sync</span></td>
+      <td><span class="stat-badge sb-prospect">PROSPECT</span></td>
+      <td class="num" style="color:var(--text2)">£149.00</td>
+      <td class="num" style="color:var(--text3)">£0</td>
+      <td class="num">£0</td>
+      <td class="num" style="color:var(--amber)">£0</td>
+      <td class="num profit-zero">—</td>
+      <td class="num" style="color:var(--text2)">—</td>
+      <td class="num" style="color:var(--amber)">68</td>
+    </tr><tr>
+      <td><span class="deal-name" onclick="selectDeal(&#39;d7&#39;)">Property Portal Trust Shield</span></td>
+      <td><span class="stat-badge sb-prospect">PROSPECT</span></td>
+      <td class="num" style="color:var(--text2)">£99.00</td>
+      <td class="num" style="color:var(--text3)">£0</td>
+      <td class="num">£0</td>
+      <td class="num" style="color:var(--amber)">£0</td>
+      <td class="num profit-zero">—</td>
+      <td class="num" style="color:var(--text2)">—</td>
+      <td class="num" style="color:var(--amber)">65</td>
+    </tr></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════════ GEMINI CLI CHAT ══════════════ -->
+    <div class="panel on" id="panel-gemini">
+      <div class="chat-wrap" style="height:100%;">
+        <div class="chat-hd">
+          <div>
+            <div class="chat-title">Gemini CLI — Shadow Ops Query Interface</div>
+            <div class="chat-model">Model: gemini-2.5-pro · Context: full solution + SQLite + lineage.json</div>
+          </div>
+          <div class="context-pills">
+            <span class="cpill on" id="ctx-revenue" onclick="toggleCtx(this,&#39;revenue&#39;)">Revenue</span>
+            <span class="cpill on" id="ctx-graph" onclick="toggleCtx(this,&#39;graph&#39;)">Graph</span>
+            <span class="cpill on" id="ctx-lineage" onclick="toggleCtx(this,&#39;lineage&#39;)">Lineage</span>
+            <span class="cpill on" id="ctx-agents" onclick="toggleCtx(this,&#39;agents&#39;)">Agents</span>
+            <span class="cpill on" id="ctx-bottleneck" onclick="toggleCtx(this,&#39;bottleneck&#39;)">Bottlenecks</span>
+          </div>
+        </div>
+        <div class="chat-msgs" id="chatMsgs">
+          <div class="msg msg-agent">
+            <div class="msg-label">GEMINI CLI · MASTER ARCHITECT</div>
+            <div class="msg-bubble mb-system">Shadow Ops C&amp;C interface initialised. I have full context over your solution: graph_design.json, lineage.json, deals table, bottleneck log, and all 8 agent SKILL.md files. Ask me anything — query revenue, analyse bottlenecks, suggest model upgrades, or re-architect a node. Type or use a quick command below.</div>
+          </div>
+        </div>
+        <div class="chat-input-area">
+          <div class="quick-cmds" id="quickCmds">
+            <span class="qcmd" onclick="sendQuick(this)">summarise revenue P&amp;L</span>
+            <span class="qcmd" onclick="sendQuick(this)">which deal has highest ROI?</span>
+            <span class="qcmd" onclick="sendQuick(this)">what bottlenecks need fixing?</span>
+            <span class="qcmd" onclick="sendQuick(this)">suggest Ollama model upgrades</span>
+            <span class="qcmd" onclick="sendQuick(this)">analyse hostile-grounding dm_score</span>
+            <span class="qcmd" onclick="sendQuick(this)">re-architect arch-synthesiser</span>
+            <span class="qcmd" onclick="sendQuick(this)">show full pipeline status</span>
+            <span class="qcmd" onclick="sendQuick(this)">what would S-rank Contract Interrogator?</span>
+          </div>
+          <div class="chat-input-row">
+            <textarea class="chat-input" id="chatInput" rows="1" placeholder="Query the full Shadow Ops solution..." onkeydown="chatKey(event)"></textarea>
+            <button class="chat-send" onclick="sendChat()">↑</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════════ SELF-ANNEAL ══════════════ -->
+    <div class="panel" id="panel-anneal">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;">
+        <div style="font-size:10px;letter-spacing:1px;text-transform:uppercase;color:var(--text3);font-family:var(--font);">Self-Anneal Watchdog · Running async, off critical path</div>
+        <div class="dtbl-action" onclick="runWatchdog()">↺ Run Check Now</div>
+      </div>
+
+      <!-- Bottlenecks -->
+      <div style="font-size:11px;font-weight:600;margin-bottom:10px;color:var(--text2);">Detected Bottlenecks</div>
+      <div class="bottleneck-list" id="bottleneckList">
+        <div class="bn-item">
+          <div class="bn-top">
+            <span class="bn-node">hostile-grounding</span>
+            <span class="bn-type bt-score">SCORE_REGRESSION</span>
+            <span class="bn-sev sev-high">HIGH</span>
+          </div>
+          <div class="bn-desc">dm_score.total declined from 0.84 → 0.64 over last 5 runs. MassGen consensus latency also increased.</div>
+          <div class="bn-fix">→ Fix: Gemini prompt seed needs adversarial framing refresh. Inject updated competitor data into grounding context.</div>
+          <button class="resolve-btn" onclick="resolveBottleneck(this)">Auto-Anneal</button>
+        </div>
+        <div class="bn-item">
+          <div class="bn-top">
+            <span class="bn-node">arch-synthesiser</span>
+            <span class="bn-type bt-latency">LATENCY_SPIKE</span>
+            <span class="bn-sev sev-med">MEDIUM</span>
+          </div>
+          <div class="bn-desc">Average task_duration 42s vs KPI max 30s. PathRAG references not re-indexed in 34 days — stale tool landscape.</div>
+          <div class="bn-fix">→ Fix: Re-index skills/arch-synthesiser/references/ via pathrag index. Should restore relevance_distance quality.</div>
+          <button class="resolve-btn" onclick="resolveBottleneck(this)">Auto-Anneal</button>
+        </div>
+        <div class="bn-item">
+          <div class="bn-top">
+            <span class="bn-node">opencode-builder</span>
+            <span class="bn-type bt-model">MODEL_CAPACITY</span>
+            <span class="bn-sev sev-med">MEDIUM</span>
+          </div>
+          <div class="bn-desc">Code generation quality borderline on complex Node.js tasks. Current model (opencode:ollama default) struggling with async error handling.</div>
+          <div class="bn-fix">→ Fix: Upgrade Invoke Model for this node to deepseek-coder:6.7b. Minimal cost increase, significant quality gain.</div>
+          <button class="resolve-btn" onclick="resolveBottleneck(this)">Auto-Anneal</button>
+        </div>
+      </div>
+
+      <!-- Upgrade Suggestions -->
+      <div style="font-size:11px;font-weight:600;margin:18px 0 10px;color:var(--text2);">Model Upgrade Suggestions</div>
+      <div class="upgrade-list" id="upgradeList">
+        <div class="up-item">
+          <div class="up-hd">
+            <span class="up-node">opencode-builder</span>
+            <span class="up-priority up-p1">PRIORITY 1</span>
+          </div>
+          <div class="up-desc">Current model producing borderline code for async tasks. deepseek-coder:6.7b is specifically trained on code and handles error handling patterns significantly better.</div>
+          <div class="up-cmd">ollama pull deepseek-coder:6.7b</div>
+          <div class="up-cmd" style="margin-top:4px;">Update graph_design.json: "invoke_model": "deepseek-coder:6.7b" for opencode_builder node</div>
+        </div>
+        <div class="up-item">
+          <div class="up-hd">
+            <span class="up-node">pain-scorer</span>
+            <span class="up-priority up-p2">PRIORITY 2</span>
+          </div>
+          <div class="up-desc">Classification latency 12s/signal at high volume. mistral-nemo:12b offers 40% speed improvement with comparable accuracy for structured scoring tasks.</div>
+          <div class="up-cmd">ollama pull mistral-nemo:12b</div>
+          <div class="up-cmd" style="margin-top:4px;">Update graph_design.json: "invoke_model": "mistral-nemo:12b" for pain_scorer node</div>
+        </div>
+        <div class="up-item">
+          <div class="up-hd">
+            <span class="up-node">hostile-grounding</span>
+            <span class="up-priority up-p2">PRIORITY 2</span>
+          </div>
+          <div class="up-desc">Subagent Regulator would benefit from gemma2:27b for deeper regulatory reasoning. Currently on Gemini — consider local fallback for cost reduction on lower-stakes reviews.</div>
+          <div class="up-cmd">ollama pull gemma2:27b</div>
+          <div class="up-cmd" style="margin-top:4px;">Use for regulatory sub-agent when pain_score &lt; 78 (full Gemini for S-Rank only)</div>
+        </div>
+      </div>
+
+      <!-- DM Score Trend -->
+      <div style="font-size:11px;font-weight:600;margin-bottom:10px;color:var(--text2);">DM Score Trend (Last 5 Runs)</div>
+      <div id="dmTrend" style="display:flex;flex-direction:column;gap:6px;"><div class="bn-item"><div class="bn-top"><span class="bn-node">arch-synthesiser</span><span style="font-family:var(--font);font-size:10px;color:var(--amber)">↓ 0.73</span><span class="bn-sev sev-med">WATCH</span></div><div style="display:flex;align-items:flex-end;gap:4px;height:44px;margin-top:8px;"><div style="width:14px;height:34px;background:var(--teal);border-radius:2px;flex-shrink:0;"></div><div style="width:14px;height:32px;background:var(--teal);border-radius:2px;flex-shrink:0;"></div><div style="width:14px;height:32px;background:var(--amber);border-radius:2px;flex-shrink:0;"></div><div style="width:14px;height:30px;background:var(--amber);border-radius:2px;flex-shrink:0;"></div><div style="width:14px;height:29px;background:var(--amber);border-radius:2px;flex-shrink:0;"></div></div></div><div class="bn-item"><div class="bn-top"><span class="bn-node">hostile-grounding</span><span style="font-family:var(--font);font-size:10px;color:var(--red)">↓ 0.64</span><span class="bn-sev sev-high">LOW</span></div><div style="display:flex;align-items:flex-end;gap:4px;height:44px;margin-top:8px;"><div style="width:14px;height:34px;background:var(--teal);border-radius:2px;flex-shrink:0;"></div><div style="width:14px;height:32px;background:var(--teal);border-radius:2px;flex-shrink:0;"></div><div style="width:14px;height:30px;background:var(--amber);border-radius:2px;flex-shrink:0;"></div><div style="width:14px;height:27px;background:var(--red);border-radius:2px;flex-shrink:0;"></div><div style="width:14px;height:26px;background:var(--red);border-radius:2px;flex-shrink:0;"></div></div></div><div class="bn-item"><div class="bn-top"><span class="bn-node">pain-scorer</span><span style="font-family:var(--font);font-size:10px;color:var(--teal-l)">↑ 0.93</span><span class="bn-sev sev-ok">OK</span></div><div style="display:flex;align-items:flex-end;gap:4px;height:44px;margin-top:8px;"><div style="width:14px;height:36px;background:var(--teal);border-radius:2px;flex-shrink:0;"></div><div style="width:14px;height:37px;background:var(--teal);border-radius:2px;flex-shrink:0;"></div><div style="width:14px;height:36px;background:var(--teal);border-radius:2px;flex-shrink:0;"></div><div style="width:14px;height:37px;background:var(--teal);border-radius:2px;flex-shrink:0;"></div><div style="width:14px;height:37px;background:var(--teal);border-radius:2px;flex-shrink:0;"></div></div></div><div class="bn-item"><div class="bn-top"><span class="bn-node">opencode-builder</span><span style="font-family:var(--font);font-size:10px;color:var(--teal-l)">↑ 0.85</span><span class="bn-sev sev-ok">OK</span></div><div style="display:flex;align-items:flex-end;gap:4px;height:44px;margin-top:8px;"><div style="width:14px;height:34px;background:var(--teal);border-radius:2px;flex-shrink:0;"></div><div style="width:14px;height:33px;background:var(--teal);border-radius:2px;flex-shrink:0;"></div><div style="width:14px;height:34px;background:var(--teal);border-radius:2px;flex-shrink:0;"></div><div style="width:14px;height:35px;background:var(--teal);border-radius:2px;flex-shrink:0;"></div><div style="width:14px;height:34px;background:var(--teal);border-radius:2px;flex-shrink:0;"></div></div></div></div>
+    </div>
+
+    <!-- ══════════════ AGENT PACK ══════════════ -->
+    <div class="panel" id="panel-agents">
+      <div style="margin-bottom:14px;font-size:11px;color:var(--text2);">All 8 agents grounded by MIRA Council &amp; Cabal. Click an agent to inspect full NodeTemplate + policy.</div>
+      <div class="agent-grid" id="agentGrid"></div>
+    </div>
+
+    <!-- ══════════════ GRAPH ══════════════ -->
+    <div class="panel" id="panel-graph">
+      <div style="margin-bottom:14px;font-size:10px;color:var(--text3);font-family:var(--font);">graph_design.json · Live topology · Click nodes to inspect</div>
+      <div id="graphNodes" style="display:flex;flex-direction:column;gap:5px;"></div>
+    </div>
+
+    <!-- ══════════════ PORTFOLIO TAB ══════════════ -->
+    <div class="panel" id="panel-portfolio">
+      <div style="display:grid;grid-template-columns:repeat(3, 1fr);gap:15px;height:100%;">
+        <!-- COLUMN: REVIEW PENDING -->
+        <div class="portfolio-col">
+          <div class="pc-hd"><span class="ni-dot d-run" style="width:12px;height:12px;font-size:6px;">●</span> REVIEW PENDING</div>
+          <div id="col-pending" class="pc-list">
+    <div class="pc-card" onclick="selectFsProject(&#39;.brain/pipeline/01_REVIEW_PENDING/FINTECH_KYC_Strategy_Fix.md&#39;)">
+      <div class="pc-name">FINTECH KYC STRATEGY FIX</div>
+      <div class="pc-meta">PAIN: 9.9 · TIER: S-Rank</div>
+      <div style="margin-top:6px;font-size:8px;text-transform:uppercase;color:var(--purple-l);font-weight:700;">PENDING</div>
+    </div>
+    <div class="pc-card" onclick="selectFsProject(&#39;.brain/pipeline/01_REVIEW_PENDING/GDPR_Friction_Zero_Shield.md&#39;)">
+      <div class="pc-name">GDPR_FRICTION_ZERO_SHIELD</div>
+      <div class="pc-meta">PAIN: 9.9 · TIER: S-Rank</div>
+      <div style="margin-top:6px;font-size:8px;text-transform:uppercase;color:var(--purple-l);font-weight:700;">PENDING</div>
+    </div>
+    <div class="pc-card" onclick="selectFsProject(&#39;.brain/pipeline/01_REVIEW_PENDING/Expiry_First_Stock_Sentry.md&#39;)">
+      <div class="pc-name">EXPIRY_FIRST_STOCK_SENTRY</div>
+      <div class="pc-meta">PAIN: 9.9 · TIER: S-Rank</div>
+      <div style="margin-top:6px;font-size:8px;text-transform:uppercase;color:var(--purple-l);font-weight:700;">PENDING</div>
+    </div>
+    <div class="pc-card" onclick="selectFsProject(&#39;.brain/pipeline/01_REVIEW_PENDING/GHOST_KITCHEN_MARGIN_Strategy_Fix.md&#39;)">
+      <div class="pc-name">GHOST KITCHEN MARGIN Strategy Fix</div>
+      <div class="pc-meta">PAIN: 9.9 · TIER: S-Rank</div>
+      <div style="margin-top:6px;font-size:8px;text-transform:uppercase;color:var(--purple-l);font-weight:700;">PENDING</div>
+    </div>
+    <div class="pc-card" onclick="selectFsProject(&#39;.brain/pipeline/01_REVIEW_PENDING/VET_CLINIC_INVENTORY_Strategy_Fix.md&#39;)">
+      <div class="pc-name">VET CLINIC INVENTORY Strategy Fix</div>
+      <div class="pc-meta">PAIN: 9.8 · TIER: N/A</div>
+      <div style="margin-top:6px;font-size:8px;text-transform:uppercase;color:var(--purple-l);font-weight:700;">PENDING</div>
+    </div>
+    <div class="pc-card" onclick="selectFsProject(&#39;.brain/pipeline/01_REVIEW_PENDING/INSURTECH_CLAIMS_Strategy_Fix.md&#39;)">
+      <div class="pc-name">INSURTECH CLAIMS STRATEGY FIX</div>
+      <div class="pc-meta">PAIN: 9.9 · TIER: S-Rank</div>
+      <div style="margin-top:6px;font-size:8px;text-transform:uppercase;color:var(--purple-l);font-weight:700;">PENDING</div>
+    </div>
+    <div class="pc-card" onclick="selectFsProject(&#39;.brain/pipeline/01_REVIEW_PENDING/Predictive_Runway_Monitor.md&#39;)">
+      <div class="pc-name">PREDICTIVE_RUNWAY_MONITOR</div>
+      <div class="pc-meta">PAIN: 9.9 · TIER: S-Rank</div>
+      <div style="margin-top:6px;font-size:8px;text-transform:uppercase;color:var(--purple-l);font-weight:700;">PENDING</div>
+    </div>
+    <div class="pc-card" onclick="selectFsProject(&#39;.brain/pipeline/01_REVIEW_PENDING/ADHD_Dopamine_Task_Orchestrator.md&#39;)">
+      <div class="pc-name">ADHD_DOPAMINE_TASK_ORCHESTRATOR</div>
+      <div class="pc-meta">PAIN: 9.9 · TIER: S-Rank</div>
+      <div style="margin-top:6px;font-size:8px;text-transform:uppercase;color:var(--purple-l);font-weight:700;">PENDING</div>
+    </div>
+    <div class="pc-card" onclick="selectFsProject(&#39;.brain/pipeline/01_REVIEW_PENDING/AI_SAFETY_COMPLIANCE_Strategy_Fix.md&#39;)">
+      <div class="pc-name">AI SAFETY COMPLIANCE Strategy Fix</div>
+      <div class="pc-meta">PAIN: 9.8 · TIER: N/A</div>
+      <div style="margin-top:6px;font-size:8px;text-transform:uppercase;color:var(--purple-l);font-weight:700;">PENDING</div>
+    </div>
+    <div class="pc-card" onclick="selectFsProject(&#39;.brain/pipeline/01_REVIEW_PENDING/AI_SAFETY_PII_Strategy_Fix.md&#39;)">
+      <div class="pc-name">AI SAFETY PII Strategy Fix</div>
+      <div class="pc-meta">PAIN: 9.9 · TIER: S-Rank</div>
+      <div style="margin-top:6px;font-size:8px;text-transform:uppercase;color:var(--purple-l);font-weight:700;">PENDING</div>
+    </div>
+    <div class="pc-card" onclick="selectFsProject(&#39;.brain/pipeline/01_REVIEW_PENDING/AI_Safety_PII_Guardrail.md&#39;)">
+      <div class="pc-name">AI_SAFETY_PII_GUARDRAIL</div>
+      <div class="pc-meta">PAIN: 9.9 · TIER: S-Rank</div>
+      <div style="margin-top:6px;font-size:8px;text-transform:uppercase;color:var(--purple-l);font-weight:700;">PENDING</div>
+    </div>
+    <div class="pc-card" onclick="selectFsProject(&#39;.brain/pipeline/01_REVIEW_PENDING/Dynamic_Margin_Protector.md&#39;)">
+      <div class="pc-name">DYNAMIC_MARGIN_PROTECTOR</div>
+      <div class="pc-meta">PAIN: 9.9 · TIER: S-Rank</div>
+      <div style="margin-top:6px;font-size:8px;text-transform:uppercase;color:var(--purple-l);font-weight:700;">PENDING</div>
+    </div>
+    <div class="pc-card" onclick="selectFsProject(&#39;.brain/pipeline/01_REVIEW_PENDING/Ghost_Kitchen_Inventory_Sync.md&#39;)">
+      <div class="pc-name">GHOST_KITCHEN_INVENTORY_SYNC</div>
+      <div class="pc-meta">PAIN: 9.9 · TIER: S-Rank</div>
+      <div style="margin-top:6px;font-size:8px;text-transform:uppercase;color:var(--purple-l);font-weight:700;">PENDING</div>
+    </div>
+    <div class="pc-card" onclick="selectFsProject(&#39;.brain/pipeline/01_REVIEW_PENDING/GHOST_KITCHEN_DELIVERY_Strategy_Fix.md&#39;)">
+      <div class="pc-name">GHOST KITCHEN DELIVERY Strategy Fix</div>
+      <div class="pc-meta">PAIN: 9.8 · TIER: N/A</div>
+      <div style="margin-top:6px;font-size:8px;text-transform:uppercase;color:var(--purple-l);font-weight:700;">PENDING</div>
+    </div>
+    <div class="pc-card" onclick="selectFsProject(&#39;.brain/pipeline/01_REVIEW_PENDING/FRACTIONAL_CFO_PREDICTIVE_Strategy_Fix.md&#39;)">
+      <div class="pc-name">FRACTIONAL CFO PREDICTIVE Strategy Fix</div>
+      <div class="pc-meta">PAIN: 9.9 · TIER: S-Rank</div>
+      <div style="margin-top:6px;font-size:8px;text-transform:uppercase;color:var(--purple-l);font-weight:700;">PENDING</div>
+    </div>
+    <div class="pc-card" onclick="selectFsProject(&#39;.brain/pipeline/01_REVIEW_PENDING/Zappier_Spaghetti_Untangler.md&#39;)">
+      <div class="pc-name">ZAPPIER_SPAGHETTI_UNTANGLER</div>
+      <div class="pc-meta">PAIN: 9.9 · TIER: S-Rank</div>
+      <div style="margin-top:6px;font-size:8px;text-transform:uppercase;color:var(--purple-l);font-weight:700;">PENDING</div>
+    </div>
+    <div class="pc-card" onclick="selectFsProject(&#39;.brain/pipeline/01_REVIEW_PENDING/FRACTIONAL_CFO_REPORTING_Strategy_Fix.md&#39;)">
+      <div class="pc-name">FRACTIONAL CFO REPORTING Strategy Fix</div>
+      <div class="pc-meta">PAIN: 9.8 · TIER: N/A</div>
+      <div style="margin-top:6px;font-size:8px;text-transform:uppercase;color:var(--purple-l);font-weight:700;">PENDING</div>
+    </div></div>
+        </div>
+        <!-- COLUMN: GO AUTHORISED -->
+        <div class="portfolio-col">
+          <div class="pc-hd"><span class="ni-dot d-ok" style="width:12px;height:12px;font-size:6px;">●</span> GO AUTHORISED</div>
+          <div id="col-authorized" class="pc-list">
+    <div class="pc-card" onclick="selectFsProject(&#39;.brain/pipeline/02_GO_AUTHORIZED/SME_Payroll_Compliance_Fix.md&#39;)">
+      <div class="pc-name">SME_PAYROLL_COMPLIANCE_FIX</div>
+      <div class="pc-meta">PAIN: 9.9 · TIER: S-Rank</div>
+      <div style="margin-top:6px;font-size:8px;text-transform:uppercase;color:var(--purple-l);font-weight:700;">AUTHORIZED</div>
+    </div>
+    <div class="pc-card" onclick="selectFsProject(&#39;.brain/pipeline/02_GO_AUTHORIZED/Contract_Clause_Interrogator.md&#39;)">
+      <div class="pc-name">CONTRACT_CLAUSE_INTERROGATOR</div>
+      <div class="pc-meta">PAIN: 9.9 · TIER: S-Rank</div>
+      <div style="margin-top:6px;font-size:8px;text-transform:uppercase;color:var(--purple-l);font-weight:700;">AUTHORIZED</div>
+    </div>
+    <div class="pc-card" onclick="selectFsProject(&#39;.brain/pipeline/02_GO_AUTHORIZED/Last_Mile_Warehouse_Sync.md&#39;)">
+      <div class="pc-name">LAST_MILE_WAREHOUSE_SYNC</div>
+      <div class="pc-meta">PAIN: 9.9 · TIER: S-Rank</div>
+      <div style="margin-top:6px;font-size:8px;text-transform:uppercase;color:var(--purple-l);font-weight:700;">AUTHORIZED</div>
+    </div>
+    <div class="pc-card" onclick="selectFsProject(&#39;.brain/pipeline/02_GO_AUTHORIZED/PROPTECH_YIELD_Strategy_Fix.md&#39;)">
+      <div class="pc-name">PROPTECH YIELD STRATEGY FIX</div>
+      <div class="pc-meta">PAIN: 9.9 · TIER: S-Rank</div>
+      <div style="margin-top:6px;font-size:8px;text-transform:uppercase;color:var(--purple-l);font-weight:700;">AUTHORIZED</div>
+    </div>
+    <div class="pc-card" onclick="selectFsProject(&#39;.brain/pipeline/02_GO_AUTHORIZED/Property_Portal_Trust_Shield.md&#39;)">
+      <div class="pc-name">PROPERTY_PORTAL_TRUST_SHIELD</div>
+      <div class="pc-meta">PAIN: 9.9 · TIER: S-Rank</div>
+      <div style="margin-top:6px;font-size:8px;text-transform:uppercase;color:var(--purple-l);font-weight:700;">AUTHORIZED</div>
+    </div>
+    <div class="pc-card" onclick="selectFsProject(&#39;.brain/pipeline/02_GO_AUTHORIZED/LOGISTICS_FREIGHT_Strategy_Fix.md&#39;)">
+      <div class="pc-name">LOGISTICS FREIGHT STRATEGY FIX</div>
+      <div class="pc-meta">PAIN: 9.9 · TIER: S-Rank</div>
+      <div style="margin-top:6px;font-size:8px;text-transform:uppercase;color:var(--purple-l);font-weight:700;">AUTHORIZED</div>
+    </div>
+    <div class="pc-card" onclick="selectFsProject(&#39;.brain/pipeline/02_GO_AUTHORIZED/Ugly_Glue_CRM_Simplifier.md&#39;)">
+      <div class="pc-name">UGLY_GLUE_CRM_SIMPLIFIER</div>
+      <div class="pc-meta">PAIN: 9.9 · TIER: S-Rank</div>
+      <div style="margin-top:6px;font-size:8px;text-transform:uppercase;color:var(--purple-l);font-weight:700;">AUTHORIZED</div>
+    </div>
+    <div class="pc-card" onclick="selectFsProject(&#39;.brain/pipeline/02_GO_AUTHORIZED/Manual_Ledger_Audit_Automator.md&#39;)">
+      <div class="pc-name">MANUAL_LEDGER_AUDIT_AUTOMATOR</div>
+      <div class="pc-meta">PAIN: 9.9 · TIER: S-Rank</div>
+      <div style="margin-top:6px;font-size:8px;text-transform:uppercase;color:var(--purple-l);font-weight:700;">AUTHORIZED</div>
+    </div></div>
+        </div>
+        <!-- COLUMN: KILLED -->
+        <div class="portfolio-col">
+          <div class="pc-hd"><span class="ni-dot d-crit" style="width:12px;height:12px;font-size:6px;">●</span> KILLED / CHURNED</div>
+          <div id="col-killed" class="pc-list"><div style="color:var(--text3);font-size:10px;text-align:center;padding:20px;">Zero churn.</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════════ METHODOLOGY TAB ══════════════ -->
+    <div class="panel" id="panel-methodology">
+      <div style="margin-bottom:20px;">
+        <div style="font-size:18px;font-weight:700;color:var(--purple-l);margin-bottom:8px;">The Sovereign Growth Model</div>
+        <div style="font-size:12px;color:var(--text2);line-height:1.5;">Foundational heuristics for Shadow Ops. Natively grounded in MIRA Council logic.</div>
+      </div>
+
+      <!-- ICON KEYS & MEANINGS -->
+      <div style="font-size:11px;font-weight:700;margin-bottom:10px;color:var(--text);letter-spacing:0.5px;">🗝️ ICON KEYS &amp; MEANINGS</div>
+      <div class="grinder-card" style="margin-bottom:20px;background:rgba(255,255,255,0.02);">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+          <div class="method-item">
+            <span class="ni-dot d-ok">£</span> <b>Revenue Hub:</b> Financial P&amp;L and ROI tracking.
+          </div>
+          <div class="method-item">
+            <span class="ni-dot d-run">AI</span> <b>Gemini CLI:</b> Real-time architectural query engine.
+          </div>
+          <div class="method-item">
+            <span class="ni-dot d-warn">⚡</span> <b>Self-Anneal:</b> Bottleneck detection &amp; auto-fixer.
+          </div>
+          <div class="method-item">
+            <span class="ni-dot d-run">▶</span> <b>Graph:</b> Live MASFactory node topology.
+          </div>
+          <div class="method-item">
+            <span class="ni-dot d-ok">LG</span> <b>Lineage:</b> Persistent MIRA decision matrix.
+          </div>
+          <div class="method-item">
+            <span class="ni-dot d-run">P</span> <b>Portfolio:</b> Project lifecycle management.
+          </div>
+        </div>
+      </div>
+
+      <div style="font-size:11px;font-weight:700;margin-bottom:10px;color:var(--red);letter-spacing:0.5px;">🧠 THE PAINFUL FRAMEWORK</div>
+      <div class="grinder-card" style="background:rgba(226,75,74,0.05);border-color:rgba(226,75,74,0.2);margin-bottom:20px;">
+        <div style="display:grid;grid-template-columns:repeat(auto-fill, minmax(200px, 1fr));gap:15px;">
+          <div>
+            <div style="font-weight:700;color:var(--red);font-family:var(--font);font-size:10px;">P - PRESSURE</div>
+            <div style="font-size:10px;color:var(--text2);">Problem intensity. Measures stress or disruption. "Does it actually hurt?"</div>
+          </div>
+          <div>
+            <div style="font-weight:700;color:var(--red);font-family:var(--font);font-size:10px;">A - ADVANTAGE</div>
+            <div style="font-size:10px;color:var(--text2);">Upside of solving. Saved time, revenue, or new capabilities. "What is gained?"</div>
+          </div>
+          <div>
+            <div style="font-weight:700;color:var(--red);font-family:var(--font);font-size:10px;">I - IMMEDIACY</div>
+            <div style="font-size:10px;color:var(--text2);">Urgency. How bad do they need it NOW? Market priority level.</div>
+          </div>
+          <div>
+            <div style="font-weight:700;color:var(--red);font-family:var(--font);font-size:10px;">N - NECESSITY</div>
+            <div style="font-size:10px;color:var(--text2);">Unavoidability. Must fix to avoid loss or failure. "Can they ignore it?"</div>
+          </div>
+          <div>
+            <div style="font-weight:700;color:var(--red);font-family:var(--font);font-size:10px;">F - FREQUENCY</div>
+            <div style="font-size:10px;color:var(--text2);">Daily (10) to Rare (0). Frequent problems compound pain exponentially.</div>
+          </div>
+          <div>
+            <div style="font-weight:700;color:var(--red);font-family:var(--font);font-size:10px;">U - UNRESOLVED</div>
+            <div style="font-size:10px;color:var(--text2);">Fallout if ignored. Cost of doing nothing: lost revenue or risk.</div>
+          </div>
+          <div>
+            <div style="font-weight:700;color:var(--red);font-family:var(--font);font-size:10px;">L - LAPSE</div>
+            <div style="font-size:10px;color:var(--text2);">Competition gap. Are existing tools FULLY solving this? Room for unbundling.</div>
+          </div>
+        </div>
+      </div>
+
+      <div style="font-size:11px;font-weight:700;margin-bottom:10px;color:var(--amber);letter-spacing:0.5px;">🏰 MOAT: STRUCTURAL DEFENSE</div>
+      <div class="dd-story-sec" style="border-left-color:var(--amber);margin-bottom:20px;">
+        <div class="dd-val" style="font-size:10px;">
+          <b>M - Market Angle:</b> Unpopular segment, Risk removal, or Cognitive load unbundling.<br>
+          <b>O - Operator Advantage:</b> Skin in the game. Using lived edge cases to build better defaults.<br>
+          <b>A - Adoption Ease:</b> Zero-setup, "Stupidly Simple" first wins within 60 seconds.<br>
+          <b>T - Traction Gravity:</b> Sticky logic where leaving means losing history, data, or automation.
+        </div>
+      </div>
+
+      <div style="font-size:11px;font-weight:700;margin-bottom:10px;color:var(--teal);letter-spacing:0.5px;">💡 TACTICAL HINTS</div>
+      <div class="mom-test">
+        <b>Rule of 10X:</b> Never build a solution unless the PAINFUL score indicates the benefit is 10X the effort to switch.<br>
+        <b>The Mom Test:</b> If you can't describe the pain without using "features," you don't understand the problem yet.<br>
+        <b>Zero-Capital:</b> If it costs more than £0 to build the MVP, re-architect using Tier 0 local-first logic.
+      </div>
+    </div>
+
+    <!-- ══════════════ LINEAGE ══════════════ -->
+    <div class="panel" id="panel-lineage">
+      <div style="margin-bottom:12px;font-size:11px;color:var(--text2);">.mira/scores/lineage.json · Append-only · MIRA ScoringService Lite · Tier 1</div>
+      <div id="lineageRecords" style="display:flex;flex-direction:column;gap:7px;">
+    <div class="score-row">
+      <div class="sr-top">
+        <span class="sr-node">arch-synthesiser</span>
+        <span class="sr-model">gemini-2.5-pro</span>
+        <span style="font-size:9px;font-family:var(--font);padding:2px 7px;border-radius:3px;margin-left:auto;background:rgba(29,158,117,.1);color:var(--teal-l);border:1px solid rgba(29,158,117,.2);">✓ PASS</span>
+      </div>
+      <div class="sr-dims">
+        <div class="sr-d">content <span style="color:var(--teal-l)">0.84</span></div>
+        <div class="sr-d">provenance <span style="color:var(--teal-l)">0.91</span></div>
+        <div class="sr-d">total <span style="font-weight:700;color:var(--teal-l)">0.87</span></div>
+      </div>
+      <div class="sr-bar"><div class="sr-fill" style="width:87%;background:var(--teal)"></div></div>
+      <div style="font-size:9px;color:var(--text3);font-family:var(--font);">→ GDPR_Friction/ARCHITECTURE.md · 1840 tokens ·  £0.015</div>
+    </div>
+    <div class="score-row">
+      <div class="sr-top">
+        <span class="sr-node">hostile-grounding</span>
+        <span class="sr-model">gemini-2.5-pro×3</span>
+        <span style="font-size:9px;font-family:var(--font);padding:2px 7px;border-radius:3px;margin-left:auto;background:rgba(239,159,39,.1);color:var(--amber);border:1px solid rgba(239,159,39,.2);">⚠ WATCH</span>
+      </div>
+      <div class="sr-dims">
+        <div class="sr-d">content <span style="color:var(--red)">0.64</span></div>
+        <div class="sr-d">provenance <span style="color:var(--amber)">0.74</span></div>
+        <div class="sr-d">total <span style="font-weight:700;color:var(--red)">0.64</span></div>
+      </div>
+      <div class="sr-bar"><div class="sr-fill" style="width:64%;background:var(--red)"></div></div>
+      <div style="font-size:9px;color:var(--text3);font-family:var(--font);">→ GDPR_Friction/GROUNDING.md · 4200 tokens ·  £0.038</div>
+    </div>
+    <div class="score-row">
+      <div class="sr-top">
+        <span class="sr-node">pain-scorer</span>
+        <span class="sr-model">opencode:ollama</span>
+        <span style="font-size:9px;font-family:var(--font);padding:2px 7px;border-radius:3px;margin-left:auto;background:rgba(29,158,117,.1);color:var(--teal-l);border:1px solid rgba(29,158,117,.2);">✓ PASS</span>
+      </div>
+      <div class="sr-dims">
+        <div class="sr-d">content <span style="color:var(--teal-l)">0.91</span></div>
+        <div class="sr-d">provenance <span style="color:var(--teal-l)">0.95</span></div>
+        <div class="sr-d">total <span style="font-weight:700;color:var(--teal-l)">0.93</span></div>
+      </div>
+      <div class="sr-bar"><div class="sr-fill" style="width:93%;background:var(--teal)"></div></div>
+      <div style="font-size:9px;color:var(--text3);font-family:var(--font);">→ signal_083·PIS:76.2 ·  £0.00</div>
+    </div>
+    <div class="score-row">
+      <div class="sr-top">
+        <span class="sr-node">pain-sentry</span>
+        <span class="sr-model">opencode:ollama</span>
+        <span style="font-size:9px;font-family:var(--font);padding:2px 7px;border-radius:3px;margin-left:auto;background:rgba(29,158,117,.1);color:var(--teal-l);border:1px solid rgba(29,158,117,.2);">✓ PASS</span>
+      </div>
+      <div class="sr-dims">
+        <div class="sr-d">content <span style="color:var(--teal-l)">0.88</span></div>
+        <div class="sr-d">provenance <span style="color:var(--teal-l)">0.93</span></div>
+        <div class="sr-d">total <span style="font-weight:700;color:var(--teal-l)">0.9</span></div>
+      </div>
+      <div class="sr-bar"><div class="sr-fill" style="width:90%;background:var(--teal)"></div></div>
+      <div style="font-size:9px;color:var(--text3);font-family:var(--font);">→ 3 signals·r/microsaas ·  £0.00</div>
+    </div>
+    <div class="score-row">
+      <div class="sr-top">
+        <span class="sr-node">opencode-builder</span>
+        <span class="sr-model">opencode:ollama</span>
+        <span style="font-size:9px;font-family:var(--font);padding:2px 7px;border-radius:3px;margin-left:auto;background:rgba(29,158,117,.1);color:var(--teal-l);border:1px solid rgba(29,158,117,.2);">✓ PASS</span>
+      </div>
+      <div class="sr-dims">
+        <div class="sr-d">content <span style="color:var(--teal-l)">0.85</span></div>
+        <div class="sr-d">provenance <span style="color:var(--teal-l)">0.88</span></div>
+        <div class="sr-d">total <span style="font-weight:700;color:var(--teal-l)">0.86</span></div>
+      </div>
+      <div class="sr-bar"><div class="sr-fill" style="width:86%;background:var(--teal)"></div></div>
+      <div style="font-size:9px;color:var(--text3);font-family:var(--font);">→ Contract_Interrogator/src/ ·  £0.00</div>
+    </div></div>
+    </div>
+
+  </div>
+</div>
+
+<!-- RIGHT COLUMN -->
+<div class="right-col">
+  <div class="rp-tabs">
+    <div class="rp-tab on" onclick="rpTab(this,&#39;deal&#39;)">Deal Detail</div>
+    <div class="rp-tab" onclick="rpTab(this,&#39;mira&#39;)">MIRA Scores</div>
+    <div class="rp-tab" onclick="rpTab(this,&#39;log&#39;)">Agent Log</div>
+  </div>
+  <div class="rp-panel on" id="rp-deal">
+    <div id="dealDetail">
+      <div style="color:var(--text3);font-size:11px;padding:20px 0;">Select a deal to view financial detail.</div>
+    </div>
+  </div>
+  <div class="rp-panel" id="rp-mira">
+    <div id="miraScores">
+    <div class="score-row">
+      <div class="sr-top"><span class="sr-node">arch-synthesiser</span><span class="sr-model">gemini-2.5-pro</span></div>
+      <div class="sr-dims">
+        <div class="sr-d" style="color:var(--text2)">c: <span style="color:var(--teal-l)">0.84</span></div>
+        <div class="sr-d" style="color:var(--text2)">p: <span style="color:var(--teal-l)">0.91</span></div>
+        <div class="sr-d" style="color:var(--text2)">Σ: <span style="font-weight:700;color:var(--teal-l)">0.87</span></div>
+      </div>
+      <div class="sr-bar"><div class="sr-fill" style="width:87%;background:var(--teal)"></div></div>
+    </div>
+    <div class="score-row">
+      <div class="sr-top"><span class="sr-node">hostile-grounding</span><span class="sr-model">gemini-2.5-pro×3</span></div>
+      <div class="sr-dims">
+        <div class="sr-d" style="color:var(--text2)">c: <span style="color:var(--amber)">0.64</span></div>
+        <div class="sr-d" style="color:var(--text2)">p: <span style="color:var(--amber)">0.74</span></div>
+        <div class="sr-d" style="color:var(--text2)">Σ: <span style="font-weight:700;color:var(--red)">0.64</span></div>
+      </div>
+      <div class="sr-bar"><div class="sr-fill" style="width:64%;background:var(--red)"></div></div>
+    </div>
+    <div class="score-row">
+      <div class="sr-top"><span class="sr-node">pain-scorer</span><span class="sr-model">opencode:ollama</span></div>
+      <div class="sr-dims">
+        <div class="sr-d" style="color:var(--text2)">c: <span style="color:var(--teal-l)">0.91</span></div>
+        <div class="sr-d" style="color:var(--text2)">p: <span style="color:var(--teal-l)">0.95</span></div>
+        <div class="sr-d" style="color:var(--text2)">Σ: <span style="font-weight:700;color:var(--teal-l)">0.93</span></div>
+      </div>
+      <div class="sr-bar"><div class="sr-fill" style="width:93%;background:var(--teal)"></div></div>
+    </div>
+    <div class="score-row">
+      <div class="sr-top"><span class="sr-node">pain-sentry</span><span class="sr-model">opencode:ollama</span></div>
+      <div class="sr-dims">
+        <div class="sr-d" style="color:var(--text2)">c: <span style="color:var(--teal-l)">0.88</span></div>
+        <div class="sr-d" style="color:var(--text2)">p: <span style="color:var(--teal-l)">0.93</span></div>
+        <div class="sr-d" style="color:var(--text2)">Σ: <span style="font-weight:700;color:var(--teal-l)">0.9</span></div>
+      </div>
+      <div class="sr-bar"><div class="sr-fill" style="width:90%;background:var(--teal)"></div></div>
+    </div>
+    <div class="score-row">
+      <div class="sr-top"><span class="sr-node">opencode-builder</span><span class="sr-model">opencode:ollama</span></div>
+      <div class="sr-dims">
+        <div class="sr-d" style="color:var(--text2)">c: <span style="color:var(--teal-l)">0.85</span></div>
+        <div class="sr-d" style="color:var(--text2)">p: <span style="color:var(--teal-l)">0.88</span></div>
+        <div class="sr-d" style="color:var(--text2)">Σ: <span style="font-weight:700;color:var(--teal-l)">0.86</span></div>
+      </div>
+      <div class="sr-bar"><div class="sr-fill" style="width:86%;background:var(--teal)"></div></div>
+    </div></div>
+  </div>
+  <div class="rp-panel" id="rp-log">
+    <div id="agentLog" style="font-family:var(--font);font-size:9px;display:flex;flex-direction:column;gap:3px;"><div style="display: flex; gap: 7px; padding: 2px 0px; border-bottom: 1px solid var(--border);"><span style="color:var(--text3);flex-shrink:0;">17:46:20</span><span style="color:var(--text2);flex:1;">[PORTFOLIO] Error loading pack: Invalid path</span></div><div style="display: flex; gap: 7px; padding: 2px 0px; border-bottom: 1px solid var(--border);"><span style="color:var(--text3);flex-shrink:0;">17:46:20</span><span style="color:var(--text2);flex:1;">[PORTFOLIO] Error loading pack: Invalid path</span></div><div style="display: flex; gap: 7px; padding: 2px 0px; border-bottom: 1px solid var(--border);"><span style="color:var(--text3);flex-shrink:0;">17:46:19</span><span style="color:var(--text2);flex:1;">[PORTFOLIO] Error loading pack: Invalid path</span></div><div style="display: flex; gap: 7px; padding: 2px 0px; border-bottom: 1px solid var(--border);"><span style="color:var(--text3);flex-shrink:0;">17:46:18</span><span style="color:var(--text2);flex:1;">[PORTFOLIO] Error loading pack: Invalid path</span></div><div style="display: flex; gap: 7px; padding: 2px 0px; border-bottom: 1px solid var(--border);"><span style="color:var(--text3);flex-shrink:0;">17:46:13</span><span style="color:var(--blue-l);flex:1;">[REVENUE] 8 deals loaded from SQLite</span></div><div style="display: flex; gap: 7px; padding: 2px 0px; border-bottom: 1px solid var(--border);"><span style="color:var(--text3);flex-shrink:0;">17:46:13</span><span style="color:var(--amber);flex:1;">[WATCHDOG] 2 bottlenecks detected — hostile-grounding dm regression + arch latency</span></div><div style="display: flex; gap: 7px; padding: 2px 0px; border-bottom: 1px solid var(--border);"><span style="color:var(--text3);flex-shrink:0;">17:46:13</span><span style="color:var(--pink-l);flex:1;">[MIRA] 8 agents grounded by Council &amp; Cabal</span></div><div style="display: flex; gap: 7px; padding: 2px 0px; border-bottom: 1px solid var(--border);"><span style="color:var(--text3);flex-shrink:0;">17:46:13</span><span style="color:var(--teal-l);flex:1;">[SYSTEM] Shadow Ops C&amp;C initialised — Weave v4.0</span></div></div>
+  </div>
+</div>
+</div>
+
+<!-- ADD DEAL MODAL -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal">
+    <div class="modal-title">Add / Edit Deal</div>
+    <div class="field"><div class="field-lbl">Project Name</div><input type="text" id="f_name" placeholder="e.g. GDPR Friction Zero Shield"></div>
+    <div class="field"><div class="field-lbl">Status</div>
+      <select id="f_status">
+        <option>PROSPECT</option><option>ARCH_COMPLETE</option><option>GROUNDED</option>
+        <option>HITL_PENDING</option><option>GO</option><option>BUILD_COMPLETE</option>
+        <option>LAUNCHED</option><option>MRR_ACTIVE</option><option>CHURNED</option>
+      </select>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+      <div class="field"><div class="field-lbl">Entry Price (£)</div><input type="number" id="f_entry" placeholder="0" min="0" step="1"></div>
+      <div class="field"><div class="field-lbl">MRR Target (£)</div><input type="number" id="f_mrr_t" placeholder="0" min="0" step="1"></div>
+      <div class="field"><div class="field-lbl">MRR Actual (£)</div><input type="number" id="f_mrr_a" placeholder="0" min="0" step="1"></div>
+      <div class="field"><div class="field-lbl">Total Revenue (£)</div><input type="number" id="f_rev" placeholder="0" min="0" step="1"></div>
+      <div class="field"><div class="field-lbl">Dev Cost (£)</div><input type="number" id="f_dev" placeholder="0" min="0" step="0.01"></div>
+      <div class="field"><div class="field-lbl">Gemini Cost (£)</div><input type="number" id="f_gem" placeholder="0.08" min="0" step="0.01"></div>
+      <div class="field"><div class="field-lbl">Infra Cost/mo (£)</div><input type="number" id="f_infra" placeholder="0" min="0" step="0.01"></div>
+      <div class="field"><div class="field-lbl">S-Rank Score</div><input type="number" id="f_srank" placeholder="75" min="0" max="100"></div>
+      <div class="field"><div class="field-lbl">Pain Score</div><input type="number" id="f_pain" placeholder="72.0" min="0" max="100" step="0.1"></div>
+      <div class="field"><div class="field-lbl">ICP</div><input type="text" id="f_icp" placeholder="e.g. compliance manager"></div>
+    </div>
+    <div class="field"><div class="field-lbl">Notes</div><textarea id="f_notes" rows="2" placeholder="Any context..."></textarea></div>
+    <div class="modal-btns">
+      <button class="btn-save" onclick="saveDeal()">Save Deal</button>
+      <button class="btn-cancel" onclick="closeModal()">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ══════════════════════════════════════════
+// DATA
+// ══════════════════════════════════════════
+let deals = [
+  {
+    id:'d0',
+    name:'LOGISTICS FREIGHT STRATEGY FIX',
+    status:'READY FOR AUTHORIZATION',
+    entry:0, mrr_t:750, mrr_a:0, rev:0, dev:0, gem:0, infra:0, srank:99, pain:9.9,
+    icp:'Courier Operations Managers',
+    problem: 'Missing real-time tracking for sub-contracted van drivers without expensive software.',
+    cure: 'Unified GPS-to-WhatsApp relay.',
+    how: 'Browser-side navigator API relaying to WhatsApp free-tier notify.',
+    innovation: 'Enterprise-grade tracking with zero app-install requirement.',
+    mom_test: [
+      "Walk me through the energy cost of dealing with this friction today.",
+      "If this manual workaround broke tomorrow, how much revenue stops flowing?",
+      "I have a local-first prototype that solves this for zero cost. Can I send you the diagnostic?"
+    ],
+    notes: 'S-Rank Qualification'
+  },
+  {id:'d1',name:'GDPR Friction Zero Shield',status:'HITL_PENDING',entry:299,mrr_t:299,mrr_a:0,rev:0,dev:0,gem:0.08,infra:0,srank:84,pain:76.2,icp:'Compliance manager',notes:'3/3 GO from MassGen'},
+  {id:'d2',name:'Contract Clause Interrogator',status:'BUILD_COMPLETE',entry:149,mrr_t:149,mrr_a:0,rev:0,dev:0,gem:0.10,infra:0,srank:90,pain:78.9,icp:'SME founder',notes:'OpenCode build in progress'},
+  {id:'d3',name:'Expiry First Stock Sentry',status:'ARCH_COMPLETE',entry:199,mrr_t:199,mrr_a:0,rev:0,dev:0,gem:0.05,infra:0,srank:81,pain:74.8,icp:'Food retail ops',notes:''},
+  {id:'d4',name:'Ugly Glue CRM Simplifier',status:'ARCH_COMPLETE',entry:99,mrr_t:99,mrr_a:0,rev:0,dev:0,gem:0.08,infra:0,srank:75,pain:72.3,icp:'Ops manager',notes:'Verify CRM API ToS first'},
+  {id:'d5',name:'Manual Ledger Audit Auto',status:'PROSPECT',entry:249,mrr_t:249,mrr_a:0,rev:0,dev:0,gem:0,infra:0,srank:70,pain:71.0,icp:'Bookkeeper/accountant',notes:'Score borderline — needs more signal'},
+  {id:'d6',name:'Last Mile Warehouse Sync',status:'PROSPECT',entry:149,mrr_t:149,mrr_a:0,rev:0,dev:0,gem:0,infra:0,srank:68,pain:69.7,icp:'Warehouse ops',notes:''},
+  {id:'d7',name:'Property Portal Trust Shield',status:'PROSPECT',entry:99,mrr_t:99,mrr_a:0,rev:0,dev:0,gem:0,infra:0,srank:65,pain:68.4,icp:'Letting agent',notes:'Check portal scraping ToS'},
+];
+
+let selectedDeal = null;
+let editingDealId = null;
+
+const AGENTS = [
+  {n:'pain-sentry',persona:'⚛️',model:'opencode:ollama',tools:['run_scrapy','praw_fetch','imap_read','sqlite_write'],allow:'run_scrapy, praw_fetch, imap_read, sqlite_write, read_file',deny:'gemini_call, send_email, http_post, delete_file',cc:'Council: GROUNDED · Cabal: GROUNDED · Persona: ⚛️ First Principles'},
+  {n:'pain-scorer',persona:'🔬',model:'opencode:ollama',tools:['sqlite_r/w','ollama_infer','score_signal','write_file'],allow:'sqlite_read/write, ollama_infer, score_signal, write_file',deny:'gemini_call, send_email, http_post, delete_file',cc:'Council: GROUNDED · Cabal: GROUNDED · Persona: 🔬 Scientific Method'},
+  {n:'arch-synthesiser',persona:'✨',model:'gemini-2.5-pro',tools:['gemini_call','ollama_infer','pathrag_query','write_file'],allow:'gemini_call, ollama_infer, sqlite_write, write_file, pathrag_query',deny:'send_email, http_post, delete_file, git_push, deploy',cc:'Council: GROUNDED · Cabal: GROUNDED · Persona: ✨ Creative Synthesis'},
+  {n:'hostile-grounding',persona:'🌑',model:'MassGen×3',tools:['gemini_call','sqlite_write','write_file'],allow:'gemini_call, sqlite_write, write_file, read_file',deny:'send_email, http_post, delete_file, git_push, deploy',cc:'Council: GROUNDED · Cabal: GROUNDED · Persona: 🌑 Dark Passenger · 3 subagents'},
+  {n:'srank-pack-gen',persona:'⚙️',model:'gemini-2.5-pro',tools:['gemini_call','ollama_infer','sqlite_write','write_file'],allow:'gemini_call, ollama_infer, sqlite_write, write_file, read_file',deny:'send_email, http_post, delete_file, git_push, deploy',cc:'Council: GROUNDED · Cabal: GROUNDED · Persona: ⚙️ Pragmatic Application'},
+  {n:'opencode-builder',persona:'⚙️',model:'opencode:ollama',tools:['opencode_run','ollama_infer','write_file','run_tests'],allow:'opencode_run, ollama_infer, read_file, write_file, run_tests',deny:'send_email, http_post, git_push, deploy, delete_file, gemini_call',cc:'Council: GROUNDED · Cabal: GROUNDED · Persona: ⚙️ Pragmatic Application'},
+  {n:'revenue-tracker',persona:'📊',model:'opencode:ollama',tools:['sqlite_r/w','read_file','write_file'],allow:'sqlite_read, sqlite_write, read_file, write_file',deny:'gemini_call, send_email, http_post, delete_file, git_push',cc:'Council: GROUNDED · Cabal: GROUNDED · Persona: ⚙️ Pragmatic Application'},
+  {n:'self-anneal-watchdog',persona:'🌑',model:'opencode:ollama',tools:['sqlite_read','read_file','write_file','ollama_infer'],allow:'sqlite_read, read_file, write_file, ollama_infer',deny:'gemini_call, send_email, http_post, delete_file, git_push, deploy',cc:'Council: GROUNDED · Cabal: GROUNDED · Persona: 🌑 Dark Passenger · async'},
+];
+
+const LINEAGE = [
+  {node:'arch-synthesiser',model:'gemini-2.5-pro',scores:{c:0.84,p:0.91,t:0.87},output:'GDPR_Friction/ARCHITECTURE.md',tok:1840,cost:'£0.015'},
+  {node:'hostile-grounding',model:'gemini-2.5-pro×3',scores:{c:0.64,p:0.74,t:0.64},output:'GDPR_Friction/GROUNDING.md',tok:4200,cost:'£0.038',warn:true},
+  {node:'pain-scorer',model:'opencode:ollama',scores:{c:0.91,p:0.95,t:0.93},output:'signal_083·PIS:76.2',tok:0,cost:'£0.00'},
+  {node:'pain-sentry',model:'opencode:ollama',scores:{c:0.88,p:0.93,t:0.90},output:'3 signals·r/microsaas',tok:0,cost:'£0.00'},
+  {node:'opencode-builder',model:'opencode:ollama',scores:{c:0.85,p:0.88,t:0.86},output:'Contract_Interrogator/src/',tok:0,cost:'£0.00'},
+];
+
+const GRAPH_NODES = [
+  {id:'pain_sentry',type:'Agent',model:'opencode:ollama',status:'ok'},
+  {id:'pain_scorer',type:'Agent',model:'opencode:ollama',status:'ok'},
+  {id:'pain_router',type:'Switch',model:'—',status:'ok'},
+  {id:'arch_synthesiser',type:'Agent',model:'gemini-2.5-pro',status:'warn'},
+  {id:'hostile_grounding',type:'Graph/MassGen',model:'gemini-2.5-pro×3',status:'warn'},
+  {id:'grounding_router',type:'Switch',model:'—',status:'ok'},
+  {id:'srank_pack_generator',type:'Agent',model:'gemini-2.5-pro',status:'ok'},
+  {id:'hitl_gate',type:'Interaction',model:'human',status:'gate'},
+  {id:'opencode_builder',type:'Agent',model:'opencode:ollama',status:'ok'},
+  {id:'revenue_tracker',type:'Agent',model:'opencode:ollama',status:'ok'},
+  {id:'self_anneal_watchdog',type:'CustomNode(async)',model:'opencode:ollama',status:'ok'},
+];
+
+// ══════════════════════════════════════════
+// NAVIGATION
+// ══════════════════════════════════════════
+function goTab(el,tab){
+  document.querySelectorAll('.nitem').forEach(x=>x.classList.remove('on'));
+  el.classList.add('on');
+  setTab(tab, document.getElementById('ttab-'+tab));
+}
+function setTab(id, el){
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('on'));
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('on'));
+  if(el) el.classList.add('on');
+  document.getElementById('panel-'+id).classList.add('on');
+  if(id==='agents') renderAgents();
+  if(id==='graph') renderGraph();
+  if(id==='lineage') renderLineage();
+  if(id==='revenue') renderRevenue();
+  if(id==='portfolio') renderPortfolio();
+}
+
+async function renderPortfolio(){
+  const resp = await fetch('/api/portfolio/fs');
+  const data = await resp.json();
+
+  const card = d => `
+    <div class="pc-card" onclick="selectFsProject('${d.path}')">
+      <div class="pc-name">${d.name}</div>
+      <div class="pc-meta">PAIN: ${d.pain} · TIER: ${d.srank}</div>
+      <div style="margin-top:6px;font-size:8px;text-transform:uppercase;color:var(--purple-l);font-weight:700;">${d.status}</div>
+    </div>`;
+
+  document.getElementById('col-pending').innerHTML = data.pending.length ? data.pending.map(card).join('') : '<div style="color:var(--text3);font-size:10px;text-align:center;padding:20px;">Zero pending.</div>';
+  document.getElementById('col-authorized').innerHTML = data.authorized.length ? data.authorized.map(card).join('') : '<div style="color:var(--text3);font-size:10px;text-align:center;padding:20px;">No active builds.</div>';
+  document.getElementById('col-killed').innerHTML = data.killed.length ? data.killed.map(card).join('') : '<div style="color:var(--text3);font-size:10px;text-align:center;padding:20px;">Zero churn.</div>';
+}
+
+async function selectFsProject(path) {
+  const resp = await fetch(`/api/business/pack/content?path=${path}`);
+  const data = await resp.json();
+  if (data.error) {
+    addLog(`[PORTFOLIO] Error loading pack: ${data.error}`, 'crit');
+    return;
+  }
+
+  // Parse the markdown content
+  const content = data.content;
+  const lines = content.split('\n');
+  let name = 'Unknown Project';
+  for (let l of lines) {
+    if (l.trim().startsWith('# ')) {
+      name = l.replace('# [S-RANK] Sovereign Business Pack:', '').replace('# ', '').trim();
+      break;
+    }
+  }
+  
+  let pain = 'N/A', srank = 'N/A', cluster = 'N/A', capital = '£0.00', stack = 'Edge Hybrid';
+  const jsonMatch = content.match(/```json\n([\s\S]*?)\n```/);
+  if (jsonMatch) {
+    try {
+      const meta = JSON.parse(jsonMatch[1]);
+      pain = meta.pain_score || 'N/A';
+      srank = meta.intelligence_tier || 'N/A';
+      cluster = meta.cluster || 'N/A';
+      capital = meta.capital_required || '£0.00';
+      stack = meta.stack || 'Edge Hybrid';
+    } catch(e) {}
+  }
+
+  // Improved Regex for S-Rank Detail extraction with fallbacks
+  const getSec = (title) => {
+    const regex = new RegExp(`## ${title}[\\s\\S]*?\\n([\\s\\S]*?)(?:\\n---|$|##)`);
+    const m = content.match(regex);
+    return m ? m[1].trim() : null;
+  };
+
+  const problem = getSec('🔎 ANALYSED PROBLEM STATEMENT') || getSec('🔎 SUPERIOR PROBLEM ANALYSIS') || 'Friction detected via signal analysis.';
+  const cure = getSec('💡 THE STRATEGIC CURE') || 'Autonomous unbundling solution.';
+  const how = getSec('🛠 TECHNICAL ACHIEVEMENT PATH') || 'Local-first execution via MASFactory.';
+  const icp = content.match(/### 🎯 ICP.*?\n([\s\S]*?)(?:\n---|$|##)/) || content.match(/🎯 IDEAL CUSTOMER PROFILE.*?\n([\s\S]*?)(?:\n---|$|##)/);
+  
+  const momTestArr = [...content.matchAll(/> "(.*?)"/g)].map(m => m[1]);
+  if (momTestArr.length === 0) {
+    momTestArr.push("Walk me through the energy cost of dealing with this friction today.");
+    momTestArr.push("If this manual workaround broke tomorrow, how much revenue stops flowing?");
+  }
+
+  rpTab(document.querySelector('.rp-tab'), 'deal');
+  
+  document.getElementById('dealDetail').innerHTML = `
+    <div class="dd-pack-title">[S-RANK] Sovereign Business Pack</div>
+    <div class="dd-name">${name}</div>
+    
+    <div class="grinder-card">
+      <div class="dd-lbl" style="margin-bottom:8px;color:var(--text)">📊 Meat Grinder Qualification</div>
+      <div class="grinder-grid">
+        <div class="grinder-item"><span class="grinder-lbl">Pain Score</span><span class="grinder-val">${pain}</span></div>
+        <div class="grinder-item"><span class="grinder-lbl">Capital Req.</span><span class="grinder-val">${capital}</span></div>
+        <div class="grinder-item"><span class="grinder-lbl">Intelligence</span><span class="grinder-val">${srank}</span></div>
+        <div class="grinder-item"><span class="grinder-lbl">Stack</span><span class="grinder-val">${stack}</span></div>
+      </div>
+    </div>
+
+    <div class="dd-story-sec">
+      <div class="dd-story-hd">🔎 Superior Problem Analysis</div>
+      <div class="dd-val">${problem}</div>
+    </div>
+
+    <div class="dd-story-sec">
+      <div class="dd-story-hd">💡 The Strategic Cure</div>
+      <div class="dd-val">${cure}</div>
+    </div>
+
+    <div class="dd-story-sec">
+      <div class="dd-story-hd">🛠 Technical Achievement Path</div>
+      <div class="dd-val">${how}</div>
+    </div>
+
+    <div class="dd-sec">
+      <div class="dd-lbl">🎯 Ideal Customer Profile</div>
+      <div class="dd-val">${icp ? icp[1].trim() : 'High-Value Stakeholder'}</div>
+    </div>
+
+    <div class="dd-sec">
+      <div class="dd-lbl">🧪 The Mom Test Interrogation</div>
+      <div class="mom-test">
+        ${momTestArr.map(q => `<div>"${q}"</div>`).join('<div style="margin-top:4px;"></div>')}
+      </div>
+    </div>
+
+    <div class="dd-sec">
+      <div class="dd-lbl">⚡️ Truth Serum Conversion</div>
+      <div class="dd-val" style="font-weight:600;color:${path.includes('01_REVIEW') ? 'var(--amber)' : 'var(--teal-l)'}">
+        Status: ${path.includes('01_REVIEW') ? 'PENDING HITL AUTHORIZATION' : 'GO AUTHORIZED'}
+      </div>
+      ${path.includes('01_REVIEW') ? `
+        <div class="auth-btns">
+          <button class="btn-go" onclick="authorizeProject('${name}', 'GO')">✓ AUTHORIZE GO</button>
+          <button class="btn-nogo" onclick="authorizeProject('${name}', 'NO-GO')">✕ KILL PROJECT</button>
+        </div>
+      ` : ''}
+    </div>
+  `;
+  addLog(`[PORTFOLIO] Detailed FS Pack Loaded: ${name}`, 'info');
+}
+
+async function authorizeProject(id, verdict){
+  addLog(`[AUTHORIZATION] Submitting ${verdict} for ${id}...`, 'warn');
+  
+  try {
+    const resp = await fetch('/api/interact', {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({
+        requestId: id,
+        content: verdict
+      })
+    });
+    
+    if(resp.ok) {
+      if(verdict === 'GO') addLog(`[AUTHORIZATION] Project ${id} is now GO. File moved to AUTHORIZED.`, 'ok');
+      else addLog(`[AUTHORIZATION] Project ${id} KILLED. File moved to CHURNED.`, 'crit');
+      
+      // Force refresh portfolio to show physical file move
+      setTimeout(() => {
+        renderPortfolio();
+        document.getElementById('dealDetail').innerHTML = '<div style="color:var(--text3);text-align:center;padding-top:40px;">Select a project to view details.</div>';
+      }, 500);
+    } else {
+      addLog(`[AUTHORIZATION] Error: ${await resp.text()}`, 'crit');
+    }
+  } catch(e) {
+    addLog(`[AUTHORIZATION] Connection error: ${e.message}`, 'crit');
+  }
+}
+function rpTab(el,id){
+  document.querySelectorAll('.rp-tab').forEach(t=>t.classList.remove('on'));
+  document.querySelectorAll('.rp-panel').forEach(p=>p.classList.remove('on'));
+  el.classList.add('on');
+  document.getElementById('rp-'+id).classList.add('on');
+}
+
+// ══════════════════════════════════════════
+// REVENUE & DEALS
+// ══════════════════════════════════════════
+function profit(d){ return d.rev - d.dev - d.gem - (d.infra*12); }
+function roi(d){ const c=d.dev+d.gem+(d.infra*12); return c>0?(profit(d)/c*100):null; }
+function fmt(n){ return n===0?'£0':'£'+Math.abs(n).toLocaleString('en-GB',{minimumFractionDigits:2,maximumFractionDigits:2}); }
+function fmtSign(n){ return (n>=0?'+':'−')+'£'+Math.abs(n).toLocaleString('en-GB',{minimumFractionDigits:2,maximumFractionDigits:2}); }
+
+function renderRevenue(){
+  const totalMrr = deals.reduce((a,d)=>a+d.mrr_a,0);
+  const totalRev = deals.reduce((a,d)=>a+d.rev,0);
+  const totalProfit = deals.reduce((a,d)=>a+profit(d),0);
+  const pipelineMrr = deals.reduce((a,d)=>a+d.mrr_t,0);
+  const activeDls = deals.filter(d=>d.mrr_a>0).length;
+
+  document.getElementById('kpiMrr').textContent = fmt(totalMrr);
+  document.getElementById('kpiMrrSub').textContent = activeDls+' active deals';
+  document.getElementById('kpiRev').textContent = fmt(totalRev);
+  document.getElementById('kpiProfit').textContent = fmt(totalProfit);
+  document.getElementById('kpiProfit').style.color = totalProfit>0?'var(--teal-l)':totalProfit<0?'var(--red)':'var(--text3)';
+  document.getElementById('kpiProfitSub').textContent = 'rev − all costs';
+  const totalCost = deals.reduce((a,d)=>a+d.dev+d.gem+(d.infra*12),0);
+  document.getElementById('kpiRoi').textContent = totalCost>0?'ROI: '+(totalProfit/totalCost*100).toFixed(0)+'%':'—';
+  document.getElementById('kpiPipeline').textContent = fmt(pipelineMrr);
+  document.getElementById('kpiDeals').textContent = deals.length+' deals tracked';
+
+  // Mini charts
+  const maxMrr = Math.max(...deals.map(d=>d.mrr_t),1);
+  document.getElementById('mrrChart').innerHTML = deals.map(d=>`
+    <div class="bc-row">
+      <span class="bc-label" title="${d.name}">${d.name.slice(0,16)+(d.name.length>16?'…':'')}</span>
+      <div class="bc-track"><div class="bc-fill" style="width:${(d.mrr_t/maxMrr*100).toFixed(0)}%;background:var(--teal)"></div></div>
+      <span class="bc-val" style="color:var(--teal-l)">${fmt(d.mrr_t)}</span>
+    </div>`).join('');
+
+  const profs = deals.map(d=>profit(d));
+  const maxP = Math.max(...profs.map(Math.abs),1);
+  document.getElementById('profitChart').innerHTML = deals.map((d,i)=>{
+    const p=profs[i]; const pct=(Math.abs(p)/maxP*100).toFixed(0);
+    const col=p>0?'var(--teal)':p<0?'var(--red)':'var(--text3)';
+    return `<div class="bc-row">
+      <span class="bc-label" title="${d.name}">${d.name.slice(0,16)+(d.name.length>16?'…':'')}</span>
+      <div class="bc-track"><div class="bc-fill" style="width:${pct}%;background:${col}"></div></div>
+      <span class="bc-val" style="color:${col}">${p===0?'—':fmtSign(p)}</span>
+    </div>`;
+  }).join('');
+
+  // Table
+  const statClass = {PROSPECT:'sb-prospect',ARCH_COMPLETE:'sb-arch',GROUNDED:'sb-arch',HITL_PENDING:'sb-hitl',GO:'sb-build',BUILD_COMPLETE:'sb-build',LAUNCHED:'sb-live',MRR_ACTIVE:'sb-live',CHURNED:'sb-churned'};
+  document.getElementById('dealTbody').innerHTML = deals.map(d=>{
+    const p=profit(d); const r=roi(d);
+    const pcls=p>0?'profit-pos':p<0?'profit-neg':'profit-zero';
+    return `<tr>
+      <td><span class="deal-name" onclick="selectDeal('${d.id}')">${d.name}</span></td>
+      <td><span class="stat-badge ${statClass[d.status]||'sb-prospect'}">${d.status}</span></td>
+      <td class="num" style="color:var(--text2)">${fmt(d.mrr_t)}</td>
+      <td class="num" style="color:${d.mrr_a>0?'var(--teal-l)':'var(--text3)'}">${fmt(d.mrr_a)}</td>
+      <td class="num">${fmt(d.rev)}</td>
+      <td class="num" style="color:var(--amber)">${fmt(d.dev+d.gem+(d.infra*12))}</td>
+      <td class="num ${pcls}">${p===0?'—':fmtSign(p)}</td>
+      <td class="num" style="color:var(--text2)">${r!==null?r.toFixed(0)+'%':'—'}</td>
+      <td class="num" style="color:var(--amber)">${d.srank}</td>
+    </tr>`;
+  }).join('');
+}
+
+function selectDeal(id){
+  selectedDeal = deals.find(d=>d.id===id);
+  if(!selectedDeal) return;
+  rpTab(document.querySelector('.rp-tab'),'deal');
+  const p=profit(selectedDeal); const r=roi(selectedDeal);
+  
+  // Dynamic enrichment for simulation if fields are missing
+  const pack = {
+    problem: selectedDeal.problem || "Friction in high-latency workflow detected via signal analysis.",
+    cure: selectedDeal.cure || "Autonomous unbundling of the vertical pain via local-first logic.",
+    how: selectedDeal.how || "Shadow execution via MASFactory Edge nodes.",
+    innovation: selectedDeal.innovation || "Zero-capital architecting with S-Rank intelligence.",
+    mom_test: selectedDeal.mom_test || [
+      "Walk me through the energy cost of dealing with this friction today.",
+      "If this manual workaround broke tomorrow, how much revenue stops flowing?"
+    ]
+  };
+
+  document.getElementById('dealDetail').innerHTML = `
+    <div class="dd-pack-title">[S-RANK] Sovereign Business Pack</div>
+    <div class="dd-name">${selectedDeal.name}</div>
+    
+    <div class="grinder-card">
+      <div class="dd-lbl" style="margin-bottom:8px;color:var(--text)">📊 Meat Grinder Qualification</div>
+      <div class="grinder-grid">
+        <div class="grinder-item"><span class="grinder-lbl">Pain Score</span><span class="grinder-val">${selectedDeal.pain}</span></div>
+        <div class="grinder-item"><span class="grinder-lbl">Capital Req.</span><span class="grinder-val">£0.00</span></div>
+        <div class="grinder-item"><span class="grinder-lbl">Intelligence</span><span class="grinder-val">S-Rank</span></div>
+        <div class="grinder-item"><span class="grinder-lbl">Stack</span><span class="grinder-val">Edge Hybrid</span></div>
+      </div>
+    </div>
+
+    <div class="dd-story-sec">
+      <div class="dd-story-hd">🔎 Superior Problem Analysis</div>
+      <div class="dd-val">${pack.problem}</div>
+    </div>
+
+    <div class="dd-story-sec">
+      <div class="dd-story-hd">💡 The Strategic Cure</div>
+      <div class="dd-val">${pack.cure}</div>
+    </div>
+
+    <div class="dd-story-sec">
+      <div class="dd-story-hd">🛠 Technical Achievement</div>
+      <div class="dd-val">${pack.how}</div>
+    </div>
+
+    <div class="dd-sec">
+      <div class="dd-lbl">🎯 Ideal Customer Profile</div>
+      <div class="dd-val">${selectedDeal.icp}</div>
+    </div>
+
+    <div class="dd-story-sec" style="border-left-color:var(--teal)">
+      <div class="dd-story-hd">⚛️ The Innovation Edge</div>
+      <div class="dd-val">${pack.innovation}</div>
+    </div>
+
+    <div class="dd-sec">
+      <div class="dd-lbl">🧪 The Mom Test Interrogation</div>
+      <div class="mom-test">
+        ${pack.mom_test.map(q => `<div>"${q}"</div>`).join('<div style="margin-top:4px;"></div>')}
+      </div>
+    </div>
+
+    <div class="dd-sec">
+      <div class="dd-lbl">⚡️ Truth Serum Conversion</div>
+      <div class="dd-val" style="font-weight:600;color:var(--purple-l)">Status: ${selectedDeal.status}</div>
+      ${(selectedDeal.status==='READY FOR AUTHORIZATION' || selectedDeal.status==='HITL_PENDING') ? `
+        <div class="auth-btns">
+          <button class="btn-go" onclick="authorizeProject('${selectedDeal.id}', 'GO')">✓ AUTHORIZE GO</button>
+          <button class="btn-nogo" onclick="authorizeProject('${selectedDeal.id}', 'NO-GO')">✕ KILL PROJECT</button>
+        </div>
+      ` : ''}
+    </div>
+
+    <div class="dd-sec">
+      <div class="dd-lbl">Financial Projection</div>
+      <div class="cost-tbl" style="background:var(--bg2);border:1px solid var(--border);border-radius:6px;padding:8px 10px;">
+        <div class="fin-row"><span>MRR Target</span><span style="font-family:var(--font)">${fmt(selectedDeal.mrr_t)}</span></div>
+        <div class="fin-row"><span>Est. Profit</span><span style="font-family:var(--font);font-weight:700;color:var(--teal-l)">${fmtSign(p)}</span></div>
+      </div>
+    </div>
+
+    <button class="edit-deal" onclick="editDeal('${selectedDeal.id}')">Modify Deal Parameters</button>
+  `;
+  addLog(`[REVENUE] Inspected Pack: ${selectedDeal.name}`, 'info');
+}
+
+async function authorizeProject(id, verdict){
+  const d = deals.find(x=>x.id===id);
+  if(!d) return;
+  
+  addLog(`[AUTHORIZATION] Submitting ${verdict} for ${d.name}...`, 'warn');
+  
+  try {
+    const resp = await fetch('/api/interact', {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({
+        requestId: d.name,
+        content: verdict
+      })
+    });
+    
+    if(resp.ok) {
+      d.status = verdict === 'GO' ? 'GO' : 'CHURNED';
+      if(verdict === 'GO') addLog(`[AUTHORIZATION] Project ${d.name} is now GO. Starting build sequence.`, 'ok');
+      else addLog(`[AUTHORIZATION] Project ${d.name} KILLED.`, 'crit');
+      renderRevenue();
+      selectDeal(id);
+    } else {
+      addLog(`[AUTHORIZATION] Error: ${await resp.text()}`, 'crit');
+    }
+  } catch(e) {
+    addLog(`[AUTHORIZATION] Connection error: ${e.message}`, 'crit');
+  }
+}
+
+// Modal
+function showModal(){ editingDealId=null; clearForm(); document.getElementById('modalOverlay').classList.add('show'); }
+function closeModal(){ document.getElementById('modalOverlay').classList.remove('show'); editingDealId=null; }
+function editDeal(id){ 
+  const d=deals.find(x=>x.id===id); if(!d) return;
+  editingDealId=id;
+  document.getElementById('f_name').value=d.name;
+  document.getElementById('f_status').value=d.status;
+  document.getElementById('f_entry').value=d.entry;
+  document.getElementById('f_mrr_t').value=d.mrr_t;
+  document.getElementById('f_mrr_a').value=d.mrr_a;
+  document.getElementById('f_rev').value=d.rev;
+  document.getElementById('f_dev').value=d.dev;
+  document.getElementById('f_gem').value=d.gem;
+  document.getElementById('f_infra').value=d.infra;
+  document.getElementById('f_srank').value=d.srank;
+  document.getElementById('f_pain').value=d.pain;
+  document.getElementById('f_icp').value=d.icp||'';
+  document.getElementById('f_notes').value=d.notes||'';
+  document.getElementById('modalOverlay').classList.add('show');
+}
+function clearForm(){['f_name','f_status','f_entry','f_mrr_t','f_mrr_a','f_rev','f_dev','f_gem','f_infra','f_srank','f_pain','f_icp','f_notes'].forEach(id=>{ const el=document.getElementById(id); if(el.tagName==='SELECT') el.value='PROSPECT'; else el.value=''; });}
+function saveDeal(){
+  const name=document.getElementById('f_name').value.trim();
+  if(!name){ alert('Project name required'); return; }
+  const d={
+    id: editingDealId || 'd'+Date.now(),
+    name, status:document.getElementById('f_status').value,
+    entry:parseFloat(document.getElementById('f_entry').value)||0,
+    mrr_t:parseFloat(document.getElementById('f_mrr_t').value)||0,
+    mrr_a:parseFloat(document.getElementById('f_mrr_a').value)||0,
+    rev:parseFloat(document.getElementById('f_rev').value)||0,
+    dev:parseFloat(document.getElementById('f_dev').value)||0,
+    gem:parseFloat(document.getElementById('f_gem').value)||0,
+    infra:parseFloat(document.getElementById('f_infra').value)||0,
+    srank:parseInt(document.getElementById('f_srank').value)||0,
+    pain:parseFloat(document.getElementById('f_pain').value)||0,
+    icp:document.getElementById('f_icp').value,
+    notes:document.getElementById('f_notes').value,
+  };
+  if(editingDealId){ const i=deals.findIndex(x=>x.id===editingDealId); if(i>=0) deals[i]=d; }
+  else deals.push(d);
+  closeModal(); renderRevenue();
+  addLog(`[REVENUE] ${editingDealId?'Updated':'Added'}: ${name}`, 'ok');
+  if(selectedDeal && selectedDeal.id===d.id) selectDeal(d.id);
+}
+function exportCSV(){
+  const hdr='Project,Status,MRR Target,MRR Actual,Revenue,Dev Cost,Gemini Cost,Infra(annual),Profit,ROI%,S-Rank,Pain Score,ICP,Notes\n';
+  const rows=deals.map(d=>[d.name,d.status,d.mrr_t,d.mrr_a,d.rev,d.dev,d.gem,d.infra*12,profit(d).toFixed(2),roi(d)!==null?roi(d).toFixed(1):'',d.srank,d.pain,d.icp,d.notes].join(',')).join('\n');
+  const blob=new Blob([hdr+rows],{type:'text/csv'});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a'); a.href=url; a.download='shadow_ops_deals.csv'; a.click();
+  URL.revokeObjectURL(url);
+}
+
+// ══════════════════════════════════════════
+// GEMINI CHAT (AI-powered via Anthropic API)
+// ══════════════════════════════════════════
+let chatHistory = [];
+let activeContexts = new Set(['revenue','graph','lineage','agents','bottleneck']);
+
+function toggleCtx(el, ctx){ el.classList.toggle('on'); if(activeContexts.has(ctx)) activeContexts.delete(ctx); else activeContexts.add(ctx); }
+
+function buildSystemPrompt(){
+  const dealsJson = JSON.stringify(deals.map(d=>({...d,profit:profit(d).toFixed(2),roi_pct:roi(d)!==null?roi(d).toFixed(1):'N/A'})),null,2);
+  const totalMrr = deals.reduce((a,d)=>a+d.mrr_a,0);
+  const totalProfit = deals.reduce((a,d)=>a+profit(d),0);
+  const pipelineMrr = deals.reduce((a,d)=>a+d.mrr_t,0);
+
+  return `You are the Gemini CLI Master Architect for Shadow Ops × The Weave v4.0. You have full context over the entire system.
+
+ACTIVE CONTEXT MODULES: ${[...activeContexts].join(', ')}
+
+${activeContexts.has('revenue')?`## REVENUE & P&L DATA (SQLite: deals table)
+Total MRR Actual: £${totalMrr.toFixed(2)}
+Total Profit: £${totalProfit.toFixed(2)}  
+Pipeline MRR (target): £${pipelineMrr.toFixed(2)}
+Deals: ${JSON.stringify(deals.map(d=>({name:d.name,status:d.status,mrr_t:d.mrr_t,mrr_a:d.mrr_a,rev:d.rev,cost:(d.dev+d.gem+d.infra*12).toFixed(2),profit:profit(d).toFixed(2),srank:d.srank,pain:d.pain})),null,2)}`:''}
+
+${activeContexts.has('graph')?`## GRAPH_DESIGN.JSON TOPOLOGY
+Nodes: pain_sentry(Agent,ollama) → pain_scorer(Agent,ollama) → pain_router(Switch) → arch_synthesiser(Agent,gemini) → hostile_grounding(Graph/MassGen×3,gemini) → grounding_router(Switch) → srank_pack_generator(Agent,gemini) → hitl_gate(Interaction,human) → opencode_builder(Agent,ollama) → revenue_tracker(Agent,ollama)
+Async: self_anneal_watchdog(CustomNode,ollama)
+Gemini trigger: pain_score >= 72 only`:''}
+
+${activeContexts.has('lineage')?`## MIRA LINEAGE (last 5 records)
+arch-synthesiser: dm_score=0.87 (content:0.84, provenance:0.91) — PASS
+hostile-grounding: dm_score=0.64 (content:0.64, provenance:0.74) — WARNING (SCORE_REGRESSION detected)
+pain-scorer: dm_score=0.93 — PASS
+pain-sentry: dm_score=0.90 — PASS
+opencode-builder: dm_score=0.86 — PASS`:''}
+
+${activeContexts.has('agents')?`## AGENT PACK (8 agents, C&C grounded)
+1. pain-sentry: ⚛️ First Principles, invoke=ollama, gemini_call DENIED
+2. pain-scorer: 🔬 Scientific Method, invoke=ollama, MGT loop
+3. arch-synthesiser: ✨ Creative Synthesis, invoke=gemini, PathRAG
+4. hostile-grounding: 🌑 Dark Passenger, MassGen×3, 2/3 consensus
+5. srank-pack-gen: ⚙️ Pragmatic, invoke=gemini, 6 docs output
+6. opencode-builder: ⚙️ Pragmatic, invoke=ollama, deploy DENIED
+7. revenue-tracker: 📊 Pragmatic, invoke=ollama, deals table
+8. self-anneal-watchdog: 🌑 Dark Passenger, async, off critical path`:''}
+
+${activeContexts.has('bottleneck')?`## BOTTLENECKS (self_anneal_watchdog report)
+1. hostile-grounding: SCORE_REGRESSION — dm_score 0.84→0.64, HIGH severity
+   Fix: Refresh adversarial prompt seed, inject fresh competitor data
+2. arch-synthesiser: LATENCY_SPIKE — avg 42s vs 30s KPI, PathRAG stale 34 days
+   Fix: Re-index skills/arch-synthesiser/references/
+3. opencode-builder: MODEL_CAPACITY — async error handling struggles
+   Fix: ollama pull deepseek-coder:6.7b, update graph_design.json`:''}
+
+## YOUR ROLE
+You are the Master Architect. You can: query financial data, analyse bottlenecks, suggest architectural changes, recommend model upgrades, re-design agent prompts, interpret MIRA scores, and explain the full system. 
+
+Be specific. Use numbers. Cite the exact nodes, scores, and costs. When suggesting model upgrades, give the exact ollama command and the graph_design.json change needed. When analysing revenue, reference specific deal names and figures. Format your responses clearly — use short headers where helpful, be direct and actionable.`;
+}
+
+async function sendChat(){
+  const input = document.getElementById('chatInput');
+  const msg = input.value.trim();
+  if(!msg) return;
+  input.value = '';
+
+  appendMsg(msg, 'user');
+  const typingEl = appendTyping();
+
+  chatHistory.push({role:'user', content: msg});
+
+  try {
+    const resp = await fetch('/api/chat', {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({
+        system: buildSystemPrompt(),
+        messages: chatHistory.slice(-10)
+      })
+    });
+    const data = await resp.json();
+    const reply = data.content?.map(b=>b.text||'').join('') || 'No response.';
+    typingEl.remove();
+    appendMsg(reply, 'agent');
+    chatHistory.push({role:'assistant', content: reply});
+    addLog(`[GEMINI] Query answered — ${reply.slice(0,60)}...`, 'ok');
+  } catch(e) {
+    typingEl.remove();
+    appendMsg('Connection error. Check Sovereign Bridge availability.', 'system');
+    addLog('[GEMINI] API call failed: '+e.message, 'warn');
+  }
+}
+
+function appendMsg(text, role){
+  const msgs = document.getElementById('chatMsgs');
+  const div = document.createElement('div');
+  div.className = `msg msg-${role==='user'?'user':'agent'}`;
+  const label = role==='user'?'YOU':'GEMINI CLI · MASTER ARCHITECT';
+  const bubbleClass = role==='user'?'mb-user':role==='system'?'mb-system':'mb-agent';
+  div.innerHTML = `<div class="msg-label ${role==='user'?'msg-label-right':''}">${label}</div><div class="msg-bubble ${bubbleClass}" style="white-space:pre-wrap">${escHtml(text)}</div>`;
+  msgs.appendChild(div);
+  msgs.scrollTop = msgs.scrollHeight;
+  return div;
+}
+function appendTyping(){
+  const msgs = document.getElementById('chatMsgs');
+  const div = document.createElement('div');
+  div.className = 'msg msg-agent';
+  div.innerHTML = `<div class="msg-label">GEMINI CLI · THINKING</div><div class="typing"><span></span><span></span><span></span></div>`;
+  msgs.appendChild(div);
+  msgs.scrollTop = msgs.scrollHeight;
+  return div;
+}
+function escHtml(s){ return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+function sendQuick(el){ document.getElementById('chatInput').value=el.textContent; sendChat(); }
+function chatKey(e){ if(e.key==='Enter'&&!e.shiftKey){ e.preventDefault(); sendChat(); } }
+
+// ══════════════════════════════════════════
+// SELF-ANNEAL
+// ══════════════════════════════════════════
+function resolveBottleneck(btn){
+  const item = btn.closest('.bn-item');
+  const node = item.querySelector('.bn-node').textContent;
+  item.style.opacity='0.4';
+  item.querySelector('.bn-sev').textContent='RESOLVED';
+  item.querySelector('.bn-sev').className='bn-sev sev-ok';
+  btn.textContent='✓ Annealed';
+  btn.disabled=true;
+  addLog(`[WATCHDOG] Auto-annealed: ${node} — heuristic updated`, 'ok');
+  updateSidebarDots();
+}
+function runWatchdog(){
+  addLog('[WATCHDOG] Manual check triggered...', 'warn');
+  setTimeout(()=>{ addLog('[WATCHDOG] Check complete. 2 bottlenecks confirmed. 1 new heuristic written.', 'ok'); },1200);
+}
+function updateSidebarDots(){
+  const critCount = document.querySelectorAll('.bn-sev:not(.sev-ok)').length;
+  document.getElementById('annealBadge').textContent = critCount+' warns';
+  if(critCount===0){ document.getElementById('annealDot').className='ni-dot d-ok'; document.getElementById('annealBadge').textContent='all clear'; }
+}
+function renderDmTrend(){
+  const nodes = [{n:'arch-synthesiser',scores:[0.84,0.81,0.79,0.75,0.73]},{n:'hostile-grounding',scores:[0.84,0.80,0.74,0.68,0.64]},{n:'pain-scorer',scores:[0.91,0.92,0.90,0.93,0.93]},{n:'opencode-builder',scores:[0.85,0.83,0.86,0.87,0.85]}];
+  document.getElementById('dmTrend').innerHTML = nodes.map(n=>{
+    const last=n.scores[n.scores.length-1]; const first=n.scores[0];
+    const trend=last>=first?'↑':'↓'; const col=last>=0.80?'var(--teal-l)':last>=0.70?'var(--amber)':'var(--red)';
+    const bars=n.scores.map(s=>`<div style="width:14px;height:${Math.round(s*40)}px;background:${s>=0.80?'var(--teal)':s>=0.70?'var(--amber)':'var(--red)'};border-radius:2px;flex-shrink:0;"></div>`).join('');
+    return `<div class="bn-item"><div class="bn-top"><span class="bn-node">${n.n}</span><span style="font-family:var(--font);font-size:10px;color:${col}">${trend} ${last}</span><span class="bn-sev ${last>=0.80?'sev-ok':last>=0.70?'sev-med':'sev-high'}">${last>=0.80?'OK':last>=0.70?'WATCH':'LOW'}</span></div><div style="display:flex;align-items:flex-end;gap:4px;height:44px;margin-top:8px;">${bars}</div></div>`;
+  }).join('');
+}
+
+// ══════════════════════════════════════════
+// AGENTS
+// ══════════════════════════════════════════
+function renderAgents(){
+  const mbadge = m=>({
+    'opencode:ollama':'background:rgba(127,119,221,.12);color:var(--purple-l);border:1px solid rgba(127,119,221,.22);',
+    'gemini-2.5-pro':'background:rgba(239,159,39,.1);color:var(--amber);border:1px solid rgba(239,159,39,.22);',
+    'MassGen×3':'background:rgba(212,83,126,.1);color:var(--pink-l);border:1px solid rgba(212,83,126,.22);',
+  }[m]||'background:var(--bg3);color:var(--text3);border:1px solid var(--border);');
+  document.getElementById('agentGrid').innerHTML = AGENTS.map(a=>`
+    <div class="ag-card" onclick="agClick(this,'${a.n}')">
+      <div class="ag-hd">
+        <span class="ag-persona">${a.persona}</span>
+        <span class="ag-name">${a.n}</span>
+        <span class="ag-model" style="${mbadge(a.model)}">${a.model}</span>
+      </div>
+      <div class="ag-tools">${a.tools.map(t=>`<span class="ag-tool">${t}</span>`).join('')}</div>
+      <div class="ag-policy-allow">✓ ${a.allow.slice(0,60)}${a.allow.length>60?'…':''}</div>
+      <div class="ag-policy-deny">✕ ${a.deny.slice(0,60)}${a.deny.length>60?'…':''}</div>
+      <div class="ag-cc">${a.cc}</div>
+    </div>`).join('');
+}
+function agClick(el,name){ document.querySelectorAll('.ag-card').forEach(x=>x.classList.remove('sel')); el.classList.add('sel'); addLog(`[AGENT] Inspecting: ${name}`,'mas'); }
+
+// ══════════════════════════════════════════
+// GRAPH
+// ══════════════════════════════════════════
+function renderGraph(){
+  const statusStyle={ok:'background:rgba(29,158,117,.1);color:var(--teal-l);border:1px solid rgba(29,158,117,.2);',warn:'background:rgba(239,159,39,.1);color:var(--amber);border:1px solid rgba(239,159,39,.2);',gate:'background:rgba(216,90,48,.1);color:var(--coral-l);border:1px solid rgba(216,90,48,.2);'};
+  document.getElementById('graphNodes').innerHTML = GRAPH_NODES.map((n,i)=>`
+    <div style="display:flex;align-items:center;gap:10px;padding:8px 12px;background:var(--bg2);border:1px solid var(--border);border-radius:6px;cursor:pointer;transition:border-color .12s;" onmouseenter="this.style.borderColor='var(--border2)'" onmouseleave="this.style.borderColor='var(--border)'" onclick="addLog('[GRAPH] Node: ${n.id} — ${n.type}','mas')">
+      <span style="font-size:10px;font-family:var(--font);color:var(--text3);width:20px;text-align:right;flex-shrink:0;">${i+1}</span>
+      <span style="font-size:11px;font-weight:600;font-family:var(--font);flex:1;">${n.id}</span>
+      <span style="font-size:9px;color:var(--text3);font-family:var(--font);margin-right:6px;">${n.type}</span>
+      <span style="font-size:9px;font-family:var(--font);padding:2px 7px;border-radius:3px;background:rgba(127,119,221,.1);color:var(--purple-l);border:1px solid rgba(127,119,221,.2);">${n.model}</span>
+      <span style="font-size:7px;font-family:var(--font);padding:1px 5px;border-radius:3px;${statusStyle[n.status]}">${n.status.toUpperCase()}</span>
+    </div>
+    ${i<GRAPH_NODES.length-1?`<div style="padding:0 12px;font-size:9px;color:var(--text3);font-family:var(--font);">↓</div>`:''}
+  `).join('');
+}
+
+// ══════════════════════════════════════════
+// LINEAGE
+// ══════════════════════════════════════════
+function renderLineage(){
+  document.getElementById('lineageRecords').innerHTML = LINEAGE.map(r=>`
+    <div class="score-row">
+      <div class="sr-top">
+        <span class="sr-node">${r.node}</span>
+        <span class="sr-model">${r.model}</span>
+        <span style="font-size:9px;font-family:var(--font);padding:2px 7px;border-radius:3px;margin-left:auto;${r.warn?'background:rgba(239,159,39,.1);color:var(--amber);border:1px solid rgba(239,159,39,.2);':'background:rgba(29,158,117,.1);color:var(--teal-l);border:1px solid rgba(29,158,117,.2);'}">${r.warn?'⚠ WATCH':'✓ PASS'}</span>
+      </div>
+      <div class="sr-dims">
+        <div class="sr-d">content <span style="color:${r.scores.c>=0.80?'var(--teal-l)':r.scores.c>=0.70?'var(--amber)':'var(--red)'}">${r.scores.c}</span></div>
+        <div class="sr-d">provenance <span style="color:${r.scores.p>=0.80?'var(--teal-l)':r.scores.p>=0.70?'var(--amber)':'var(--red)'}">${r.scores.p}</span></div>
+        <div class="sr-d">total <span style="font-weight:700;color:${r.scores.t>=0.80?'var(--teal-l)':r.scores.t>=0.70?'var(--amber)':'var(--red)'}">${r.scores.t}</span></div>
+      </div>
+      <div class="sr-bar"><div class="sr-fill" style="width:${r.scores.t*100}%;background:${r.scores.t>=0.80?'var(--teal)':r.scores.t>=0.70?'var(--amber)':'var(--red)'}"></div></div>
+      <div style="font-size:9px;color:var(--text3);font-family:var(--font);">→ ${r.output} · ${r.tok?r.tok+' tokens · ':''} ${r.cost}</div>
+    </div>`).join('');
+  renderMiraScores();
+}
+function renderMiraScores(){
+  document.getElementById('miraScores').innerHTML = LINEAGE.map(r=>`
+    <div class="score-row">
+      <div class="sr-top"><span class="sr-node">${r.node}</span><span class="sr-model">${r.model}</span></div>
+      <div class="sr-dims">
+        <div class="sr-d" style="color:var(--text2)">c: <span style="color:${r.scores.c>=0.80?'var(--teal-l)':'var(--amber)'}">${r.scores.c}</span></div>
+        <div class="sr-d" style="color:var(--text2)">p: <span style="color:${r.scores.p>=0.80?'var(--teal-l)':'var(--amber)'}">${r.scores.p}</span></div>
+        <div class="sr-d" style="color:var(--text2)">Σ: <span style="font-weight:700;color:${r.scores.t>=0.80?'var(--teal-l)':r.scores.t>=0.70?'var(--amber)':'var(--red)'}">${r.scores.t}</span></div>
+      </div>
+      <div class="sr-bar"><div class="sr-fill" style="width:${r.scores.t*100}%;background:${r.scores.t>=0.80?'var(--teal)':r.scores.t>=0.70?'var(--amber)':'var(--red)'}"></div></div>
+    </div>`).join('');
+}
+
+// ══════════════════════════════════════════
+// LOG
+// ══════════════════════════════════════════
+const LOG_COLORS = {ok:'var(--teal-l)',warn:'var(--amber)',gate:'var(--coral-l)',info:'var(--blue-l)',mas:'var(--green-l)',mira:'var(--pink-l)'};
+function addLog(msg, type='info'){
+  const log = document.getElementById('agentLog');
+  const now = new Date();
+  const t = now.toTimeString().slice(0,8);
+  const div = document.createElement('div');
+  div.style.cssText = `display:flex;gap:7px;padding:2px 0;border-bottom:1px solid var(--border);`;
+  div.innerHTML = `<span style="color:var(--text3);flex-shrink:0;">${t}</span><span style="color:${LOG_COLORS[type]||'var(--text2)'};flex:1;">${msg}</span>`;
+  log.insertBefore(div, log.firstChild);
+  if(log.children.length > 30) log.removeChild(log.lastChild);
+}
+
+// ══════════════════════════════════════════
+// INIT
+// ══════════════════════════════════════════
+renderRevenue();
+renderDmTrend();
+renderMiraScores();
+addLog('[SYSTEM] Shadow Ops C&C initialised — Weave v4.0', 'ok');
+addLog('[MIRA] 8 agents grounded by Council & Cabal', 'mira');
+addLog('[WATCHDOG] 2 bottlenecks detected — hostile-grounding dm regression + arch latency', 'warn');
+addLog('[REVENUE] '+deals.length+' deals loaded from SQLite', 'info');
+
+// Simple live status polling (every 30 seconds)
+setInterval(function() {
+  fetch('/api/system/status').then(function(r){return r.json();}).then(function(data){
+    var statusEl = document.getElementById('sysStatus');
+    if(statusEl && data.lineage_entries > 0) {
+      statusEl.textContent = '● LIVE';
+      statusEl.style.color = '#5DCAA5';
+    }
+  }).catch(function(){});
+}, 30000);
+</script>
+
+
+</body></html>

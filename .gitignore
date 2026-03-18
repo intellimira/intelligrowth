@@ -1,0 +1,60 @@
+# Secrets & Credentials
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+credentials.json
+token*.json
+
+# IDE & Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+dist/
+build/
+*.egg
+
+# Node
+node_modules/
+package-lock.json
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Large/Media files
+*.mp4
+*.mov
+*.avi
+*.zip
+*.tar
+*.gz
+
+# Archives
+*.rar
+*.7z
+
+# Sensitive data
+*.sqlite
+*.db
+*.db-journal
+
+# Backup directories (external)
+**/backups/
+**/archive/
+
+# Open Notebook (large external)
+open_notebook_local/
+
+# Claude-specific (user-specific)
+.claude/
+.local/

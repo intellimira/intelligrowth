@@ -1,0 +1,6 @@
+{
+  "opencode-builder": {
+    "allowed_tools": ["opencode_run", "ollama_infer", "read_file", "write_file", "run_tests"],
+    "deny_tools":    ["send_email", "http_post", "git_push", "deploy", "delete_file", "gemini_call"]
+  }
+}

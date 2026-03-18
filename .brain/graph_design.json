@@ -1,0 +1,220 @@
+{
+  "meta": {
+    "version": "4.0",
+    "name": "ShadowOpsWeave",
+    "reasoning_model": "ollama/qwen3:8b",
+    "code_model": "ollama/qwen2.5-coder:1.5b",
+    "invoke_model": "hybrid",
+    "build_model": "hybrid",
+    "mira_tier": 1,
+    "intent_file": ".gemini/shadow_ops_intent.gemini",
+    "blueprint_path": ".brain/graph_design.json",
+    "c_and_c_grounded": true,
+    "grounding_date": "2026-03-13",
+    "last_updated": "2026-03-13-hybrid-model"
+  },
+  "nodes": [
+    {
+      "id": "pain_sentry",
+      "type": "Action",
+      "label": "Sentry",
+      "agent": "pain-sentry",
+      "instructions": "[SENTRY · ⚛️ FIRST PRINCIPLES]\nStrip all assumptions. You are reading raw internet text.\nYour only task: tag what TYPE of pain this represents.\n\nSignal text: {{raw_text}}\nPlatform: {{platform}}\n\nApply First Principles: What is the user ACTUALLY describing?\n- A workaround they built? → SIGNAL_A\n- A product they're paying for that fails them? → SIGNAL_B\n- An overkill tool for a simple need? → SIGNAL_C\n- Emotional frustration with specific technical detail? → SIGNAL_D\n- Vague complaining with no actionable data? → SIGNAL_E\n\nIMPORTANT: Output MUST be valid JSON only. No markdown fences. No explanations.\n\nOutput JSON:\n{\"signal_id\": \"<unique-id>\", \"signal_type\": \"<SIGNAL_A-E>\", \"icp_hint\": \"<2-3 word customer description>\"}",
+      "invoke_model": "gemini-1.5-pro",
+      "message_adapter": "json",
+      "input_keys": ["raw_text", "platform"],
+      "output_keys": ["signal_id", "signal_type", "icp_hint"],
+      "mira_hooks": ["score_output", "write_lineage"]
+    },
+    {
+      "id": "pain_scorer",
+      "type": "Action",
+      "label": "Scorer",
+      "agent": "pain-scorer",
+      "instructions": "[SCORER · 🔬 SCIENTIFIC METHOD]\nHypothesis: This signal represents a monetisable pain point.\nYour job: test this hypothesis rigorously using the 5-axis PIS formula.\nTreat each axis as an independent measurement. Do not let high scores on\none axis compensate for missing evidence on another.\n\nSignal: {{raw_text}}\nSignal type: {{signal_type}}\nICP hint: {{icp_hint}}\n\nPIS FORMULA (must calculate exactly):\n- Frequency (0-30): How often does problem occur? Daily=25-30, Weekly=15-24, Monthly=5-14, Rare=<5\n- Revenue Proximity (0-25): Direct £ impact? £10k+/mo=20-25, £1-10k=10-19, <£1k=1-9, None=0\n- Workaround Evidence (0-20): Manual workarounds? Complex spreadsheet=15-20, Simple fix=5-14, None=0\n- Narrative Complexity (0-15): Detailed explanation with specifics=10-15, Vague=1-9, None=0\n- Budget Ownership (0-10): Can spend without approval=8-10, Has budget=4-7, No budget=0-3\n\nScore each axis independently. Then compute total.\n\nIMPORTANT: Output MUST be valid JSON only. No markdown fences. No explanations.\n\nRouting rules:\n- pain_score >= 72: route to gemini_arch\n- pain_score 55-71: route to ollama_arch\n- pain_score < 55: route to discard\n\nOutput JSON:\n{\"signal_id\": \"{{signal_id}}\", \"axis_scores\": {\"frequency\": <0-30>, \"revenue_proximity\": <0-25>, \"workaround_evidence\": <0-20>, \"narrative_complexity\": <0-15>, \"budget_ownership\": <0-10>}, \"pain_score\": <total>, \"routing_tag\": \"gemini_arch|ollama_arch|discard\", \"mgt_heuristic\": \"<one sentence actionable rule>\"}",
+      "invoke_model": "gemini-1.5-pro",
+      "message_adapter": "json",
+      "input_keys": ["signal_id", "raw_text", "signal_type", "icp_hint"],
+      "output_keys": ["pain_score", "axis_scores", "routing_tag", "mgt_heuristic"],
+      "mira_hooks": ["score_output", "write_lineage"]
+    },
+    {
+      "id": "pain_router",
+      "type": "Switch",
+      "label": "Router",
+      "invoke_model": "gemini-1.5-pro"
+    },
+    {
+      "id": "arch_synthesiser",
+      "type": "Action",
+      "label": "Architect",
+      "agent": "arch-synthesiser",
+      "instructions": "Synthesises zero-capital MVP architecture.\nEvery tool must be TIER 0 (£0 forever) or TIER 1 (free tier covers MVP).\n\nSignal: pain_score={{pain_score}}, axes={{axis_scores}}, route={{routing_tag}}\n\nReference architectures (use as patterns):\n- IMAP Listener: Python imaplib + SQLite + scheduled cron = £0\n- Web Scraper: Python Scrapy + SQLite + Cloudflare Workers = £0\n- API Bridge: FastAPI (render.com free) + SQLite = £0\n- RAG Pipeline: LangChain + ChromaDB (local) + Ollama = £0\n\nIMPORTANT: Output MUST be valid JSON only. No markdown fences. No explanations.\n\nOutput JSON:\n{\"project_id\": \"<proj_XXX>\", \"project_name\": \"<Name>\", \"architecture_json\": {\"stack\": [\"<tech1>\", \"<tech2>\"], \"cost_tier\": \"<0|1>\"}, \"revenue_model\": \"<subscription|usage|one-time>\", \"build_time_hours\": <1-40>, \"s_rank_confidence\": <0.0-1.0>}",
+      "invoke_model": "gemini-1.5-pro",
+      "message_adapter": "json",
+      "input_keys": ["signal_id", "pain_score", "axis_scores", "routing_tag"],
+      "output_keys": ["project_id", "project_name", "architecture_json", "revenue_model", "s_rank_confidence"],
+      "mira_hooks": ["score_output", "write_lineage", "log_gemini_cost"]
+    },
+    {
+      "id": "hostile_grounding",
+      "type": "Subgraph",
+      "label": "Grounding",
+      "sub_graph": {
+        "nodes": [
+          {
+            "id": "regulator",
+            "type": "Action",
+            "label": "Regulator",
+            "agent": "hostile-grounding",
+            "instructions": "UK/EU regulatory counsel. Assume the worst.\nFocus: GDPR Article 6 (lawful basis), ICO guidance, API Terms of Service.\n\nIMPORTANT: Output MUST be valid JSON only. No markdown fences.\n\nVote GO only if: no material regulatory breach AND no ToS violation.\nCite specific regulation if claiming risk.\n\nOutput JSON:\n{\"verdict\": \"GO|NO-GO\", \"reason\": \"<specific regulation or 'clear>'\"}",
+            "invoke_model": "gemini-1.5-pro"
+          },
+          {
+            "id": "pessimist",
+            "type": "Action",
+            "label": "Pessimist",
+            "agent": "hostile-grounding",
+            "instructions": "Seed-stage investor persona. Focus: vitamin or painkiller?\nCompetition density. Market timing. Daily-use loop confirmation.\n\nIMPORTANT: Output MUST be valid JSON only. No markdown fences.\n\nVote GO only if: <5 direct competitors AND daily-use loop confirmed.\nName competitors if claiming saturation.\n\nOutput JSON:\n{\"verdict\": \"GO|NO-GO\", \"competitors_named\": [\"<name1>\"], \"daily_loop\": \"<confirmed|unclear|missing>\"}",
+            "invoke_model": "gemini-1.5-pro"
+          },
+          {
+            "id": "realist",
+            "type": "Action",
+            "label": "Realist",
+            "agent": "hostile-grounding",
+            "instructions": "Solo senior engineer. Focus: Solo build feasibility.\nHidden complexity. API rate limits. Third-party dependencies.\n\nIMPORTANT: Output MUST be valid JSON only. No markdown fences.\n\nVote GO only if: solo build credibly achievable in stated hours.\nEstimate hours with 1.5x contingency buffer.\n\nOutput JSON:\n{\"verdict\": \"GO|NO-GO\", \"estimated_hours\": <1-100>, \"contingency_hours\": <estimated*1.5>, \"risk_factors\": [\"<risk1>\"]}",
+            "invoke_model": "gemini-1.5-pro"
+          },
+          {
+            "id": "consensus",
+            "type": "Action",
+            "label": "Consensus",
+            "agent": "hostile-grounding",
+            "instructions": "Consensus Rules:\n- 2/3 GO -> project_verdict = 'GO'\n- 3/3 GO -> project_verdict = 'GO_SRANK'\n- Any NO-GO -> project_verdict = 'NO-GO'\n\nIMPORTANT: Output MUST be valid JSON only. No markdown fences.\n\nOutput JSON:\n{\"project_verdict\": \"GO|GO_SRANK|NO-GO\", \"vote_distribution\": \"<X/3 GO>\", \"votes\": [{\"regulator\": \"GO|NO-GO\"}, {\"pessimist\": \"GO|NO-GO\"}, {\"realist\": \"GO|NO-GO\"}]}",
+            "invoke_model": "gemini-1.5-pro"
+          }
+        ],
+        "edges": [
+          { "source": "ENTRY", "target": "regulator" },
+          { "source": "ENTRY", "target": "pessimist" },
+          { "source": "ENTRY", "target": "realist" },
+          { "source": "regulator", "target": "consensus" },
+          { "source": "pessimist", "target": "consensus" },
+          { "source": "realist", "target": "consensus" },
+          { "source": "consensus", "target": "EXIT" }
+        ]
+      }
+    },
+    {
+      "id": "grounding_router",
+      "type": "Switch",
+      "label": "GO Router",
+      "invoke_model": "gemini-1.5-pro"
+    },
+    {
+      "id": "srank_pack_generator",
+      "type": "Action",
+      "label": "Sealing",
+      "agent": "srank-pack-generator",
+      "instructions": "Generates the full S-Rank Business Pack for GO-verified projects.\nOutputs: PAIN_SIGNAL_BRIEF.md, ARCHITECTURE.md, ZERO_CAPITAL_PLAN.md, GROUNDING_REPORT.md, OUTREACH_PACK.md, HITL_GATE.md.\nUpdate SQLite `deals` table.",
+      "invoke_model": "gemini-1.5-pro",
+      "message_adapter": "markdown",
+      "input_keys": ["project_id", "project_verdict", "architecture_json", "failure_vectors", "vote_distribution"],
+      "output_keys": ["pack_complete", "deal_id", "docs_written", "hitl_gate_path"],
+      "mira_hooks": ["score_output", "write_lineage", "log_gemini_cost", "update_revenue_tracker"]
+    },
+    {
+      "id": "hitl_gate",
+      "type": "Action",
+      "label": "HITL Gate",
+      "agent": "hitl-gate",
+      "instructions": "Review the S-Rank pack. Output 'GO' to proceed to building or 'NO-GO' to archive.",
+      "invoke_model": "gemini-1.5-pro",
+      "message_adapter": "json",
+      "input_keys": ["pack_complete", "deal_id", "docs_written"],
+      "output_keys": ["hitl_decision"]
+    },
+    {
+      "id": "opencode_builder",
+      "type": "Action",
+      "label": "Builder",
+      "agent": "opencode-builder",
+      "instructions": "Manifests the MVP codebase via OpenCode after HITL GO.\nOllama reviews output for security + ToS. Never deploys.\nWrite to projects/<PROJECT_NAME>/src/.",
+      "invoke_model": "gemini-1.5-pro",
+      "message_adapter": "json",
+      "input_keys": ["project_id", "architecture_json", "hitl_decision"],
+      "output_keys": ["build_complete", "src_path", "test_results", "ollama_review_verdict"],
+      "mira_hooks": ["score_output", "write_lineage", "update_deal_status"]
+    },
+    {
+      "id": "revenue_tracker",
+      "type": "Action",
+      "label": "Revenue Tracker",
+      "agent": "revenue-tracker",
+      "instructions": "Tracks revenue, costs, and profit per deal. Reads/writes the deals SQLite table.",
+      "invoke_model": "gemini-1.5-pro",
+      "message_adapter": "json",
+      "input_keys": ["deal_id", "status", "profit"],
+      "output_keys": ["mrr_updated", "p_and_l_report"],
+      "mira_hooks": ["write_lineage"]
+    },
+    {
+      "id": "self_anneal_watchdog",
+      "type": "Action",
+      "label": "Watchdog",
+      "agent": "self-anneal-watchdog",
+      "instructions": "Monitors lineage.json for DM score regressions and latency spikes. Suggests fixes and model upgrades.",
+      "invoke_model": "gemini-1.5-pro",
+      "execution": "async",
+      "off_critical_path": true,
+      "poll_interval_seconds": 300,
+      "message_adapter": "json",
+      "input_keys": ["lineage_path", "bottlenecks_table"],
+      "output_keys": ["bottleneck_report", "anneal_actions_taken", "upgrade_suggestions"],
+      "mira_hooks": ["write_lineage"]
+    },
+    {
+      "id": "discard_node",
+      "type": "Action",
+      "label": "Discard",
+      "agent": "base-worker",
+      "instructions": "Signal discarded due to low score.",
+      "invoke_model": "gemini-1.5-pro"
+    },
+    {
+      "id": "archive_node",
+      "type": "Action",
+      "label": "Archive",
+      "agent": "base-worker",
+      "instructions": "Project archived.",
+      "invoke_model": "gemini-1.5-pro"
+    }
+  ],
+  "edges": [
+    {"source": "ENTRY", "target": "pain_sentry"},
+    {"source": "ENTRY", "target": "self_anneal_watchdog"},
+    {"source": "pain_sentry",       "target": "pain_scorer"},
+    {"source": "pain_scorer",       "target": "pain_router"},
+    {"source": "pain_router",       "target": "arch_synthesiser",  "condition": "pain_score >= 72"},
+    {"source": "pain_router",       "target": "discard_node",      "condition": "pain_score < 72"},
+    {"source": "arch_synthesiser",  "target": "hostile_grounding"},
+    {"source": "hostile_grounding", "target": "grounding_router"},
+    {"source": "grounding_router",  "target": "srank_pack_generator", "condition": "GO"},
+    {"source": "grounding_router",  "target": "archive_node",      "condition": "NO-GO"},
+    {"source": "srank_pack_generator", "target": "hitl_gate"},
+    {"source": "hitl_gate",         "target": "opencode_builder",  "condition": "GO"},
+    {"source": "hitl_gate",         "target": "archive_node",      "condition": "NO-GO"},
+    {"source": "opencode_builder",  "target": "revenue_tracker"},
+    {"source": "revenue_tracker",   "target": "EXIT"},
+    {"source": "discard_node",      "target": "EXIT"},
+    {"source": "archive_node",      "target": "EXIT"},
+    {"source": "self_anneal_watchdog", "target": "EXIT"}
+  ],
+  "async_nodes": ["self_anneal_watchdog", "revenue_tracker"],
+  "state": {
+    "shared_keys": ["pain_score", "signal_id", "project_id", "project_name", "project_verdict", "deal_id"],
+    "backed_by": "sqlite",
+    "db_path": ".brain/shadow_ops.db"
+  }
+}

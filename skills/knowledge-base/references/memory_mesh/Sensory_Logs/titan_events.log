@@ -1,0 +1,4 @@
+{"timestamp": "2026-03-03 18:30:27", "origin": "TITAN_VISION_OS", "type": "MOTION_DETECTED", "data": {"location": "Front Door", "confidence": 0.98}, "nodal_trigger": "Risk Node"}
+{"timestamp": "2026-03-03 18:30:27", "origin": "TITAN_VISION_OS", "type": "OCR_TEXT_RECOGNIZED", "data": {"text": "Project Alpha: Confidential", "source": "User Screen"}, "nodal_trigger": "Analytic Node"}
+{"timestamp": "2026-03-03 19:00:25", "origin": "TITAN_VISION_OS", "type": "MOTION_DETECTED", "data": {"location": "Front Door", "confidence": 0.98}, "nodal_trigger": "Risk Node"}
+{"timestamp": "2026-03-03 19:00:25", "origin": "TITAN_VISION_OS", "type": "OCR_TEXT_RECOGNIZED", "data": {"text": "Project Alpha: Confidential", "source": "User Screen"}, "nodal_trigger": "Analytic Node"}

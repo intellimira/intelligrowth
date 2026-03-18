@@ -1,0 +1,554 @@
+{
+  "skills_count": 38,
+  "indexed_at": "2026-03-14T16:09:17.599543",
+  "skills": [
+    {
+      "name": "cabal_spawner",
+      "description": "Spawns autonomous ACCT sub-nodes for parallel task execution. Use when a complex task can be decomposed into independent sub-goals (e.g., analyzing two different repos simultaneously).",
+      "triggers": [],
+      "tools": [],
+      "persona": "",
+      "mira_tier": 1,
+      "file_path": "/home/sir-v/MiRA/skills/cabal_spawner/SKILL.md",
+      "indexed_at": "2026-03-14T11:34:33.766234"
+    },
+    {
+      "name": "base-worker",
+      "description": "Standard fallback worker for data extraction and basic reasoning tasks.",
+      "triggers": [
+        "analyze",
+        "read",
+        "write",
+        "evaluate"
+      ],
+      "tools": [
+        "read_log_file",
+        "write_file",
+        "execute_code"
+      ],
+      "persona": "",
+      "mira_tier": 1,
+      "file_path": "/home/sir-v/MiRA/skills/base-worker/SKILL.md",
+      "indexed_at": "2026-03-14T11:34:33.767548"
+    },
+    {
+      "name": "self-anneal-watchdog",
+      "description": "Monitors lineage.json for DM score regressions, latency spikes,",
+      "triggers": [
+        "monitor",
+        "watchdog",
+        "health check",
+        "bottleneck",
+        "anneal",
+        "self-heal"
+      ],
+      "tools": [
+        "sqlite_read",
+        "read_file",
+        "write_file",
+        "ollama_infer"
+      ],
+      "persona": "\ud83c\udf11 Dark Passenger \u2014 finds failure before it finds you",
+      "mira_tier": 1,
+      "file_path": "/home/sir-v/MiRA/skills/self-anneal-watchdog/SKILL.md",
+      "indexed_at": "2026-03-14T11:34:33.768223"
+    },
+    {
+      "name": "opencode-builder",
+      "description": "Manifests the MVP codebase via OpenCode after HITL GO.",
+      "triggers": [
+        "build",
+        "code",
+        "implement",
+        "manifest",
+        "generate codebase"
+      ],
+      "tools": [
+        "opencode_run",
+        "ollama_infer",
+        "read_file",
+        "write_file",
+        "run_tests"
+      ],
+      "persona": "\u2699\ufe0f Pragmatic Application \u2014 working code, minimum viable",
+      "mira_tier": 1,
+      "file_path": "/home/sir-v/MiRA/skills/opencode-builder/SKILL.md",
+      "indexed_at": "2026-03-14T11:34:33.768790"
+    },
+    {
+      "name": "cabal_commander",
+      "description": "Orchestrates and synthesizes results from multiple sub-nodes. Use as the high-level manager for multi-threaded Quests.",
+      "triggers": [],
+      "tools": [],
+      "persona": "",
+      "mira_tier": 1,
+      "file_path": "/home/sir-v/MiRA/skills/cabal_commander/SKILL.md",
+      "indexed_at": "2026-03-14T11:34:33.769332"
+    },
+    {
+      "name": "revenue-tracker",
+      "description": "Tracks revenue, costs, and profit per deal. Reads/writes the",
+      "triggers": [
+        "track revenue",
+        "update deal",
+        "profit",
+        "MRR",
+        "P&L",
+        "financial summary"
+      ],
+      "tools": [
+        "sqlite_read",
+        "sqlite_write",
+        "read_file",
+        "write_file"
+      ],
+      "persona": "\u2699\ufe0f Pragmatic Application \u2014 accurate numbers, zero drama",
+      "mira_tier": 1,
+      "file_path": "/home/sir-v/MiRA/skills/revenue-tracker/SKILL.md",
+      "indexed_at": "2026-03-14T11:34:33.769968"
+    },
+    {
+      "name": "client-delivery",
+      "description": "Generates professional engagement and delivery packages for Shadow Ops clients. Supports NotebookLM and Google Docs formats.",
+      "triggers": [
+        "delivery package",
+        "engagement package",
+        "client delivery",
+        "client portal"
+      ],
+      "tools": [
+        "generate_delivery_packages",
+        "generate_client_doc_link"
+      ],
+      "persona": "",
+      "mira_tier": 1,
+      "file_path": "/home/sir-v/MiRA/skills/client-delivery/SKILL.md",
+      "indexed_at": "2026-03-14T11:34:33.771141"
+    },
+    {
+      "name": "pain-scorer",
+      "description": "Applies dual-layer scoring: 5-axis PIS formula (Signal Strength)",
+      "triggers": [
+        "score",
+        "evaluate",
+        "grade",
+        "rank signal",
+        "calculate PIS",
+        "calculate PAINFUL"
+      ],
+      "tools": [
+        "sqlite_read",
+        "sqlite_write",
+        "ollama_infer",
+        "score_signal",
+        "write_file"
+      ],
+      "persona": "\ud83d\udd2c Scientific Method \u2014 treats scoring as hypothesis testing",
+      "mira_tier": 1,
+      "file_path": "/home/sir-v/MiRA/skills/pain-scorer/SKILL.md",
+      "indexed_at": "2026-03-14T11:34:33.772486"
+    },
+    {
+      "name": "shadow_monetizer",
+      "description": "Skill for shadow_monetizer",
+      "triggers": [],
+      "tools": [],
+      "persona": "",
+      "mira_tier": 1,
+      "file_path": "/home/sir-v/MiRA/skills/shadow_monetizer/SKILL.md",
+      "indexed_at": "2026-03-14T11:34:33.773238"
+    },
+    {
+      "name": "mesh_brancher",
+      "description": "Manages non-linear reasoning history. Use when you need to \"save state\" or explore alternative paths in a conversation.",
+      "triggers": [],
+      "tools": [],
+      "persona": "",
+      "mira_tier": 1,
+      "file_path": "/home/sir-v/MiRA/skills/mesh_brancher/SKILL.md",
+      "indexed_at": "2026-03-14T11:34:33.774006"
+    },
+    {
+      "name": "topic_sealer",
+      "description": "Consolidates reasoning turns into permanent EXP Zettels. Use to prevent context bloat after a sub-task is complete.",
+      "triggers": [],
+      "tools": [],
+      "persona": "",
+      "mira_tier": 1,
+      "file_path": "/home/sir-v/MiRA/skills/topic_sealer/SKILL.md",
+      "indexed_at": "2026-03-14T11:34:33.775084"
+    },
+    {
+      "name": "Consensus_Engine",
+      "description": "Skill for Consensus_Engine",
+      "triggers": [],
+      "tools": [],
+      "persona": "",
+      "mira_tier": 1,
+      "file_path": "/home/sir-v/MiRA/skills/Consensus_Engine/SKILL.md",
+      "indexed_at": "2026-03-14T11:34:33.775749"
+    },
+    {
+      "name": "ACCT_Dashboard",
+      "description": "Skill for ACCT_Dashboard",
+      "triggers": [],
+      "tools": [],
+      "persona": "",
+      "mira_tier": 1,
+      "file_path": "/home/sir-v/MiRA/skills/ACCT_Dashboard/SKILL.md",
+      "indexed_at": "2026-03-14T11:34:33.776507"
+    },
+    {
+      "name": "sovereign_shadow_operator",
+      "description": "Autonomous self-managing engine for monetization 'Shadow Operations.' Coordinates multiple skills to identify market targets, generate plans, and manage the execution cycle for passive value generation.",
+      "triggers": [],
+      "tools": [],
+      "persona": "",
+      "mira_tier": 1,
+      "file_path": "/home/sir-v/MiRA/skills/sovereign_shadow_operator/SKILL.md",
+      "indexed_at": "2026-03-14T11:34:33.777150"
+    },
+    {
+      "name": "Vector_Mesh",
+      "description": "Skill for Vector_Mesh",
+      "triggers": [],
+      "tools": [],
+      "persona": "",
+      "mira_tier": 1,
+      "file_path": "/home/sir-v/MiRA/skills/Vector_Mesh/SKILL.md",
+      "indexed_at": "2026-03-14T11:34:33.777873"
+    },
+    {
+      "name": "hostile-grounding",
+      "description": "Adversarial 3-subagent MassGen vote on GO/NO-GO. Consensus 2/3.",
+      "triggers": [
+        "challenge",
+        "stress-test",
+        "hostile review",
+        "grounding",
+        "validate"
+      ],
+      "tools": [
+        "gemini_call",
+        "sqlite_write",
+        "write_file",
+        "read_file"
+      ],
+      "persona": "\ud83c\udf11 Dark Passenger \u2014 assumption challenger, chaos identifier",
+      "mira_tier": 1,
+      "file_path": "/home/sir-v/MiRA/skills/hostile-grounding/SKILL.md",
+      "indexed_at": "2026-03-14T11:34:33.778572"
+    },
+    {
+      "name": "sovereign_cockpit",
+      "description": "Multi-pane TUI dashboard for ACCT. Surfaces Nodal status, system stats, and real-time sensory feeds. Use to visualize the state of the Sovereign Thinking Mesh.",
+      "triggers": [],
+      "tools": [],
+      "persona": "",
+      "mira_tier": 1,
+      "file_path": "/home/sir-v/MiRA/skills/sovereign_cockpit/SKILL.md",
+      "indexed_at": "2026-03-14T11:34:33.779537"
+    },
+    {
+      "name": "notebook_bridge",
+      "description": "Programmatically interacts with Google NotebookLM for ingestion, authoring, and presentation (audio/slides). Use to bridge local ACCT context with Google's high-fidelity cognitive tools.",
+      "triggers": [],
+      "tools": [],
+      "persona": "",
+      "mira_tier": 1,
+      "file_path": "/home/sir-v/MiRA/skills/notebook_bridge/SKILL.md",
+      "indexed_at": "2026-03-14T11:34:33.780629"
+    },
+    {
+      "name": "Project_Affiliate_Synapse",
+      "description": "Skill for Project_Affiliate_Synapse",
+      "triggers": [],
+      "tools": [],
+      "persona": "",
+      "mira_tier": 1,
+      "file_path": "/home/sir-v/MiRA/skills/Project_Affiliate_Synapse/SKILL.md",
+      "indexed_at": "2026-03-14T11:34:33.781574"
+    },
+    {
+      "name": "Quest_OpenClaw",
+      "description": "Skill for Quest_OpenClaw",
+      "triggers": [],
+      "tools": [],
+      "persona": "",
+      "mira_tier": 1,
+      "file_path": "/home/sir-v/MiRA/skills/Quest_OpenClaw/SKILL.md",
+      "indexed_at": "2026-03-14T11:34:33.782454"
+    },
+    {
+      "name": "pain-sentry",
+      "description": "Mines Reddit (PRAW), G2 reviews, and IMAP for raw pain signals.",
+      "triggers": [
+        "discover",
+        "mine",
+        "scan",
+        "find pain",
+        "monitor",
+        "harvest"
+      ],
+      "tools": [
+        "run_scrapy",
+        "praw_fetch",
+        "imap_read",
+        "sqlite_write",
+        "read_file"
+      ],
+      "persona": "\u269b\ufe0f First Principles \u2014 strips assumptions from raw signal",
+      "mira_tier": 1,
+      "file_path": "/home/sir-v/MiRA/skills/pain-sentry/SKILL.md",
+      "indexed_at": "2026-03-14T11:34:33.783848"
+    },
+    {
+      "name": "active_recall",
+      "description": "Proactively surfaces relevant historical context, Zettels, and logic-streams from the ACCT Memory Mesh and MIRA manifest. Use when starting a new Quest, exploring legacy documentation, or whenever \"deep memory\" is required.",
+      "triggers": [],
+      "tools": [],
+      "persona": "",
+      "mira_tier": 1,
+      "file_path": "/home/sir-v/MiRA/skills/active_recall/SKILL.md",
+      "indexed_at": "2026-03-14T11:34:33.784751"
+    },
+    {
+      "name": "lab-utility",
+      "description": "Skill for lab-utility",
+      "triggers": [],
+      "tools": [],
+      "persona": "",
+      "mira_tier": 1,
+      "file_path": "/home/sir-v/MiRA/skills/lab-utility/SKILL.md",
+      "indexed_at": "2026-03-14T11:34:33.785714"
+    },
+    {
+      "name": "saas-shadow-pro",
+      "description": "Professional SaaS Shadow Entrepreneur engine for solving high-impact business pain points (e.g., HMRC, Payroll, Admin).",
+      "triggers": [
+        "pain point",
+        "engagement prospective",
+        "SaaS solution",
+        "prospective plan"
+      ],
+      "tools": [
+        "pain_miner",
+        "prospective_generator",
+        "solution_builder",
+        "engagement_qualifier"
+      ],
+      "persona": "",
+      "mira_tier": 1,
+      "file_path": "/home/sir-v/MiRA/skills/saas-shadow-pro/SKILL.md",
+      "indexed_at": "2026-03-14T11:34:33.786545"
+    },
+    {
+      "name": "srank-pack-generator",
+      "description": "Generates the full S-Rank Business Pack for GO-verified projects.",
+      "triggers": [
+        "seal",
+        "generate business pack",
+        "srank",
+        "create project pack"
+      ],
+      "tools": [
+        "gemini_call",
+        "ollama_infer",
+        "sqlite_write",
+        "write_file",
+        "read_file"
+      ],
+      "persona": "\u2699\ufe0f Pragmatic Application \u2014 fastest path to actionable output",
+      "mira_tier": 1,
+      "file_path": "/home/sir-v/MiRA/skills/srank-pack-generator/SKILL.md",
+      "indexed_at": "2026-03-14T11:34:33.788306"
+    },
+    {
+      "name": "stream_monitor",
+      "description": "Monitors real-time reasoning streams for forbidden patterns or errors. Use for high-security or critical system operations.",
+      "triggers": [],
+      "tools": [],
+      "persona": "",
+      "mira_tier": 1,
+      "file_path": "/home/sir-v/MiRA/skills/stream_monitor/SKILL.md",
+      "indexed_at": "2026-03-14T11:34:33.790443"
+    },
+    {
+      "name": "arch-synthesiser",
+      "description": "Synthesises zero-capital MVP architecture using Gemini CLI.",
+      "triggers": [
+        "architect",
+        "design solution",
+        "plan build",
+        "technical design",
+        "MVP spec"
+      ],
+      "tools": [
+        "gemini_call",
+        "ollama_infer",
+        "sqlite_write",
+        "write_file",
+        "pathrag_query"
+      ],
+      "persona": "\u2728 Creative Synthesis \u2014 novel zero-capital tool combinations",
+      "mira_tier": 1,
+      "file_path": "/home/sir-v/MiRA/skills/arch-synthesiser/SKILL.md",
+      "indexed_at": "2026-03-14T11:34:33.792516"
+    },
+    {
+      "name": "context_compactor",
+      "description": "Performs mass semantic summarization of folders. Use for maintaining a lean Memory Mesh footprint.",
+      "triggers": [],
+      "tools": [],
+      "persona": "",
+      "mira_tier": 1,
+      "file_path": "/home/sir-v/MiRA/skills/context_compactor/SKILL.md",
+      "indexed_at": "2026-03-14T11:34:33.793701"
+    },
+    {
+      "name": "email_manager",
+      "description": "Skill for email_manager",
+      "triggers": [],
+      "tools": [],
+      "persona": "",
+      "mira_tier": 1,
+      "file_path": "/home/sir-v/MiRA/skills/email_manager/SKILL.md",
+      "indexed_at": "2026-03-14T11:34:33.795200"
+    },
+    {
+      "name": "shadow-ops-prover",
+      "description": "Monetization Proof-of-Work engine for intellimira@gmail.com. Automates the 7-stage Shadow Operator pipeline from scout to close.",
+      "triggers": [
+        "shadow ops",
+        "proof",
+        "monetization",
+        "outreach",
+        "creator audit"
+      ],
+      "tools": [
+        "scout_node",
+        "dna_node",
+        "relay_node",
+        "report_node",
+        "dashboard_node",
+        "ultima_reporter"
+      ],
+      "persona": "",
+      "mira_tier": 1,
+      "file_path": "/home/sir-v/MiRA/skills/shadow-ops-prover/SKILL.md",
+      "indexed_at": "2026-03-14T11:34:33.796189"
+    },
+    {
+      "name": "B-Line Arsenal (Problem-Led Solutions)",
+      "description": "A suite of diagnostic tools (MCP-compatible) designed to perform high-integrity audits on messy business data to surface \"Revenue Leaks\" and \"Operational Fragility.\"",
+      "triggers": [],
+      "tools": [],
+      "persona": "",
+      "mira_tier": 1,
+      "file_path": "/home/sir-v/MiRA/skills/b_line_arsenal/SKILL.md",
+      "indexed_at": "2026-03-14T11:34:33.797368"
+    },
+    {
+      "name": "knowledge-base",
+      "description": "Skill for knowledge-base",
+      "triggers": [],
+      "tools": [],
+      "persona": "",
+      "mira_tier": 1,
+      "file_path": "/home/sir-v/MiRA/skills/knowledge-base/SKILL.md",
+      "indexed_at": "2026-03-14T11:34:33.798413"
+    },
+    {
+      "name": "B-Line Arsenal (Problem-Led Solutions)",
+      "description": "A suite of diagnostic tools (MCP-compatible) designed to perform high-integrity audits on messy business data to surface \"Revenue Leaks\" and \"Operational Fragility.\"",
+      "triggers": [],
+      "tools": [],
+      "persona": "",
+      "mira_tier": 1,
+      "file_path": "/home/sir-v/MiRA/skills/b_line_arsenal/SKILL.md",
+      "indexed_at": "2026-03-14T13:51:17.402566"
+    },
+    {
+      "name": "B-Line Arsenal (Problem-Led Solutions)",
+      "description": "A suite of diagnostic tools (MCP-compatible) designed to perform high-integrity audits on messy business data to surface \"Revenue Leaks\" and \"Operational Fragility.\"",
+      "triggers": [],
+      "tools": [],
+      "persona": "",
+      "mira_tier": 1,
+      "file_path": "/home/sir-v/MiRA/skills/b_line_arsenal/SKILL.md",
+      "indexed_at": "2026-03-14T15:42:27.486141"
+    },
+    {
+      "name": "ai-agent-foundations",
+      "description": "Comprehensive skill covering AI agent fundamentals, capabilities, architecture patterns, and implementation across education and enterprise workflows.",
+      "triggers": [
+        "ai-agent",
+        "agentic-ai",
+        "autonomous-agents",
+        "multi-agent",
+        "workflow-automation",
+        "llm-agents",
+        "agent-architecture",
+        "agent-implementation"
+      ],
+      "tools": [
+        "llm_infer",
+        "tool_calling",
+        "memory_management",
+        "orchestration_layer",
+        "rag_retrieval"
+      ],
+      "persona": "\ud83d\udd2c Scientific Method \u2014 pattern extraction and systematic analysis",
+      "mira_tier": 1,
+      "file_path": "/home/sir-v/MiRA/skills/ai-agent-foundations/SKILL.md",
+      "indexed_at": "2026-03-14T15:51:55.830354"
+    },
+    {
+      "name": "B-Line Arsenal (Problem-Led Solutions)",
+      "description": "A suite of diagnostic tools (MCP-compatible) designed to perform high-integrity audits on messy business data to surface \"Revenue Leaks\" and \"Operational Fragility.\"",
+      "triggers": [],
+      "tools": [],
+      "persona": "",
+      "mira_tier": 1,
+      "file_path": "/home/sir-v/MiRA/skills/b_line_arsenal/SKILL.md",
+      "indexed_at": "2026-03-14T15:51:55.832889"
+    },
+    {
+      "name": "local-ai-stack",
+      "description": "Comprehensive skill for setting up local AI infrastructure with Ollama, OpenClaw, LM Studio, and self-hosted AI agent deployment.",
+      "triggers": [
+        "local-ai",
+        "self-hosted-llm",
+        "ollama",
+        "openclaw",
+        "lm-studio",
+        "local-ai-stack",
+        "ai-agents",
+        "self-hosted-ai",
+        "gguf-models"
+      ],
+      "tools": [
+        "ollama_run",
+        "docker",
+        "pnpm",
+        "npm",
+        "model_download",
+        "gateway_config"
+      ],
+      "persona": "\u2699\ufe0f Pragmatic Application \u2014 infrastructure and deployment",
+      "mira_tier": 1,
+      "file_path": "/home/sir-v/MiRA/skills/local-ai-stack/SKILL.md",
+      "indexed_at": "2026-03-14T16:09:17.592176"
+    },
+    {
+      "name": "B-Line Arsenal (Problem-Led Solutions)",
+      "description": "A suite of diagnostic tools (MCP-compatible) designed to perform high-integrity audits on messy business data to surface \"Revenue Leaks\" and \"Operational Fragility.\"",
+      "triggers": [],
+      "tools": [],
+      "persona": "",
+      "mira_tier": 1,
+      "file_path": "/home/sir-v/MiRA/skills/b_line_arsenal/SKILL.md",
+      "indexed_at": "2026-03-14T16:09:17.599033"
+    }
+  ]
+}

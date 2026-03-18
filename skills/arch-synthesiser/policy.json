@@ -1,0 +1,6 @@
+{
+  "arch-synthesiser": {
+    "allowed_tools": ["gemini_call", "ollama_infer", "sqlite_write", "write_file", "pathrag_query", "read_file"],
+    "deny_tools":    ["send_email", "http_post", "delete_file", "git_push", "deploy"]
+  }
+}

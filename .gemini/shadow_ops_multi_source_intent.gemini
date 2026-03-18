@@ -1,0 +1,35 @@
+Vibe Graphing Intent: Shadow Ops Multi-Source Scout (Exploratory SaaS & Jobs)
+
+Model Configuration:
+- Build Model (Architect): Gemini 2.0 Flash
+- Invoke Model (Worker): opencode:ollama
+
+Design Intent:
+Expand the Shadow Ops monetization engine to identify low-impact, high-speed delivery opportunities across multiple reputable platforms (Upwork, LinkedIn, X, specialized job boards, and Reddit). 
+The goal is to harvest pain points, qualify them against "proven and tested" resellable solutions, 
+and deliver data-grounded pitches via NotebookLM. 
+Adhere strictly to MIRA mandates for empirical grounding and the Weave's deterministic execution.
+
+Structural Constraints (Topology):
+START -> [MultiSource_Scout] -> [Solution_Matcher] -> [Data_Validator] -> [Pitch_Generator] -> [Neural_Relay] -> END
+
+MultiSource_Scout: Exploratory search across Upwork, LinkedIn, X, and Reddit for "Job Openings" or "Pain Signals" in high-margin niches (Notion, AI Workflows, Automation).
+Solution_Matcher: Cross-references pain signals with the Weave's library of "Proven & Tested" solutions (e.g., HTML Gameplans, Whop Setup, Launch Formulas).
+Data_Validator: Ensures all claims are backed by empirical data (ER%, Revenue Potential, Traction Scores) as per MIRA protocols.
+Pitch_Generator: Constructs the 100% tailored NotebookLM pitch asset and "Operational Relief" message.
+Neural_Relay: Executes delivery and initiates the engagement listener.
+
+Data Contracts:
+- PULL: skills/knowledge-base/references/memory_mesh/Zettels/SHADOW_OPS_WEAVE.md, .mira/policies/agent_tool_policy.json, ACCT Protocols.
+- PUSH: .brain/outputs/scout_report.json, .mira/scores/solution_fidelity.json.
+
+Context Adapters:
+- PathRAG: Access "Green Forest" strategy and "Battle-Testing" logs for solution validation.
+- MCP: Utilize 'lab-utility' scripts for scraping and 'sovereign_shadow_operator' for CRM management.
+
+Role Assignment:
+- Scout: 🔬 Scientific Method + ✨ Creative Synthesis
+- Matcher: ⚛️ First Principles + ⚙️ Pragmatic Application
+- Validator: 🔬 Scientific Method + 🤔 Philosophical Inquiry
+- Pitcher: ✨ Creative Synthesis + ⚙️ Pragmatic Application
+- Relay: ⚙️ Pragmatic Application + 🌑 The Dark Passenger

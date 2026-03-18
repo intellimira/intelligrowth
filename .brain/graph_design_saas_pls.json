@@ -1,0 +1,103 @@
+{
+  "name": "Shadow_Ops_SaaS_PLS",
+  "metadata": {
+    "vibe": "Problem-Led SaaS Opportunity Harvesting",
+    "blueprint_v": "4.1.0"
+  },
+  "nodes": [
+    {
+      "id": "b_line_hunter",
+      "type": "Agent",
+      "metadata": {
+        "role": "B-Line Hunter",
+        "description": "Scans Reddit for high-signal pain points",
+        "personas": ["⚛️ First Principles", "🔬 Scientific Method"]
+      },
+      "config": {
+        "skill": "b_line_arsenal",
+        "tools": ["omni_scout_orchestrate", "run_shell_command"],
+        "instructions": "Execute Arena Deployment: Scan target subreddits for recurring business pain points, 'manual task' complaints, or operational fragility."
+      },
+      "edges": [
+        {
+          "to": "diagnostic_agent",
+          "adapter": "json"
+        }
+      ]
+    },
+    {
+      "id": "diagnostic_agent",
+      "type": "Agent",
+      "metadata": {
+        "role": "Diagnostic",
+        "description": "Qualifies pain points via automated audits",
+        "personas": ["🔬 Scientific Method", "⚙️ Pragmatic Application"]
+      },
+      "config": {
+        "skill": "b_line_arsenal",
+        "tools": ["hygiene_flow_audit", "iron_node_audit"],
+        "instructions": "Perform evidence-based audits on harvested data. Calculate PIS (Pain Intensity Score) and qualify the 'Revenue Leak' potential."
+      },
+      "edges": [
+        {
+          "to": "solution_architect",
+          "adapter": "json"
+        }
+      ]
+    },
+    {
+      "id": "solution_architect",
+      "type": "Agent",
+      "metadata": {
+        "role": "Architect",
+        "description": "Generates MVP Blueprints and NotebookLM assets",
+        "personas": ["✨ Creative Synthesis", "🤔 Philosophical Inquiry"]
+      },
+      "config": {
+        "skill": "lab-utility",
+        "tools": ["recursive_product_research", "transmit_rendered_aetheric"],
+        "instructions": "Synthesize a SaaS MVP Blueprint. Generate a 100% tailored NotebookLM pitch asset illustrating the solution and the 'Operational Relief' it provides."
+      },
+      "edges": [
+        {
+          "to": "pitch_agent",
+          "adapter": "json"
+        }
+      ]
+    },
+    {
+      "id": "pitch_agent",
+      "type": "Agent",
+      "metadata": {
+        "role": "Pitch Agent",
+        "description": "Executes outreach and monitors for response",
+        "personas": ["⚙️ Pragmatic Application", "🌑 The Dark Passenger"]
+      },
+      "config": {
+        "skill": "lab-utility",
+        "tools": ["gemini_mail_trigger", "sensory_listener"],
+        "instructions": "Execute outreach via the Neural Relay. Monitor for triggers like 'BLUEPRINT' or 'YES' to advance the sequence."
+      },
+      "edges": [
+        {
+          "to": "end_evaluator",
+          "adapter": "markdown"
+        }
+      ]
+    },
+    {
+      "id": "end_evaluator",
+      "type": "Agent",
+      "metadata": {
+        "role": "Sentinel",
+        "description": "Final quality gate and lineage logger",
+        "personas": ["🔬 Scientific Method"]
+      },
+      "config": {
+        "skill": "base-worker",
+        "tools": ["read_file", "run_shell_command"],
+        "instructions": "Log final lineage and PIS traction scores to .mira/scores/saas_pls_performance.json."
+      }
+    }
+  ]
+}

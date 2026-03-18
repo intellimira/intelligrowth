@@ -1,0 +1,6 @@
+{
+  "pain-sentry": {
+    "allowed_tools": ["run_scrapy", "praw_fetch", "imap_read", "sqlite_write", "read_file"],
+    "deny_tools":    ["gemini_call", "ollama_infer", "send_email", "send_sms", "http_post", "delete_file", "git_push", "deploy", "write_file"]
+  }
+}

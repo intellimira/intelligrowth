@@ -1,0 +1,123 @@
+{
+  "name": "Shadow_Ops_Multi_Source_Scout",
+  "metadata": {
+    "vibe": "Exploratory Multi-Source Shadow Ops Engine",
+    "blueprint_v": "4.2.0"
+  },
+  "nodes": [
+    {
+      "id": "multisource_scout",
+      "type": "Agent",
+      "metadata": {
+        "role": "Scout",
+        "description": "Exploratory search across Upwork, LinkedIn, X, and Reddit",
+        "personas": ["🔬 Scientific Method", "✨ Creative Synthesis"]
+      },
+      "config": {
+        "skill": "lab-utility",
+        "tools": ["web_search", "web_fetch", "run_shell_command"],
+        "instructions": "Execute multi-source harvesting. Search Upwork, LinkedIn, X, and Reddit for 'help wanted' or 'how do I' signals in Notion, AI Automation, and Workflow niches. Target low-impact jobs that can be delivered quickly."
+      },
+      "edges": [
+        {
+          "to": "solution_matcher",
+          "adapter": "json"
+        }
+      ]
+    },
+    {
+      "id": "solution_matcher",
+      "type": "Agent",
+      "metadata": {
+        "role": "Matcher",
+        "description": "Cross-references signals with proven solutions",
+        "personas": ["⚛️ First Principles", "⚙️ Pragmatic Application"]
+      },
+      "config": {
+        "skill": "knowledge-base",
+        "tools": ["read_file", "grep_search"],
+        "instructions": "Identify the best 'Proven & Tested' solution from the Weave (e.g., 7-Stage Pipeline assets, HTML Gameplans) to address the scouted pain point. Favor high-leverage, low-impact deliveries."
+      },
+      "edges": [
+        {
+          "to": "data_validator",
+          "adapter": "json"
+        }
+      ]
+    },
+    {
+      "id": "data_validator",
+      "type": "Agent",
+      "metadata": {
+        "role": "Validator",
+        "description": "Ensures empirical grounding",
+        "personas": ["🔬 Scientific Method", "🤔 Philosophical Inquiry"]
+      },
+      "config": {
+        "skill": "base-worker",
+        "tools": ["read_file"],
+        "instructions": "Validate the solution and pitch data against MIRA mandates and the 1% Rule. Ensure all revenue and engagement projections are empirically grounded."
+      },
+      "edges": [
+        {
+          "to": "pitch_generator",
+          "adapter": "json"
+        }
+      ]
+    },
+    {
+      "id": "pitch_generator",
+      "type": "Agent",
+      "metadata": {
+        "role": "Pitcher",
+        "description": "Generates NotebookLM assets and tailored copy",
+        "personas": ["✨ Creative Synthesis", "⚙️ Pragmatic Application"]
+      },
+      "config": {
+        "skill": "lab-utility",
+        "tools": ["transmit_rendered_aetheric", "run_shell_command"],
+        "instructions": "Construct the NotebookLM pitch asset. Focus on 'Operational Relief' and 'Spec Work' (e.g., 'I built a prototype for you')."
+      },
+      "edges": [
+        {
+          "to": "neural_relay",
+          "adapter": "json"
+        }
+      ]
+    },
+    {
+      "id": "neural_relay",
+      "type": "Agent",
+      "metadata": {
+        "role": "Relay",
+        "description": "Executes delivery and monitors for engagement",
+        "personas": ["⚙️ Pragmatic Application", "🌑 The Dark Passenger"]
+      },
+      "config": {
+        "skill": "lab-utility",
+        "tools": ["gemini_mail_trigger", "sensory_listener"],
+        "instructions": "Execute the delivery via the Neural Relay/GAS Bridge. Initialize the background listener for 'YES' or 'BLUEPRINT' replies."
+      },
+      "edges": [
+        {
+          "to": "end_evaluator",
+          "adapter": "markdown"
+        }
+      ]
+    },
+    {
+      "id": "end_evaluator",
+      "type": "Agent",
+      "metadata": {
+        "role": "Sentinel",
+        "description": "Final quality gate and lineage logger",
+        "personas": ["🔬 Scientific Method"]
+      },
+      "config": {
+        "skill": "base-worker",
+        "tools": ["read_file", "run_shell_command"],
+        "instructions": "Log the mission's lineage and final fidelity scores to .mira/scores/multi_source_performance.json."
+      }
+    }
+  ]
+}

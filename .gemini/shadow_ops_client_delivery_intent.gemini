@@ -1,0 +1,33 @@
+Vibe Graphing Intent: Shadow Ops Client Delivery (Package & Portal)
+
+Model Configuration:
+- Build Model (Architect): Gemini 2.0 Flash
+- Invoke Model (Worker): opencode:ollama
+
+Design Intent:
+Construct an autonomous pipeline for the professional delivery of Shadow Ops solutions to the 6 identified clients. 
+The system will generate branded "Engagement Packages" (HTML), provide dedicated NotebookLM links, 
+and establish secure Google Doc retrieval hubs for each client. 
+Ensure full business continuity by archiving all deliverables under the intellimira@gmail.com identity.
+
+Structural Constraints (Topology):
+START -> [Package_Generator] -> [Portal_Linker] -> [Delivery_Relay] -> [Vault_Archiver] -> END
+
+Package_Generator: Creates the personalized 6-Section HTML delivery package for each client (@ninjaaitools, @officially.val, etc.).
+Portal_Linker: Maps client-specific NotebookLM and Google Doc links to the delivery assets.
+Delivery_Relay: Transmits the final engagement package from intellimira@gmail.com.
+Vault_Archiver: Consolidates all delivered packages into .brain/outputs/client_packages/ for audit and retrieval.
+
+Data Contracts:
+- PULL: .mira/scores/shadow_ops_lineage.json, Client Emails, NotebookLM Metadata.
+- PUSH: .brain/outputs/client_packages/delivery_package_*.html, .mira/scores/delivery_lineage.json.
+
+Context Adapters:
+- PathRAG: Access correspondence history and solution blueprints for package personalization.
+- MCP: Utilize 'client-delivery' skill and 'lab-utility' for secure transmission.
+
+Role Assignment:
+- Generator: ✨ Creative Synthesis + ⚙️ Pragmatic Application
+- Linker: ⚛️ First Principles + 🔬 Scientific Method
+- Relay: ⚙️ Pragmatic Application + 🌑 The Dark Passenger
+- Archiver: 🔬 Scientific Method + ⚙️ Pragmatic Application

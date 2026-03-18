@@ -1,0 +1,26 @@
+{
+  "root_path": "/home/sir-v/MiRA/skills/opencode-builder",
+  "file_count": 2,
+  "total_size": 1241,
+  "extensions": {
+    ".json": 1,
+    ".md": 1
+  },
+  "timestamp": "20260314_131946",
+  "files": [
+    {
+      "path": "/home/sir-v/MiRA/skills/opencode-builder/policy.json",
+      "relative_path": "policy.json",
+      "extension": ".json",
+      "size": 227,
+      "file_type": "data"
+    },
+    {
+      "path": "/home/sir-v/MiRA/skills/opencode-builder/SKILL.md",
+      "relative_path": "SKILL.md",
+      "extension": ".md",
+      "size": 1014,
+      "file_type": "document"
+    }
+  ]
+}
