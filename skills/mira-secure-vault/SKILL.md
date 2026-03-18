@@ -115,7 +115,8 @@ chmod 600 ~/.ssh/id_ed25519
 ## Best Practices
 
 1. **Never commit secrets** - Use `.env.example` as template, not actual values
-2. **Rotate regularly** - Run `mira-vault.sh rotate` quarterly
+2. **Capture immediately** - When user provides credentials, vault them before proceeding
+3. **Rotate regularly** - Run `mira-vault.sh rotate` quarterly
 3. **Backup vault** - Store encrypted backup in secure location
 4. **Use SSH** - Prefer SSH keys over tokens where possible
 5. **最小权限** - Grant only necessary access to each credential
@@ -130,6 +131,46 @@ chmod 600 ~/.ssh/id_ed25519
 - [ ] Audit logging
 - [ ] Key rotation capability
 - [ ] Secure memory handling
+
+---
+
+## SSH Key: axiom-1
+
+| Property | Value |
+|----------|-------|
+| Name | `axiom-1` |
+| Type | Authentication (Read/Write) |
+| Added | March 18, 2026 |
+| Fingerprint | `SHA256:ij0duuT2qOyPMihMzAfVxKdtV6rqORzcT/VAqfN0MSE` |
+
+### SSH Setup Script
+Located at: `~/.mira/secrets/setup_ssh.sh`
+```bash
+~/.mira/secrets/setup_ssh.sh
+```
+
+---
+
+## Credential Capture Protocol
+
+### ⚠️ CRITICAL: Always capture credentials immediately
+
+When receiving tokens or secrets from the user:
+1. **Immediately** add to vault: `mira-vault add <name> <value>`
+2. **Never** re-request - check vault first
+3. **Confirm** capture before proceeding
+
+### Capture Template
+```bash
+# For GitHub tokens
+mira-vault add github_token "<token>"
+
+# For API keys
+mira-vault add <service>_api_key "<key>"
+
+# For SSH keys
+mira-vault add ssh_private "<key_content>"
+```
 
 ---
 

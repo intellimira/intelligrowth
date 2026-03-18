@@ -22,6 +22,7 @@ Each skill is tagged with:
 | `openjarvis` | UTO | ACTIVE | Stanford OpenJarvis local-first inference |
 | `session-guardian` | Telemetry | ACTIVE | Auto-save, crash recovery, decision logging |
 | `open-notebook` | The Weave | ACTIVE | Open Notebook LM integration for semantic search |
+| `mira-secure-vault` | Security | ACTIVE | Military-grade secrets management (GPG 4096-bit RSA) |
 
 ---
 
