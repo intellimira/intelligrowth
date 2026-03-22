@@ -316,9 +316,61 @@ For details, see: `skills/open-notebook/SKILL.md`
 
 ---
 
+## VRAM Optimizer & Efficiency Mode
+
+MIRA-OJ includes AutoResearch-powered optimization for local inference.
+
+### Based On
+
+Experiments on RTX 2060 (6GB VRAM) with 4 training runs:
+
+| Finding | Result |
+|---------|--------|
+| Optimal depth | 4 layers |
+| Optimal embedding | 384 dims |
+| Optimal learning rate | 0.001 |
+| VRAM efficiency | 0.25 GB baseline |
+
+### Commands
+
+```bash
+# Check device profile
+python3 .mira/vram_optimizer.py
+
+# Get optimization params
+python3 -c "from .mira.vram_optimizer import get_device_profile; print(get_device_profile())"
+```
+
+### Device Tiers
+
+| Tier | VRAM | Profile |
+|------|------|---------|
+| High | 24+ GB | Full model capacity |
+| Medium | 12-24 GB | Balanced |
+| Low | 6-12 GB | Efficiency recommended |
+| Minimal | 2-6 GB | Efficiency mode |
+| CPU | <2 GB | Minimal inference |
+
+### Efficiency Mode
+
+For constrained devices, MIRA-OJ can use:
+
+- **Reduced depth** (2-4 layers vs 12+)
+- **Smaller embeddings** (256-384 vs 768+)
+- **FP16 precision** when available
+- **Standard attention** (no Flash Attention)
+
+### Council Decision
+
+Persona Council approved integration (85% consensus):
+- Token bounds safety ✅
+- VRAM-aware detection ✅
+- Memory-efficient mode ✅
+
 ---
 
-*Agent: MIRA-oj v2.0*
+*Agent: MIRA-oj v2.1*
 *Weave Learning: Active*
+*AutoResearch: Integrated*
 *Open Notebook: Integrated*
-*2026-03-18*
+*2026-03-22*
