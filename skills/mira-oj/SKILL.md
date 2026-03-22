@@ -369,8 +369,68 @@ Persona Council approved integration (85% consensus):
 
 ---
 
-*Agent: MIRA-oj v2.1*
+## Trained Models (MIRA_ARCH)
+
+MIRA-OJ includes self-trained models learned from MIRA_ARCH data.
+
+### Based On
+
+- **MIRA_ARCH corpus**: 26,634 documents, 39.6M tokens
+- **Training date**: 2026-03-22
+- **Method**: AutoResearch baseline (depth=4, n_embd=384)
+
+### Weave Models
+
+Location: `~/.mira/weave_models/`
+
+| Model | Size | Purpose |
+|-------|------|---------|
+| `link_predictor.pt` | 1.0 MB | Predicts zettel links |
+| `summarizer.pt` | 772 KB | Generates zettel summaries |
+| `quality_scorer.pt` | 228 KB | Scores content quality |
+
+### MIRA-OJ Models
+
+Location: `~/.mira/miraoj_models/`
+
+| Model | Size | Purpose |
+|-------|------|---------|
+| `response_generator.pt` | 18 MB | Base response generation |
+| `persona_first_principles.pt` | 772 KB | ⚛️ First Principles persona |
+| `persona_scientific.pt` | 772 KB | 🔬 Scientific Method persona |
+| `persona_philosophical.pt` | 772 KB | 🤔 Philosophical Inquiry persona |
+| `persona_creative.pt` | 772 KB | ✨ Creative Synthesis persona |
+| `persona_pragmatic.pt` | 772 KB | ⚙️ Pragmatic Application persona |
+| `persona_dark_passenger.pt` | 772 KB | 🌑 Dark Passenger persona |
+
+### Training Commands
+
+```bash
+# Retrain Weave models
+cd /home/sir-v/MiRA && python3 Memory_Mesh/weave_trainer.py
+
+# Retrain MIRA-OJ models
+cd /home/sir-v/MiRA && python3 Memory_Mesh/miraoj_trainer.py
+
+# View training data
+ls -la ~/MIRA_ARCH_extracted/
+```
+
+### Data Sources
+
+| Dataset | Documents | Tokens (est.) |
+|---------|-----------|---------------|
+| Session logs | 419 | 130K |
+| Council decisions | 774 | 226K |
+| Weave training | 7,035 | 2.2M |
+| MIRA-OJ training | 2,572 | 783K |
+| Full corpus | 26,634 | 39.6M |
+
+---
+
+*Agent: MIRA-oj v2.2*
 *Weave Learning: Active*
 *AutoResearch: Integrated*
 *Open Notebook: Integrated*
+*Trained Models: v2.2*
 *2026-03-22*
