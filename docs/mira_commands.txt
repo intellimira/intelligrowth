@@ -1,0 +1,125 @@
+# MIRA Enquiry Pipeline Commands
+# Location: /home/sir-v/MiRA/docs/mira_commands.txt
+# Last Updated: 2026-03-22
+
+# ═══════════════════════════════════════════════════════════════
+# MIRA ENQUIRY PIPELINE COMMANDS
+# ═══════════════════════════════════════════════════════════════
+
+# ───────────────────────────────────────────────────────────────
+# UNIFIED DASHBOARD (RECOMMENDED)
+# ───────────────────────────────────────────────────────────────
+
+# Launch the interactive TUI dashboard
+python3 /home/sir-v/MiRA/Memory_Mesh/mira_dashboard.py
+
+
+# ───────────────────────────────────────────────────────────────
+# UNIFIED REPORTS
+# ───────────────────────────────────────────────────────────────
+
+# Check if there's a significant update (no send)
+python3 /home/sir-v/MiRA/Memory_Mesh/mira_report.py --check
+
+# Generate console report
+python3 /home/sir-v/MiRA/Memory_Mesh/mira_report.py
+
+# Send ONLY on significant updates (critical leads, system issues)
+python3 /home/sir-v/MiRA/Memory_Mesh/mira_report.py --significant
+
+# Send report to Telegram only
+python3 /home/sir-v/MiRA/Memory_Mesh/mira_report.py --telegram
+
+# Send report to Email only
+python3 /home/sir-v/MiRA/Memory_Mesh/mira_report.py --email
+
+# Send report to ALL channels (Telegram + Email)
+python3 /home/sir-v/MiRA/Memory_Mesh/mira_report.py --all
+
+
+# ───────────────────────────────────────────────────────────────
+# CONFIGURATION
+# ───────────────────────────────────────────────────────────────
+
+# Check config status
+python3 /home/sir-v/MiRA/Memory_Mesh/mira_config.py
+
+# Test Gmail connection
+python3 /home/sir-v/MiRA/Memory_Mesh/mira_config.py --test-gmail
+
+# Update Telegram chat ID (if needed)
+python3 /home/sir-v/MiRA/Memory_Mesh/mira_config.py --update-chat-id
+
+
+# ───────────────────────────────────────────────────────────────
+# PIPELINE SCRIPTS (Individual)
+# ───────────────────────────────────────────────────────────────
+
+# Poll Gmail for new enquiries
+python3 /home/sir-v/MiRA/Memory_Mesh/poll_enquiries.py
+
+# Score leads (pain analysis)
+python3 /home/sir-v/MiRA/Memory_Mesh/score_leads.py
+
+# Check & alert for qualified leads
+python3 /home/sir-v/MiRA/Memory_Mesh/telegram_alerts.py --check
+
+# Send weekly digest
+python3 /home/sir-v/MiRA/Memory_Mesh/telegram_alerts.py --digest
+
+
+# ───────────────────────────────────────────────────────────────
+# CRON JOB SETUP (Run Once)
+# ───────────────────────────────────────────────────────────────
+
+# Open crontab editor
+crontab -e
+
+# Add these lines (then save & exit):
+# */5 * * * * cd /home/sir-v/MiRA/Memory_Mesh && python3 poll_enquiries.py >> cron.log 2>&1
+# 0 * * * * cd /home/sir-v/MiRA/Memory_Mesh && python3 score_leads.py >> cron.log 2>&1
+# */10 * * * * cd /home/sir-v/MiRA/Memory_Mesh && python3 telegram_alerts.py --check >> cron.log 2>&1
+# 0 9 * * * cd /home/sir-v/MiRA/Memory_Mesh && python3 mira_report.py --significant >> cron.log 2>&1
+
+
+# ───────────────────────────────────────────────────────────────
+# VIEW CRON LOGS
+# ───────────────────────────────────────────────────────────────
+
+# View recent cron activity
+tail -20 /home/sir-v/MiRA/Memory_Mesh/cron.log
+
+# Check if cron is running
+ps aux | grep cron
+
+
+# ───────────────────────────────────────────────────────────────
+# MANUAL TEST
+# ───────────────────────────────────────────────────────────────
+
+# Send test Telegram message
+python3 -c "from telegram_alerts import send_telegram_message; send_telegram_message('Test from terminal')"
+
+
+# ───────────────────────────────────────────────────────────────
+# SIGNIFICANT UPDATE TRIGGERS
+# ───────────────────────────────────────────────────────────────
+# Reports are sent automatically when:
+# - Critical leads (score 9+) detected
+# - Qualified leads (score 7+) detected
+# - New enquiries received
+# - System health issues detected (Swap, RAM, Disk)
+#
+# Reports go to:
+# - Telegram: @Sirswali
+# - Email: intellimira@gmail.com, randolphdube@gmail.com
+
+
+# ───────────────────────────────────────────────────────────────
+# DASHBOARD KEYBOARD SHORTCUTS (when running mira_dashboard.py)
+# ───────────────────────────────────────────────────────────────
+# r      - Refresh all widgets
+# t      - Send Telegram report
+# e      - Send Email report
+# p      - Poll Gmail
+# q      - Quit dashboard

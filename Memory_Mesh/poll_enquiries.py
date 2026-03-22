@@ -13,9 +13,12 @@ import sys
 from datetime import datetime
 from pathlib import Path
 
+# Import secure config
+from mira_config import get_gmail_password, get_enquiries_repo
+
 # Configuration
 GMAIL_USER = "intellimira@gmail.com"
-ENQUIRIES_REPO = "/home/sir-v/MiRA/enquiries_local"  # Local clone of enquiries repo
+ENQUIRIES_REPO = get_enquiries_repo()
 INTEREST_KEYWORDS = {
     "collaboration": ["COLLABORATION", "collab"],
     "consulting": ["CONSULTING"],
@@ -100,24 +103,23 @@ def extract_fields_from_email(body):
 def connect_gmail():
     """Connect to Gmail via IMAP"""
     try:
-        # Try OAuth2 first (uses Thunderbird's token)
         mail = imaplib.IMAP4_SSL("imap.gmail.com", 993)
         
-        # Check for cached OAuth token
-        token_file = os.path.expanduser("~/.config/himalaya/token")
-        if os.path.exists(token_file):
-            with open(token_file) as f:
-                token = f.read().strip()
-            mail.authenticate('XOAUTH2', lambda x: f'user={GMAIL_USER}\1auth=Bearer {token}\1\1')
+        # Get password from secure config
+        password = get_gmail_password()
+        if password:
+            mail.login(GMAIL_USER, password)
         else:
-            # Fallback to app password from config
-            config_file = os.path.expanduser("~/.config/himalaya/password")
-            if os.path.exists(config_file):
-                with open(config_file) as f:
-                    password = f.read().strip()
-                mail.login(GMAIL_USER, password)
+            # Try OAuth2 token from himalaya as fallback
+            token_file = os.path.expanduser("~/.config/himalaya/token")
+            if os.path.exists(token_file):
+                with open(token_file) as f:
+                    token = f.read().strip()
+                mail.authenticate('XOAUTH2', lambda x: f'user={GMAIL_USER}\1auth=Bearer {token}\1\1'.encode())
             else:
-                print("No OAuth token or password found. Using read-only mode from Thunderbird local files.")
+                print("⚠️ No Gmail password configured.")
+                print("   Set HIMALAYA_PASSWORD in ~/.env/mira_config")
+                print("   Or generate an App Password from: https://myaccount.google.com/apppasswords")
                 return None
         return mail
     except Exception as e:

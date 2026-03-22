@@ -13,6 +13,7 @@ mira_tier: 1
 2. Jotform - What are AI Agents (definition, capabilities)
 3. Analytics Vidhya - LLM Workflow for Developers
 4. Multiple ResearchGate sources on AI in enterprise/education
+5. **Microsoft AI Agents for Beginners** - 14 lessons on agent frameworks, patterns, production
 
 ## What is an AI Agent?
 
@@ -174,14 +175,108 @@ Output → Student
 - [ ] Cost tracking
 - [ ] Performance metrics
 
+## LearnAgents.dev Integration
+
+### Course: Build First AI Agent in 60 Minutes
+
+**Access:** https://learnagents.dev/lessons/introduction  
+**Email:** intellimira@gmail.com  
+**Note:** Site is client-side rendered - requires manual browser signup
+
+#### Lessons (Pending Extraction)
+| # | Lesson | MIRA Integration |
+|---|--------|-----------------|
+| 01 | What are AI Agents | Core concepts |
+| 02 | Agent Architecture | PRPAL loop |
+| 03 | Tools and Tool Calling | MIRA-OJ tool system |
+| 04 | Memory and State | Memory Mesh |
+| 05 | Planning and Reasoning | Persona Council |
+| 06 | Multi-Agent Systems | ACCT multi-node |
+| 07 | Production Considerations | Monitoring/logging |
+| 08 | What's Next | Roadmap |
+
+### Extracted Patterns
+
+#### PRPAL Loop (LearnAgents)
+```
+Perceive → Reason → Plan → Act → Learn
+```
+
+Every agent follows this loop. MIRA implements:
+- **Perceive**: User input + Memory context
+- **Reason**: Persona Council deliberation
+- **Plan**: Task decomposition
+- **Act**: Tool execution
+- **Learn**: Weave updates + training
+
+---
+
+## Microsoft AI Agents Course
+
+**Source:** https://microsoft.github.io/ai-agents-for-beginners/  
+**Format:** 14 lessons + code samples (Python, .NET)  
+**Framework:** Microsoft Agent Framework (MAF)
+
+### Course Curriculum (All 14 Lessons Extracted)
+
+| # | Lesson | MIRA Integration | File |
+|---|--------|------------------|------|
+| 01 | Intro to AI Agents | Core concepts, agent types | `lessons/01_intro_to_ai_agents.md` |
+| 02 | Exploring AI Agentic Frameworks | MAF patterns | `lessons/02_agentic_frameworks.md` |
+| 03 | AI Agentic Design Principles | Design patterns | `lessons/03_agentic_design_patterns.md` |
+| 04 | Tool Use Design Pattern | Function calling | `lessons/04_tool_use_design_pattern.md` |
+| 05 | Agentic RAG | Vector_Mesh, PathRAG | `lessons/05_agentic_rag.md` |
+| 06 | Building Trustworthy AI Agents | Security, trust | `lessons/06_building_trustworthy_agents.md` |
+| 07 | Planning Design Pattern | Task decomposition | `lessons/07_planning_design_pattern.md` |
+| 08 | Multi-Agent Design Patterns | Cabal spawner/commander | `lessons/08_multi_agent_patterns.md` |
+| 09 | Metacognition in AI Agents | Self-anneal watchdog | `lessons/09_metacognition.md` |
+| 10 | AI Agents in Production | Observability, eval | `lessons/10_ai_agents_production.md` |
+| 11 | Agentic Protocols (MCP, A2A, NLWeb) | Future MCP support | `lessons/11_agentic_protocols.md` |
+| 12 | Context Engineering | Context compactor | `lessons/12_context_engineering.md` |
+| 13 | Managing Agent Memory | Memory Mesh | `lessons/13_agent_memory.md` |
+| 14 | Microsoft Agent Framework | MAF patterns | `lessons/14_microsoft_agent_framework.md` |
+
+### Key Takeaways from Microsoft Course
+
+#### Agentic Design Principles
+1. **Transparency** - Inform user AI is involved
+2. **Control** - Enable customization
+3. **Consistency** - Multi-modal experiences
+
+#### Agentic RAG Pattern
+- Iterative maker-checker style
+- Self-correction capabilities
+- Tool integration for retrieval
+
+#### Multi-Agent Patterns
+- Group chat, handoff, collaborative filtering
+- Agent communication protocols
+- Visibility and monitoring
+
+#### Context Engineering Failures
+| Failure | Solution |
+|---------|----------|
+| Poisoning | Validation + quarantine |
+| Distraction | Context summarization |
+| Confusion | Tool loadout management |
+| Clash | Context pruning |
+
+#### Production Observability
+- **Traces**: Complete task from start to finish
+- **Spans**: Individual steps within trace
+- **Metrics**: Latency, costs, errors, feedback, accuracy
+
 ## References
 - 8allocate Agentic AI Playbook
 - Jotform AI Agents Guide
 - Analytics Vidhya LLM Workflows
 - MASFactory Vibe Graphing
 - n8n, Make.com agent platforms
+- LearnAgents.dev (pending - client-side rendered)
+- **Microsoft AI Agents for Beginners** (14 lessons extracted)
 
 ---
 *Generated: 2026-03-14*
-*Chained from 15+ sources*
+*Updated: 2026-03-22*
+*Chained from 20+ sources including Microsoft AI Agents Course*
 *Vibe Graphing Pipeline*

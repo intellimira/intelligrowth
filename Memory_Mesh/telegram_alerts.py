@@ -9,27 +9,32 @@ import os
 import sys
 from pathlib import Path
 
-# Configuration
-TELEGRAM_BOT_TOKEN = os.environ.get("MIRA_TELEGRAM_BOT_TOKEN", "")
-TELEGRAM_CHAT_ID = os.environ.get("MIRA_TELEGRAM_CHAT_ID", "")
-ENQUIRIES_REPO = "/home/sir-v/MiRA/enquiries_local"
+# Import secure config loader
+from mira_config import (
+    get_telegram_token,
+    get_telegram_chat_id,
+    get_enquiries_repo,
+)
 
 
 def send_telegram_message(message, silent=False):
     """Send message via Telegram Bot API"""
-    if not TELEGRAM_BOT_TOKEN or not TELEGRAM_CHAT_ID:
-        print(
-            "⚠️ Telegram not configured. Set MIRA_TELEGRAM_BOT_TOKEN and MIRA_TELEGRAM_CHAT_ID"
-        )
-        print(f"Message:\n{message}")
+    token = get_telegram_token()
+    chat_id = get_telegram_chat_id()
+
+    if not token or not chat_id or chat_id == "PENDING_FETCH":
+        print("⚠️ Telegram not fully configured.")
+        print("   1. Send message to @intellimirabot on Telegram")
+        print("   2. Run: python3 mira_config.py --update-chat-id")
+        print(f"   Message:\n{message}")
         return False
 
     import urllib.request
     import urllib.parse
 
-    url = f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/sendMessage"
+    url = f"https://api.telegram.org/bot{token}/sendMessage"
     data = {
-        "chat_id": TELEGRAM_CHAT_ID,
+        "chat_id": chat_id,
         "text": message,
         "parse_mode": "HTML",
         "disable_notification": silent,
@@ -71,7 +76,7 @@ def format_lead_alert(lead):
 
 def check_and_alert():
     """Check for new qualified leads and send alerts"""
-    repo = Path(ENQUIRIES_REPO)
+    repo = Path(get_enquiries_repo())
     if not repo.exists():
         print("Enquiries repo not found. Run poll_enquiries.py first.")
         return
@@ -124,7 +129,7 @@ def send_weekly_digest():
     """Send weekly digest of all leads"""
     from score_leads import process_leads_from_repo, generate_report
 
-    repo = Path(ENQUIRIES_REPO)
+    repo = Path(get_enquiries_repo())
     if not repo.exists():
         return
 
