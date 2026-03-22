@@ -428,9 +428,98 @@ ls -la ~/MIRA_ARCH_extracted/
 
 ---
 
-*Agent: MIRA-oj v2.2*
+## Continuous Learning
+
+MIRA-OJ supports continuous learning - automatically retraining when new sessions accumulate.
+
+### How It Works
+
+1. **Session Accumulation** - New sessions are created during use
+2. **Threshold Check** - Every 4 hours, cron checks if ≥10 new sessions exist
+3. **Auto-Retrain** - If threshold reached, Weave + MIRA-OJ models retrain
+4. **Model Update** - Trained models are loaded for inference
+
+### Commands
+
+```bash
+# Check if training is needed
+cd /home/sir-v/MiRA && python3 Memory_Mesh/weaver.py --continuous
+
+# Run manual training (both Weave + MIRA-OJ)
+cd /home/sir-v/MiRA && python3 Memory_Mesh/weaver.py --train-all
+
+# Run continuous learning script
+cd /home/sir-v/MiRA && python3 Memory_Mesh/continuous_learning.py
+
+# Set up cron (runs every 4 hours)
+bash /home/sir-v/MiRA/.mira/mira_cron_setup.sh
+```
+
+### Weave Orchestrator Commands
+
+```bash
+cd /home/sir-v/MiRA/Memory_Mesh
+
+# Load trained models
+python3 weaver.py --load
+
+# Run full cycle (seal + index + link)
+python3 weaver.py --full
+
+# Status
+python3 weaver.py --status
+
+# Train specific epochs
+python3 weaver.py --train 20
+```
+
+### Persona Switching
+
+```bash
+cd /home/sir-v/MiRA/Memory_Mesh
+
+# List available personas
+python3 persona_switcher.py --list
+
+# Set active persona
+python3 persona_switcher.py --set 🔬
+
+# Show current persona
+python3 persona_switcher.py --current
+
+# Status
+python3 persona_switcher.py --status
+```
+
+---
+
+## MIRA_ARCH Data Pipeline
+
+### Extraction
+
+```bash
+cd /home/sir-v/MiRA
+python3 Memory_Mesh/mira_arch_extractor.py
+```
+
+### Extracted Data
+
+Location: `~/MIRA_ARCH_extracted/`
+
+| File | Documents | Purpose |
+|------|-----------|---------|
+| `weave_training.jsonl` | 7,035 | Link prediction, summarization |
+| `miraoj_training.jsonl` | 2,572 | Response generation |
+| `session_logs.jsonl` | 419 | Session patterns |
+| `council_decisions.jsonl` | 774 | Decision patterns |
+| `full_dataset.jsonl` | 26,634 | All data |
+
+---
+
+*Agent: MIRA-oj v2.3*
 *Weave Learning: Active*
 *AutoResearch: Integrated*
+*Continuous Learning: Enabled*
 *Open Notebook: Integrated*
 *Trained Models: v2.2*
 *2026-03-22*
