@@ -34,6 +34,20 @@
 ### 2026
 
 | Date | Session | Project | Summary |
+| 2026-03-22 | [ses_202603222035_mira-dashboard-system-optimization](./ses_202603222035_mira-dashboard-system-optimization.md) | dashboard | Unified TUI dashboard, reports to Telegram+Email, swap optimization |
+| 2026-03-22 | [ses_202603222000_ai-agent-foundations-update](./ses_202603222000_ai-agent-foundations-update.md) | ai-agent-foundations | Extracted all 14 Microsoft AI Agents lessons |
+| 2026-03-22 | [ses_202603221930_full-automation](./ses_202603221930_full-automation.md) | automation | Full email→CRM→Telegram pipeline, pain scoring, cron jobs |
+| 2026-03-22 | [ses_202603221900_intelligrowth-contact](./ses_202603221900_intelligrowth-contact.md) | intelligrowth | Self-hosted contact form - mailto+localStorage hybrid |
+| 2026-03-22 | [ses_202603221651_nvme-extraction](./ses_202603221651_nvme-extraction.md) | general | NVME search - extracted OpenJarvis agents, MIRA-TitanOS |
+| 2026-03-22 | [ses_202603221636_usb-extraction](./ses_202603221636_usb-extraction.md) | general | USB backup extraction - 122 docs, 24K tokens integrated |
+| 2026-03-22 | [ses_20260322121446_general](./ses_20260322121446_general.md) | general | Deep AutoResearch integration complete. Created Se... |
+
+| 2026-03-22 | [ses_20260322121022_general](./ses_20260322121022_general.md) | general | Completed AutoResearch integration into MIRA-OJ. P... |
+
+| 2026-03-22 | [ses_20260322115025_general](./ses_20260322115025_general.md) | general | Ran 4 experiments: baseline, depth_6, lr_01, nembd... |
+
+| 2026-03-22 | [ses_20260322105954_general](./ses_20260322105954_general.md) | general | Completed AutoResearch fork from main branch. Crea... |
+
 |------|---------|---------|---------|
 | Mar 18 | ses_202603181500_session-guardian | session-guardian | MIRA Session Guardian - intelligent auto-save and crash recovery |
 | Mar 18 | ses_202603181400_mira-library | mira-library | MIRA-OJ + The Library integration - 40 skills cataloged |

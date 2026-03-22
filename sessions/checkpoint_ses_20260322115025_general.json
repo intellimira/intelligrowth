@@ -1,0 +1,14 @@
+{
+  "checkpoint_id": "ses_20260322115025_general_cp_0",
+  "session_id": "ses_20260322115025_general",
+  "timestamp": "2026-03-22T11:50:25.653271",
+  "action_count": 0,
+  "last_action": "session start",
+  "files_modified": [],
+  "checkpoint_hash": "ee62a5f0",
+  "recovery_data": {
+    "project": "general",
+    "pending_work": [],
+    "decisions": []
+  }
+}
