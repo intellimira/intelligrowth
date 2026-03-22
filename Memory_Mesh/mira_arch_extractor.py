@@ -274,11 +274,12 @@ class MIRAARCHExtractor:
         """Save documents as JSONL."""
         with open(output_path, "w", encoding="utf-8") as f:
             for doc in docs:
-                # Exclude full content for index
+                # Include full content for training
                 record = {
                     "id": doc.id,
                     "category": doc.category,
                     "title": doc.title,
+                    "content": doc.content,
                     "tokens_estimate": doc.tokens_estimate,
                     "quality_score": doc.quality_score,
                     "created_date": doc.created_date,
