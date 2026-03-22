@@ -770,8 +770,15 @@ When `/mira:` is invoked at session start, MIRA loads context from:
 | `/mira: health` | Run full MIRA system report |
 
 **Context Files Location:**
+- User Preferences: `/home/sir-v/MiRA/Memory_Mesh/user.md`
 - Ecosystem Status: `/home/sir-v/MiRA/.MIRA/ecosystem_status.md`
 - Session Summary: `/home/sir-v/MiRA/Memory_Mesh/.session_summary.md`
+
+**Context Priority:**
+1. **user.md** - WHO I'm helping (identity, preferences, goals)
+2. **ecosystem_status.md** - WHAT state MIRA is in (health, components)
+3. **session_summary.md** - WHAT WAS DONE (accomplishments, commands)
+4. **session log** - HOW it was done (detailed decisions)
 
 **SOP (Standard Operating Procedure):**
 

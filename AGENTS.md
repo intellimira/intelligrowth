@@ -44,6 +44,13 @@ All agents must adhere to the MIRA growth loop instructions and persona rotation
 | `sessions/ses_*.md` | Complete session log | Every session |
 | `.MIRA/ecosystem_status.md` | Health overview + changes | After major work |
 | `Memory_Mesh/.session_summary.md` | Quick reference | After every session |
+| `Memory_Mesh/user.md` | User preferences + identity | Auto-extracted + manual |
+
+**Context Priority:**
+1. **user.md** - WHO I'm helping (user identity, preferences, goals)
+2. **ecosystem_status.md** - WHAT state MIRA is in (health, components)
+3. **session_summary.md** - WHAT WAS DONE (accomplishments, commands)
+4. **session log** - HOW it was done (detailed decisions, rationale)
 
 ### /mira: Session Context
 
