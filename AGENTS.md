@@ -30,8 +30,32 @@ All agents must adhere to the MIRA growth loop instructions and persona rotation
 
 1. **Query before approved** - Ask user before moving to `outputs/approved/`
 2. **Query for skill/agent changes** - Ask before modifying any SKILL.md or agent files
-3. **Mirror session** - Copy session log to `/home/sir-v/MiRA/sessions/`
-4. **Update indices** - Add entry to project and central session indices
+3. **Create session log** - Create in `sessions/ses_YYYYMMDDHHMM_project.md`
+4. **Update ecosystem status** - Modify `.MIRA/ecosystem_status.md` with changes
+5. **Update session summary** - Modify `Memory_Mesh/.session_summary.md`
+6. **Git commit** - Ask user: "Commit changes to GitHub?"
+7. **Mirror session** - Ensure session log is in `/home/sir-v/MiRA/sessions/`
+8. **Update indices** - Add entry to project and central session indices
+
+### Session Context Files
+
+| File | Purpose | Updated |
+|------|---------|---------|
+| `sessions/ses_*.md` | Complete session log | Every session |
+| `.MIRA/ecosystem_status.md` | Health overview + changes | After major work |
+| `Memory_Mesh/.session_summary.md` | Quick reference | After every session |
+
+### /mira: Session Context
+
+When `/mira:` is invoked, load and display:
+1. `.MIRA/ecosystem_status.md` - System health + recent changes
+2. `Memory_Mesh/.session_summary.md` - Quick wins + commands
+
+Commands:
+- `/mira:` - Full context load
+- `/mira: status` - Quick system status (run `mira_report.py --check`)
+- `/mira: wins` - Show today's accomplishments
+- `/mira: next` - Show pending tasks
 
 ### Session Log Naming
 

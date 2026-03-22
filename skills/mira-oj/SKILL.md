@@ -2,8 +2,8 @@
 name: mira-oj
 description: MIRA-oj (MIRA OpenJarvis) - Sovereign AI Agent with local-first inference, Weave learning system, Library Orchestrator, and Open Notebook integration. Powered by Stanford's OpenJarvis framework with Ollama backend.
 agent: true
-triggers: [mira, "mira:", "@mira", "ask mira", "mira-oj", "local AI", "sovereign AI", "privacy AI", "mira: library", "manage library", "sync skills", "library report", "self-anneal", "open notebook", "notebook search", "search knowledge", "create notebook"]
-tools: [mira_think, mira_ask, weave_stats, weave_rules, weave_learn, mira_health, persona_bind, library_manage, library_sync, library_report, library_notify, library_search, library_add, notebook_search, notebook_create, notebook_list, notebook_delete, source_add, source_list, source_chat, generate_podcast]
+triggers: [mira, "mira:", "@mira", "ask mira", "mira-oj", "local AI", "sovereign AI", "privacy AI", "mira: library", "manage library", "sync skills", "library report", "self-anneal", "open notebook", "notebook search", "search knowledge", "create notebook", "mira: preferences", "mira: show my prefs", "mira: update preference", "mira: extract preferences", "mira: sync preferences", "mira: health"]
+tools: [mira_think, mira_ask, weave_stats, weave_rules, weave_learn, mira_health, persona_bind, library_manage, library_sync, library_report, library_notify, library_search, library_add, notebook_search, notebook_create, notebook_list, notebook_delete, source_add, source_list, source_chat, generate_podcast, user_prefs_show, user_prefs_update, user_prefs_extract, user_prefs_sync]
 persona: "🔬 Scientific Method — sovereign AI orchestration"
 mira_tier: 1
 ---
@@ -62,6 +62,11 @@ mira-oj analyze this code
 | `weave rules` | Show learned routing rules |
 | `weave ingest` | Re-ingest session logs |
 | `mira health` | Check system health |
+| `mira: preferences` | Show current user preferences |
+| `mira: show my prefs` | Display preference profile |
+| `mira: extract preferences` | Re-extract from session history |
+| `mira: sync preferences` | Sync preferences to user.md |
+| `mira: update preference <key> <value>` | Update specific preference |
 
 ---
 
@@ -670,6 +675,131 @@ Includes:
 | `training_dashboard.py` | Real-time dashboard |
 | `miraoj_inference.py` | Inference engine |
 | `persona_switcher.py` | Switch personas |
+| `user_preferences.py` | User preferences management |
+
+---
+
+## User Preferences
+
+MIRA includes a comprehensive user preference system that personalizes interactions.
+
+### CLI Commands
+
+```bash
+cd /home/sir-v/MiRA/Memory_Mesh
+
+# Create user.md template
+python3 user_preferences.py --init
+
+# Extract preferences from sessions
+python3 user_preferences.py --extract
+
+# Show current preferences
+python3 user_preferences.py --show
+
+# Update a preference
+python3 user_preferences.py --update communication.tone casual
+```
+
+### Preference Categories
+
+| Category | Options |
+|----------|---------|
+| Response Length | concise, moderate, detailed |
+| Tone | formal, casual, technical, mixed |
+| Emoji Usage | yes, no, selective |
+| Decision Making | autonomous, collaborative, consult |
+| Risk Tolerance | conservative, moderate, aggressive |
+
+### Training with User Preferences
+
+```bash
+# Include user preferences in MIRA-OJ training
+python3 miraoj_trainer.py --epochs 5 --user-prefs
+```
+
+### Auto-Extraction
+
+MIRA automatically extracts preferences from session history:
+- Languages (Python, JavaScript, Rust, etc.)
+- Frameworks (React, FastAPI, etc.)
+- Tools (git, docker, etc.)
+- Communication style
+- Behavioral patterns
+
+### Automated Maintenance
+
+Cron jobs ensure preferences stay current:
+```bash
+# Weekly preference refresh (Sunday 2 AM)
+0 2 * * 0 python3 user_preferences.py --refresh
+
+# Daily change check (8 AM)
+0 8 * * * python3 user_preferences.py --changes
+```
+
+### /mira: Commands Integration
+
+User preferences are now integrated into MIRA commands:
+
+| Command | Action |
+|---------|--------|
+| `mira: preferences` | Show current user preferences |
+| `mira: show my prefs` | Display preference profile |
+| `mira: extract preferences` | Re-extract from session history |
+| `mira: sync preferences` | Sync to user.md |
+| `mira: update preference communication.tone casual` | Update specific preference |
+
+### /mira: Session Context Commands
+
+When `/mira:` is invoked at session start, MIRA loads context from:
+
+| File | Purpose |
+|------|---------|
+| `.MIRA/ecosystem_status.md` | System health + recent changes |
+| `Memory_Mesh/.session_summary.md` | Quick wins + commands |
+
+**Session Context Commands:**
+
+| Command | Action |
+|---------|--------|
+| `/mira:` | Full context load + status summary |
+| `/mira: status` | Quick system status (runs `mira_report.py --check`) |
+| `/mira: wins` | Show today's accomplishments |
+| `/mira: next` | Show pending tasks |
+| `/mira: health` | Run full MIRA system report |
+
+**Context Files Location:**
+- Ecosystem Status: `/home/sir-v/MiRA/.MIRA/ecosystem_status.md`
+- Session Summary: `/home/sir-v/MiRA/Memory_Mesh/.session_summary.md`
+
+**SOP (Standard Operating Procedure):**
+
+At the **end of every session**, MIRA must:
+1. Create/update session log → `sessions/ses_YYYYMMDDHHMM_project.md`
+2. Update ecosystem status → `.MIRA/ecosystem_status.md`
+3. Update session summary → `Memory_Mesh/.session_summary.md`
+4. Ask user: "Commit changes to GitHub?"
+
+### Priority System
+
+Manual edits in `user.md` always override auto-extracted values.
+
+Manual maintenance commands:
+```bash
+# Full refresh: extract + merge + sync
+python3 user_preferences.py --refresh
+
+# Check for changes since last sync
+python3 user_preferences.py --changes
+
+# Sync JSON cache to user.md
+python3 user_preferences.py --sync
+```
+
+### Priority System
+
+Manual edits in `user.md` always override auto-extracted values.
 
 ---
 
