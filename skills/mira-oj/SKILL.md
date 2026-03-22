@@ -516,10 +516,97 @@ Location: `~/MIRA_ARCH_extracted/`
 
 ---
 
-*Agent: MIRA-oj v2.3*
+## Evaluation & Feedback
+
+### Model Evaluator
+
+```bash
+cd /home/sir-v/MiRA
+python3 Memory_Mesh/model_evaluator.py
+```
+
+Evaluates trained models on held-out validation data:
+- **Link Prediction**: Precision, Recall, F1, AUC
+- **Summarization**: Cosine similarity
+- **Quality Scoring**: Correlation metrics
+- **Persona Models**: Weight analysis
+
+Results saved to: `~/.mira/evaluation/`
+
+### Training Dashboard
+
+```bash
+# Interactive dashboard
+python3 Memory_Mesh/training_dashboard.py
+
+# One-time view
+python3 Memory_Mesh/training_dashboard.py --once
+
+# Custom refresh interval
+python3 Memory_Mesh/training_dashboard.py -i 10
+```
+
+Displays:
+- System stats (GPU, disk, VRAM)
+- Model status
+- Training history
+- Quick commands
+
+### Feedback Loop
+
+```bash
+# Show feedback status
+python3 Memory_Mesh/feedback_loop.py --status
+
+# Get improvement suggestions
+python3 Memory_Mesh/feedback_loop.py --suggest
+
+# Show patterns
+python3 Memory_Mesh/feedback_loop.py --patterns
+```
+
+Feedback collection:
+- Explicit ratings (1-5)
+- Implicit signals (response time, follow-ups)
+- Correction tracking
+
+### MIRA-OJ Inference Engine
+
+```bash
+cd /home/sir-v/MiRA
+python3 Memory_Mesh/miraoj_inference.py
+```
+
+Uses trained models for:
+- Quality scoring
+- Link prediction
+- Context ranking
+- Persona-weighted responses
+
+---
+
+## Complete Toolset
+
+| Tool | Purpose |
+|------|---------|
+| `weave_trainer.py` | Train Weave models |
+| `miraoj_trainer.py` | Train MIRA-OJ models |
+| `model_evaluator.py` | Evaluate model performance |
+| `training_dashboard.py` | Real-time training dashboard |
+| `feedback_loop.py` | User feedback collection |
+| `miraoj_inference.py` | Inference engine |
+| `persona_switcher.py` | Switch personas |
+| `continuous_learning.py` | Auto-training scheduler |
+
+---
+
+*Agent: MIRA-oj v2.4*
 *Weave Learning: Active*
 *AutoResearch: Integrated*
 *Continuous Learning: Enabled*
 *Open Notebook: Integrated*
-*Trained Models: v2.2*
+*Trained Models: v2.3*
+*Evaluation: Enabled*
+*Feedback Loop: Active*
+*Inference Engine: Active*
 *2026-03-22*
