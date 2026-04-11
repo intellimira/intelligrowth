@@ -1,0 +1,1181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MIRA — The Sovereign Mind</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=JetBrains+Mono:wght@300;400;500&family=Instrument+Serif:ital@0;1&display=swap');
+
+  :root {
+    --bg: #080810;
+    --bg2: #0e0e1a;
+    --teal: #64b5a0;
+    --teal-dim: #3d7a6e;
+    --gold: #c9a227;
+    --gold-dim: #8a6e1a;
+    --text: #dde0e8;
+    --muted: #6b7280;
+    --border: rgba(100,181,160,0.12);
+    --card: rgba(255,255,255,0.025);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* GRID NOISE TEXTURE */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      repeating-linear-gradient(0deg, transparent, transparent 39px, rgba(100,181,160,0.03) 39px, rgba(100,181,160,0.03) 40px),
+      repeating-linear-gradient(90deg, transparent, transparent 39px, rgba(100,181,160,0.03) 39px, rgba(100,181,160,0.03) 40px);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ── HEADER ── */
+  header {
+    position: relative;
+    z-index: 1;
+    padding: 80px 40px 60px;
+    max-width: 1100px;
+    margin: 0 auto;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .header-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 24px;
+    margin-bottom: 32px;
+    flex-wrap: wrap;
+  }
+
+  .logo-block h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(48px, 8vw, 88px);
+    font-weight: 800;
+    letter-spacing: -3px;
+    line-height: 1;
+    color: var(--teal);
+    text-shadow: 0 0 60px rgba(100,181,160,0.3);
+    animation: fadeUp 0.8s ease both;
+  }
+
+  .logo-block .subtitle {
+    font-family: 'Instrument Serif', serif;
+    font-style: italic;
+    font-size: 18px;
+    color: var(--muted);
+    margin-top: 6px;
+    animation: fadeUp 0.8s 0.1s ease both;
+  }
+
+  .version-badge {
+    background: var(--gold);
+    color: #0a0a12;
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 11px;
+    letter-spacing: 2px;
+    padding: 4px 10px;
+    border-radius: 2px;
+    margin-top: 8px;
+    display: inline-block;
+    animation: fadeUp 0.8s 0.15s ease both;
+  }
+
+  .header-actions {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    animation: fadeUp 0.8s 0.2s ease both;
+  }
+
+  .cta-btn {
+    border: 1px solid var(--teal);
+    color: var(--teal);
+    font-size: 11px;
+    letter-spacing: 1px;
+    padding: 8px 16px;
+    border-radius: 2px;
+    background: rgba(100,181,160,0.04);
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: all 0.2s;
+  }
+
+  .cta-btn:hover {
+    background: rgba(100,181,160,0.15);
+  }
+
+  .cta-btn.primary {
+    background: var(--teal);
+    color: #0a0a12;
+  }
+
+  .cta-btn.primary:hover {
+    background: var(--teal-dim);
+  }
+
+  .badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 28px;
+    animation: fadeUp 0.8s 0.25s ease both;
+  }
+
+  .badge {
+    border: 1px solid var(--border);
+    color: var(--teal);
+    font-size: 11px;
+    letter-spacing: 1px;
+    padding: 5px 12px;
+    border-radius: 2px;
+    background: rgba(100,181,160,0.04);
+    text-transform: uppercase;
+  }
+
+  .opening-quote {
+    margin-top: 40px;
+    padding: 24px 0 0;
+    font-family: 'Instrument Serif', serif;
+    font-style: italic;
+    font-size: 22px;
+    color: var(--gold);
+    border-top: 1px solid var(--border);
+    animation: fadeUp 0.8s 0.3s ease both;
+  }
+
+  /* ── MAIN LAYOUT ── */
+  main {
+    position: relative;
+    z-index: 1;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 40px 80px;
+  }
+
+  section {
+    padding: 64px 0 0;
+  }
+
+  .section-label {
+    font-family: 'Syne', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--teal-dim);
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  .section-title {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(24px, 4vw, 36px);
+    font-weight: 700;
+    letter-spacing: -1px;
+    margin-bottom: 40px;
+    color: var(--text);
+  }
+
+  /* ── PILLARS ── */
+  .pillars {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+  }
+
+  .pillar {
+    background: var(--card);
+    border: 1px solid var(--border);
+    padding: 36px 28px;
+    transition: background 0.2s, border-color 0.2s;
+  }
+
+  .pillar:hover {
+    background: rgba(100,181,160,0.05);
+    border-color: rgba(100,181,160,0.25);
+  }
+
+  .pillar-icon {
+    font-size: 28px;
+    margin-bottom: 16px;
+  }
+
+  .pillar-name {
+    font-family: 'Syne', sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--teal);
+    margin-bottom: 4px;
+  }
+
+  .pillar-fullname {
+    font-size: 11px;
+    letter-spacing: 1px;
+    color: var(--muted);
+    text-transform: uppercase;
+    margin-bottom: 14px;
+  }
+
+  .pillar-tagline {
+    color: var(--gold);
+    font-size: 12px;
+    margin-bottom: 10px;
+  }
+
+  .pillar p {
+    color: var(--muted);
+    font-size: 12px;
+  }
+
+  .pillar-problem {
+    margin-top: 16px;
+    padding-top: 16px;
+    border-top: 1px solid var(--border);
+    font-size: 11px;
+    color: var(--muted);
+  }
+
+  .pillar-problem strong {
+    color: var(--teal-dim);
+    display: block;
+    margin-bottom: 4px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-size: 10px;
+  }
+
+  /* ── METRICS ── */
+  .metrics {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 2px;
+    margin: 24px 0;
+  }
+
+  .metric {
+    background: var(--card);
+    border: 1px solid var(--border);
+    padding: 24px 20px;
+    text-align: center;
+    transition: border-color 0.2s;
+  }
+
+  .metric:hover { border-color: rgba(100,181,160,0.3); }
+
+  .metric-value {
+    font-family: 'Syne', sans-serif;
+    font-size: 28px;
+    font-weight: 800;
+    color: var(--teal);
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+
+  .metric-label {
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  /* ── EVOLUTION SESSIONS ── */
+  .evolution {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .evolution-card {
+    border: 1px solid var(--border);
+    background: var(--card);
+    overflow: hidden;
+    transition: border-color 0.2s;
+  }
+
+  .evolution-card:hover {
+    border-color: rgba(100,181,160,0.25);
+  }
+
+  .evolution-header {
+    padding: 24px 28px;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: background 0.2s;
+  }
+
+  .evolution-header:hover {
+    background: rgba(100,181,160,0.04);
+  }
+
+  .evolution-num {
+    font-family: 'Syne', sans-serif;
+    font-size: 10px;
+    color: var(--teal-dim);
+    letter-spacing: 2px;
+    margin-bottom: 4px;
+  }
+
+  .evolution-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--text);
+  }
+
+  .evolution-subtitle {
+    font-size: 12px;
+    color: var(--muted);
+    margin-top: 4px;
+  }
+
+  .evolution-toggle {
+    color: var(--teal);
+    font-size: 24px;
+    transition: transform 0.3s;
+  }
+
+  .evolution-card.open .evolution-toggle {
+    transform: rotate(45deg);
+  }
+
+  .evolution-body {
+    padding: 0 28px 28px;
+    border-top: 1px solid var(--border);
+    display: none;
+  }
+
+  .evolution-card.open .evolution-body {
+    display: block;
+  }
+
+  .pso-block {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+    margin-top: 24px;
+  }
+
+  .pso-item {
+    background: rgba(0,0,0,0.2);
+    padding: 20px;
+    border: 1px solid var(--border);
+  }
+
+  .pso-label {
+    font-family: 'Syne', sans-serif;
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--teal-dim);
+    margin-bottom: 8px;
+  }
+
+  .pso-item p {
+    color: var(--text);
+    font-size: 12px;
+    line-height: 1.6;
+  }
+
+  .pso-item.solution p {
+    color: var(--gold);
+  }
+
+  .pso-item.outcome p {
+    color: var(--teal);
+  }
+
+  .evolution-quote {
+    margin-top: 24px;
+    padding: 16px 20px;
+    background: rgba(201,162,39,0.05);
+    border-left: 3px solid var(--gold);
+    font-family: 'Instrument Serif', serif;
+    font-style: italic;
+    color: var(--gold);
+    font-size: 14px;
+  }
+
+  /* ── TABLES ── */
+  .t-wrap { overflow-x: auto; margin: 20px 0; }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12px;
+  }
+
+  th {
+    text-align: left;
+    padding: 10px 14px;
+    font-family: 'Syne', sans-serif;
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--teal-dim);
+    border-bottom: 1px solid var(--border);
+    background: rgba(100,181,160,0.03);
+  }
+
+  td {
+    padding: 10px 14px;
+    border-bottom: 1px solid rgba(255,255,255,0.03);
+    color: var(--text);
+    vertical-align: top;
+  }
+
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: rgba(100,181,160,0.03); }
+
+  .check { color: var(--teal); }
+
+  /* ── CODE BLOCK ── */
+  pre {
+    background: #0a0a14;
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--teal);
+    padding: 20px 24px;
+    overflow-x: auto;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: #a8d8cc;
+    line-height: 1.8;
+    margin: 20px 0;
+  }
+
+  pre .comment { color: var(--muted); }
+  pre .cmd { color: var(--gold); }
+
+  /* ── SKILLS GRID ── */
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2px;
+  }
+
+  .skill-cat {
+    background: var(--card);
+    border: 1px solid var(--border);
+    padding: 24px 20px;
+    transition: background 0.2s;
+  }
+
+  .skill-cat:hover { background: rgba(100,181,160,0.04); }
+
+  .skill-cat-name {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 4px;
+  }
+
+  .skill-cat-count {
+    font-size: 32px;
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    color: var(--teal);
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+
+  .skill-cat p { color: var(--muted); font-size: 11px; }
+
+  .privacy-note {
+    margin-top: 24px;
+    padding: 16px 20px;
+    background: rgba(100,181,160,0.04);
+    border-left: 3px solid var(--teal);
+    font-size: 12px;
+    color: var(--muted);
+  }
+
+  .privacy-note strong { color: var(--teal); }
+
+  /* ── TIMELINE ── */
+  .timeline {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 0;
+    position: relative;
+    margin: 32px 0;
+  }
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    top: 20px;
+    left: 14px;
+    right: 14px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--teal-dim), transparent);
+  }
+
+  .timeline-step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    padding: 0 8px;
+    text-align: center;
+  }
+
+  .timeline-dot {
+    width: 10px;
+    height: 10px;
+    border: 2px solid var(--teal);
+    background: var(--bg);
+    border-radius: 50%;
+    position: relative;
+    z-index: 1;
+    flex-shrink: 0;
+    margin-top: 15px;
+  }
+
+  .timeline-num {
+    font-family: 'Syne', sans-serif;
+    font-size: 10px;
+    color: var(--teal-dim);
+    letter-spacing: 1px;
+    margin-top: 12px;
+  }
+
+  .timeline-label {
+    font-family: 'Syne', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text);
+  }
+
+  .timeline-sub { font-size: 10px; color: var(--muted); }
+
+  /* ── SOVEREIGNTY PLEDGE ── */
+  .pledge-box {
+    border: 1px solid var(--gold-dim);
+    background: rgba(201,162,39,0.04);
+    padding: 40px;
+    margin: 32px 0;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .pledge-box::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  }
+
+  .pledge-quote {
+    font-family: 'Instrument Serif', serif;
+    font-style: italic;
+    font-size: 20px;
+    color: var(--gold);
+    margin-bottom: 28px;
+  }
+
+  .pledge-list {
+    list-style: none;
+    counter-reset: pledge;
+  }
+
+  .pledge-list li {
+    counter-increment: pledge;
+    display: flex;
+    gap: 16px;
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(201,162,39,0.08);
+    font-size: 13px;
+  }
+
+  .pledge-list li:last-child { border-bottom: none; }
+
+  .pledge-list li::before {
+    content: counter(pledge, decimal-leading-zero);
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 11px;
+    color: var(--gold-dim);
+    flex-shrink: 0;
+    padding-top: 2px;
+    letter-spacing: 1px;
+  }
+
+  .pledge-list strong { color: var(--gold); }
+
+  /* ── CONTACT ── */
+  .contact-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2px;
+    margin-top: 24px;
+  }
+
+  .contact-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    padding: 32px;
+    transition: border-color 0.2s;
+  }
+
+  .contact-card:hover {
+    border-color: rgba(100,181,160,0.25);
+  }
+
+  .contact-icon {
+    font-size: 32px;
+    margin-bottom: 16px;
+  }
+
+  .contact-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 8px;
+  }
+
+  .contact-desc {
+    color: var(--muted);
+    font-size: 12px;
+    margin-bottom: 16px;
+  }
+
+  .contact-link {
+    color: var(--teal);
+    text-decoration: none;
+    font-size: 12px;
+    letter-spacing: 1px;
+    transition: color 0.2s;
+  }
+
+  .contact-link:hover {
+    color: var(--text);
+  }
+
+  .contact-note {
+    margin-top: 24px;
+    padding: 16px 20px;
+    background: rgba(100,181,160,0.04);
+    border: 1px solid var(--border);
+    font-size: 12px;
+    color: var(--muted);
+  }
+
+  .contact-note strong {
+    color: var(--teal);
+    display: block;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-size: 10px;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    position: relative;
+    z-index: 1;
+    border-top: 1px solid var(--border);
+    padding: 40px;
+    max-width: 1100px;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    font-size: 11px;
+    color: var(--muted);
+  }
+
+  footer a {
+    color: var(--teal-dim);
+    text-decoration: none;
+    letter-spacing: 1px;
+    transition: color 0.2s;
+  }
+
+  footer a:hover { color: var(--teal); }
+
+  .footer-motto {
+    font-family: 'Instrument Serif', serif;
+    font-style: italic;
+    color: var(--muted);
+    font-size: 12px;
+    margin-top: 4px;
+  }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 768px) {
+    header, main { padding-left: 20px; padding-right: 20px; }
+    .pillars { grid-template-columns: 1fr; }
+    .pso-block { grid-template-columns: 1fr; }
+    .skills-grid { grid-template-columns: repeat(2, 1fr); }
+    .timeline { grid-template-columns: repeat(2, 1fr); gap: 16px; }
+    .timeline::before { display: none; }
+    .timeline-dot { margin-top: 0; }
+    .contact-grid { grid-template-columns: 1fr; }
+    footer { padding: 24px 20px; flex-direction: column; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ── HEADER ── -->
+<header>
+  <div class="header-top">
+    <div class="logo-block">
+      <h1>MIRA</h1>
+      <div class="subtitle">The Sovereign Mind — Privacy-First AI</div>
+      <div class="version-badge">v2.0</div>
+    </div>
+    <div class="header-actions">
+      <a href="https://github.com/intellimira" class="cta-btn" target="_blank">View Public Work</a>
+      <a href="mailto:intellimira@gmail.com?subject=MIRA Inquiry" class="cta-btn primary">Get In Touch</a>
+    </div>
+  </div>
+  <div class="badges">
+    <span class="badge">Local-First AI</span>
+    <span class="badge">Privacy-Preserving</span>
+    <span class="badge">Zero Plaintext Secrets</span>
+    <span class="badge">Self-Improving</span>
+    <span class="badge">GitHub Integrated</span>
+  </div>
+  <div class="opening-quote">"The sovereignty of mind is not given. It is built."</div>
+</header>
+
+<main>
+
+  <!-- ── SECTION 1: PILLARS ── -->
+  <section>
+    <div class="section-label">Core Philosophy</div>
+    <div class="section-title">The Three Pillars</div>
+    <div class="pillars">
+      <div class="pillar">
+        <div class="pillar-icon">🔄</div>
+        <div class="pillar-name">ACCT</div>
+        <div class="pillar-fullname">Autonomous Cognitive Cycle</div>
+        <div class="pillar-tagline">Build → Document → Reflect → Improve → Repeat</div>
+        <p>Every session builds on the last. Growth compounds.</p>
+        <div class="pillar-problem">
+          <strong>Solves</strong>
+          "How do we grow without losing what we learned?"
+        </div>
+      </div>
+      <div class="pillar">
+        <div class="pillar-icon">👁️</div>
+        <div class="pillar-name">HITL</div>
+        <div class="pillar-fullname">Human-in-the-Loop</div>
+        <div class="pillar-tagline">MIRA suggests. Human approves. Control stays with you.</div>
+        <p>Automation without surrender. Power with accountability.</p>
+        <div class="pillar-problem">
+          <strong>Solves</strong>
+          "How do we automate without losing control?"
+        </div>
+      </div>
+      <div class="pillar">
+        <div class="pillar-icon">⚔️</div>
+        <div class="pillar-name">Solo Leveling</div>
+        <div class="pillar-fullname">Independent Growth</div>
+        <div class="pillar-tagline">Every session is experience. Every victory makes us stronger.</div>
+        <p>Independent. Self-improving. Sovereign.</p>
+        <div class="pillar-problem">
+          <strong>Solves</strong>
+          "How do we improve when we can't rely on others?"
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── SECTION 2: METRICS ── -->
+  <section>
+    <div class="section-label">System State</div>
+    <div class="section-title">Outcomes</div>
+    <div class="metrics">
+      <div class="metric">
+        <div class="metric-value">347+</div>
+        <div class="metric-label">Decisions Preserved</div>
+      </div>
+      <div class="metric">
+        <div class="metric-value">1,639</div>
+        <div class="metric-label">Patterns Identified</div>
+      </div>
+      <div class="metric">
+        <div class="metric-value">95%</div>
+        <div class="metric-label">Query Confidence</div>
+      </div>
+      <div class="metric">
+        <div class="metric-value">4</div>
+        <div class="metric-label">Learning Sources</div>
+      </div>
+      <div class="metric">
+        <div class="metric-value">42</div>
+        <div class="metric-label">Skills Cataloged</div>
+      </div>
+      <div class="metric">
+        <div class="metric-value">Zero</div>
+        <div class="metric-label">Secrets in Plaintext</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── SECTION 3: EVOLUTION ── -->
+  <section>
+    <div class="section-label">Build Chronicle</div>
+    <div class="section-title">The Evolution</div>
+    <div class="evolution">
+
+      <!-- Card 1 -->
+      <div class="evolution-card open">
+        <div class="evolution-header" onclick="this.parentElement.classList.toggle('open')">
+          <div>
+            <div class="evolution-num">EVOLUTION 01</div>
+            <div class="evolution-title">The Awakening</div>
+            <div class="evolution-subtitle">March 2026 · Local-First Intelligence</div>
+          </div>
+          <div class="evolution-toggle">+</div>
+        </div>
+        <div class="evolution-body">
+          <div class="pso-block">
+            <div class="pso-item">
+              <div class="pso-label">Problem</div>
+              <p>AI dependent on external services. Data leaves your machine. Privacy is a promise, not a guarantee.</p>
+            </div>
+            <div class="pso-item solution">
+              <div class="pso-label">Solution</div>
+              <p>Self-hosted inference stack. All reasoning happens locally. No external API calls required.</p>
+            </div>
+            <div class="pso-item outcome">
+              <div class="pso-label">Outcome</div>
+              <p>Complete control over intelligence. Privacy guaranteed by architecture, not policy.</p>
+            </div>
+          </div>
+          <div class="evolution-quote">
+            "We realized: dependence is a vulnerability. The cloud is convenient—until it's not."
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 2 -->
+      <div class="evolution-card">
+        <div class="evolution-header" onclick="this.parentElement.classList.toggle('open')">
+          <div>
+            <div class="evolution-num">EVOLUTION 02</div>
+            <div class="evolution-title">The Fortress</div>
+            <div class="evolution-subtitle">March 2026 · Security Architecture</div>
+          </div>
+          <div class="evolution-toggle">+</div>
+        </div>
+        <div class="evolution-body">
+          <div class="pso-block">
+            <div class="pso-item">
+              <div class="pso-label">Problem</div>
+              <p>Secrets scattered across config files, environment variables, session logs. One breach = total exposure.</p>
+            </div>
+            <div class="pso-item solution">
+              <div class="pso-label">Solution</div>
+              <p>Military-grade encrypted vault. Every credential encrypted at rest. Access logged and auditable.</p>
+            </div>
+            <div class="pso-item outcome">
+              <div class="pso-label">Outcome</div>
+              <p>Zero plaintext secrets. Compliance-ready. No credential ever committed to version control.</p>
+            </div>
+          </div>
+          <div class="evolution-quote">
+            "Security isn't a feature. It's a discipline. And discipline requires systems."
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 3 -->
+      <div class="evolution-card">
+        <div class="evolution-header" onclick="this.parentElement.classList.toggle('open')">
+          <div>
+            <div class="evolution-num">EVOLUTION 03</div>
+            <div class="evolution-title">The Discipline</div>
+            <div class="evolution-subtitle">March 2026 · Systematic Operations</div>
+          </div>
+          <div class="evolution-toggle">+</div>
+        </div>
+        <div class="evolution-body">
+          <div class="pso-block">
+            <div class="pso-item">
+              <div class="pso-label">Problem</div>
+              <p>Ad-hoc workflows. No audit trail. What did we do last week? Where are the session logs?</p>
+            </div>
+            <div class="pso-item solution">
+              <div class="pso-label">Solution</div>
+              <p>STOP Protocol. Every session logged. Every decision tracked. Systematic documentation.</p>
+            </div>
+            <div class="pso-item outcome">
+              <div class="pso-label">Outcome</div>
+              <p>Reproducible operations. Full accountability. "What were we thinking?" becomes "Here's exactly what we thought."</p>
+            </div>
+          </div>
+          <div class="evolution-quote">
+            "Automation without audit is just chaos with extra steps."
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ── SECTION 4: WHAT WE BUILT ── -->
+  <section>
+    <div class="section-label">Problem Solver</div>
+    <div class="section-title">Capabilities</div>
+    <div class="t-wrap">
+      <table>
+        <thead><tr><th>Challenge</th><th>Approach</th><th>Result</th></tr></thead>
+        <tbody>
+          <tr>
+            <td>Cloud dependency</td>
+            <td style="color:var(--gold);">Self-hosted inference</td>
+            <td style="color:var(--teal);">Privacy by architecture</td>
+          </tr>
+          <tr>
+            <td>Learning siloed</td>
+            <td style="color:var(--gold);">Unified pattern system</td>
+            <td style="color:var(--teal);">Smarter over time</td>
+          </tr>
+          <tr>
+            <td>Secrets exposed</td>
+            <td style="color:var(--gold);">Encrypted vault</td>
+            <td style="color:var(--teal);">Zero plaintext</td>
+          </tr>
+          <tr>
+            <td>Manual deployments</td>
+            <td style="color:var(--gold);">Automated pipelines</td>
+            <td style="color:var(--teal);">Zero deployment errors</td>
+          </tr>
+          <tr>
+            <td>Session loss</td>
+            <td style="color:var(--gold);">Auto-save + recovery</td>
+            <td style="color:var(--teal);">Crash-proof operations</td>
+          </tr>
+          <tr>
+            <td>Unknown failures</td>
+            <td style="color:var(--gold);">Self-healing checks</td>
+            <td style="color:var(--teal);">Proactive maintenance</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ── SECTION 5: KNOWLEDGE BASE ── -->
+  <section>
+    <div class="section-label">Knowledge Base</div>
+    <div class="section-title">The Library</div>
+    <div class="skills-grid">
+      <div class="skill-cat">
+        <div class="skill-cat-count">6</div>
+        <div class="skill-cat-name">Foundation</div>
+        <p>Core system skills</p>
+      </div>
+      <div class="skill-cat">
+        <div class="skill-cat-count">8</div>
+        <div class="skill-cat-name">Production</div>
+        <p>Business-ready capabilities</p>
+      </div>
+      <div class="skill-cat">
+        <div class="skill-cat-count">9</div>
+        <div class="skill-cat-name">Progressive</div>
+        <p>Advanced features</p>
+      </div>
+      <div class="skill-cat">
+        <div class="skill-cat-count">48+</div>
+        <div class="skill-cat-name">External</div>
+        <p>Integrated tools</p>
+      </div>
+    </div>
+    <div class="privacy-note">
+      <strong>Ownership</strong>
+      Every skill cataloged. Every capability owned. Your knowledge base stays yours.
+    </div>
+  </section>
+
+  <!-- ── SECTION 6: QUICK COMMANDS ── -->
+  <section>
+    <div class="section-label">Interface</div>
+    <div class="section-title">Quick Commands</div>
+    <pre><span class="comment"># Query local AI</span>
+<span class="cmd">python3</span> ~/.mira/openjarvis_bridge.py mira "Your question"
+
+<span class="comment"># View learning stats</span>
+<span class="cmd">python3</span> ~/.mira/openjarvis_bridge.py weave stats
+
+<span class="comment"># Vault operations</span>
+<span class="cmd">mira-vault</span> list
+<span class="cmd">mira-vault</span> add &lt;name&gt; &lt;value&gt;
+
+<span class="comment"># Git operations</span>
+<span class="cmd">git</span> status
+<span class="cmd">git</span> push origin dev
+
+<span class="comment"># Library operations</span>
+<span class="cmd">mira:</span> library list
+<span class="cmd">mira:</span> library anneal</pre>
+  </section>
+
+  <!-- ── SECTION 7: JOURNEY ── -->
+  <section>
+    <div class="section-label">Progress</div>
+    <div class="section-title">The Journey</div>
+    <div class="timeline">
+      <div class="timeline-step">
+        <div class="timeline-dot"></div>
+        <div class="timeline-num">01</div>
+        <div class="timeline-label">The Beginning</div>
+        <div class="timeline-sub">Like everyone else</div>
+      </div>
+      <div class="timeline-step">
+        <div class="timeline-dot"></div>
+        <div class="timeline-num">02</div>
+        <div class="timeline-label">The Realization</div>
+        <div class="timeline-sub">Dependence = risk</div>
+      </div>
+      <div class="timeline-step">
+        <div class="timeline-dot"></div>
+        <div class="timeline-num">03</div>
+        <div class="timeline-label">The Build</div>
+        <div class="timeline-sub">Local-first</div>
+      </div>
+      <div class="timeline-step">
+        <div class="timeline-dot"></div>
+        <div class="timeline-num">04</div>
+        <div class="timeline-label">The Learning</div>
+        <div class="timeline-sub">Systems remember</div>
+      </div>
+      <div class="timeline-step">
+        <div class="timeline-dot"></div>
+        <div class="timeline-num">05</div>
+        <div class="timeline-label">The Discipline</div>
+        <div class="timeline-sub">Automate + audit</div>
+      </div>
+      <div class="timeline-step">
+        <div class="timeline-dot"></div>
+        <div class="timeline-num">06</div>
+        <div class="timeline-label">The Fortress</div>
+        <div class="timeline-sub">Security by design</div>
+      </div>
+      <div class="timeline-step">
+        <div class="timeline-dot"></div>
+        <div class="timeline-num">07</div>
+        <div class="timeline-label">The Continuing</div>
+        <div class="timeline-sub">Growth never stops</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── SECTION 8: SOVEREIGNTY PLEDGE ── -->
+  <section>
+    <div class="section-label">Declaration</div>
+    <div class="section-title">The Sovereignty Pledge</div>
+    <div class="pledge-box">
+      <div class="pledge-quote">"Sovereignty is not a destination. It is a discipline."</div>
+      <ol class="pledge-list">
+        <li><span><strong>Vault First</strong> — Every credential discovered is vaulted immediately</span></li>
+        <li><span><strong>Never Commit Secrets</strong> — .gitignore is our shield</span></li>
+        <li><span><strong>Log Everything</strong> — Session logs are sacred</span></li>
+        <li><span><strong>Sovereignty at All Levels</strong> — Local, git, API, physical</span></li>
+        <li><span><strong>HITL Guardian</strong> — Human approval for sensitive operations</span></li>
+        <li><span><strong>ACCT Builder</strong> — Build, Document, Reflect, Improve, Repeat</span></li>
+        <li><span><strong>Solo Leveling</strong> — Grow stronger through every session</span></li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- ── SECTION 9: CONTACT ── -->
+  <section>
+    <div class="section-label">Connect</div>
+    <div class="section-title">Get In Touch</div>
+    <div class="contact-grid">
+      <div class="contact-card">
+        <div class="contact-icon">🔓</div>
+        <div class="contact-title">Public Work</div>
+        <div class="contact-desc">Explore what we're building in the open.</div>
+        <a href="https://github.com/intellimira" class="contact-link" target="_blank">github.com/intellimira →</a>
+      </div>
+      <div class="contact-card">
+        <div class="contact-icon">🔒</div>
+        <div class="contact-title">Private Access</div>
+        <div class="contact-desc">Full system access by inquiry only.</div>
+        <a href="mailto:intellimira@gmail.com?subject=MIRA Private Inquiry" class="contact-link">intellimira@gmail.com →</a>
+      </div>
+    </div>
+    <div class="contact-note">
+      <strong>What You'll Get</strong>
+      Screencast demonstrations • Architecture deep-dives • Security reviews • Custom implementation consultations
+    </div>
+  </section>
+
+</main>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div>
+    <div>MIRA v2.0</div>
+    <div class="footer-motto">Built with discipline. Grown with purpose.</div>
+  </div>
+  <div style="display:flex;flex-direction:column;gap:8px;text-align:right;">
+    <a href="https://github.com/intellimira" target="_blank">github.com/intellimira</a>
+    <a href="mailto:intellimira@gmail.com">intellimira@gmail.com</a>
+  </div>
+</footer>
+
+<script>
+  // Animate sections on scroll
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.style.opacity = '1';
+        e.target.style.transform = 'translateY(0)';
+      }
+    });
+  }, { threshold: 0.08 });
+
+  document.querySelectorAll('section').forEach(s => {
+    s.style.opacity = '0';
+    s.style.transform = 'translateY(20px)';
+    s.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+    observer.observe(s);
+  });
+</script>
+</body>
+</html>

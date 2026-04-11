@@ -21,18 +21,16 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
       
-      - name: Validate HTML
-        run: |
-          # Basic HTML validation check
-          grep -q "<!DOCTYPE html>" index.html
-          grep -q "</html>" index.html
-          echo "HTML structure valid"
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
       
-      - name: Check links
-        run: |
-          # Check for common issues
-          grep -q "intelliGrowth" README.md
-          echo "Content check passed"
+      - name: Install dependencies
+        run: pip install beautifulsoup4
+      
+      - name: Generate portfolio
+        run: python3 src/generate.py
       
       - name: Setup Pages
         uses: actions/configure-pages@v4
@@ -40,7 +38,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: '.'
+          path: 'output'
       
       - name: Deploy to GitHub Pages
         id: deployment
