@@ -1,0 +1,1277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>intelliGrowth by MiRA | ACCT - AI's Missing Pieces</title>
+    <meta name="description" content="Building AI systems that solve real business problems. ACCT - Artificial Contextual Cognitive Thinking">
+    <style>
+        :root {
+            --primary-dark: #0a0a12;
+            --primary: #003232;
+            --secondary: #323264;
+            --accent-teal: #64b5a0;
+            --accent-gold: #c9a227;
+            --text-light: #e0e0e0;
+            --text-muted: #888;
+            --card-bg: rgba(255,255,255,0.05);
+            --border: rgba(255,255,255,0.1);
+        }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #0a0a12 0%, #12121f 50%, #0a0a12 100%);
+            color: var(--text-light);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+        
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(10, 10, 18, 0.9);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+            z-index: 1000;
+            padding: 15px 0;
+        }
+        
+        nav .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(90deg, var(--accent-teal), var(--accent-gold));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .nav-links { display: flex; gap: 30px; list-style: none; }
+        
+        .nav-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: color 0.3s;
+            font-size: 0.95rem;
+        }
+        
+        .nav-links a:hover, .nav-links a.active { color: var(--accent-teal); }
+        
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 120px 20px 80px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(ellipse at center, rgba(100, 181, 160, 0.1) 0%, transparent 70%);
+            pointer-events: none;
+        }
+        
+        .hero-content { position: relative; z-index: 1; max-width: 800px; }
+        
+        .hero h1 {
+            font-size: 4rem;
+            font-weight: 800;
+            margin-bottom: 20px;
+            line-height: 1.1;
+        }
+        
+        .hero h1 .highlight {
+            background: linear-gradient(90deg, var(--accent-teal), var(--accent-gold));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .hero .tagline {
+            font-size: 1.5rem;
+            color: var(--accent-gold);
+            margin-bottom: 15px;
+            font-weight: 500;
+        }
+        
+        .hero .subtitle {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            margin-bottom: 40px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .hero-cta {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            padding: 14px 32px;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s;
+            cursor: pointer;
+            border: none;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent-teal), #4a9a87);
+            color: var(--primary-dark);
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(100, 181, 160, 0.3);
+        }
+        
+        .btn-secondary {
+            background: transparent;
+            border: 2px solid var(--accent-gold);
+            color: var(--accent-gold);
+        }
+        
+        .btn-secondary:hover {
+            background: var(--accent-gold);
+            color: var(--primary-dark);
+        }
+        
+        /* Sections */
+        section { padding: 100px 0; }
+        
+        .section-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+        
+        .section-header h2 {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+        }
+        
+        .section-header p {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        /* About Section */
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 60px;
+            align-items: center;
+        }
+        
+        .about-image {
+            width: 100%;
+            aspect-ratio: 1;
+            border-radius: 20px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 5rem;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .about-image::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(100, 181, 160, 0.2), transparent);
+        }
+        
+        .about-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-top: 40px;
+        }
+        
+        .stat-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .stat-card .number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--accent-teal);
+        }
+        
+        .stat-card .label {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+        
+        .about-text h3 {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            color: var(--accent-gold);
+        }
+        
+        .about-text p {
+            color: var(--text-muted);
+            margin-bottom: 15px;
+        }
+        
+        /* Skills Grid */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+        }
+        
+        .skill-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 30px;
+            transition: all 0.3s;
+        }
+        
+        .skill-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent-teal);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+        
+        .skill-icon {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+        }
+        
+        .skill-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+        }
+        
+        .skill-card p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+        
+        .skill-tags {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-top: 15px;
+        }
+        
+        .skill-tag {
+            background: rgba(100, 181, 160, 0.15);
+            color: var(--accent-teal);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+        }
+        
+        /* Projects Grid */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 30px;
+        }
+        
+        .project-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            overflow: hidden;
+            transition: all 0.3s;
+        }
+        
+        .project-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+        
+        .project-image {
+            height: 200px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+        }
+        
+        .project-content { padding: 25px; }
+        
+        .project-content h3 {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+        }
+        
+        .project-content .industry {
+            color: var(--accent-gold);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+        }
+        
+        .project-content p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin-bottom: 15px;
+        }
+        
+        .project-result {
+            background: rgba(100, 181, 160, 0.1);
+            border-left: 3px solid var(--accent-teal);
+            padding: 12px 15px;
+            border-radius: 0 8px 8px 0;
+            font-size: 0.9rem;
+        }
+        
+        .project-result strong { color: var(--accent-teal); }
+        
+        /* Ideas Section */
+        .ideas-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+        }
+        
+        .idea-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 30px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .idea-card::before {
+            content: '💡';
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 2rem;
+            opacity: 0.3;
+        }
+        
+        .idea-card h3 {
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            color: var(--accent-gold);
+        }
+        
+        .idea-card p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+        
+        .idea-status {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            background: rgba(201, 162, 39, 0.15);
+            color: var(--accent-gold);
+        }
+        
+        /* Content Section */
+        .content-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 25px;
+        }
+        
+        .content-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 25px;
+        }
+        
+        .content-card .category {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            background: rgba(100, 181, 160, 0.15);
+            color: var(--accent-teal);
+            margin-bottom: 15px;
+        }
+        
+        .content-card h3 {
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+            line-height: 1.4;
+        }
+        
+        .content-card .hook {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            font-style: italic;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .copy-btn {
+            width: 100%;
+            padding: 10px;
+            background: transparent;
+            border: 1px solid var(--accent-teal);
+            color: var(--accent-teal);
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+        }
+        
+        .copy-btn:hover {
+            background: var(--accent-teal);
+            color: var(--primary-dark);
+        }
+        
+        /* Contact Form */
+        .contact-form-wrapper {
+            max-width: 700px;
+            margin: 0 auto;
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 40px;
+        }
+        
+        .contact-form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        
+        .form-group.full-width {
+            grid-column: 1 / -1;
+        }
+        
+        .form-group label {
+            font-size: 0.9rem;
+            color: var(--text-light);
+            font-weight: 500;
+        }
+        
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            padding: 14px 16px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            color: var(--text-light);
+            font-size: 1rem;
+            font-family: inherit;
+            transition: all 0.3s;
+        }
+        
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--accent-teal);
+            box-shadow: 0 0 0 3px rgba(100,181,160,0.1);
+        }
+        
+        .form-group input::placeholder,
+        .form-group textarea::placeholder {
+            color: var(--text-muted);
+        }
+        
+        .form-group select {
+            cursor: pointer;
+        }
+        
+        .form-group select option {
+            background: var(--primary-dark);
+            color: var(--text-light);
+        }
+        
+        .submit-btn {
+            width: 100%;
+            padding: 16px;
+            font-size: 1.1rem;
+            margin-top: 10px;
+        }
+        
+        .submit-btn .btn-loading {
+            display: none;
+        }
+        
+        .submit-btn.loading .btn-text {
+            display: none;
+        }
+        
+        .submit-btn.loading .btn-loading {
+            display: inline;
+        }
+        
+        .form-success,
+        .form-error {
+            display: none;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+        
+        .form-success {
+            background: rgba(100, 181, 160, 0.15);
+            border: 1px solid var(--accent-teal);
+        }
+        
+        .form-success .success-icon {
+            font-size: 2rem;
+            color: var(--accent-teal);
+            display: block;
+            margin-bottom: 10px;
+        }
+        
+        .form-success p {
+            color: var(--accent-teal);
+            font-size: 1.1rem;
+        }
+        
+        .form-error {
+            background: rgba(255, 100, 100, 0.15);
+            border: 1px solid #ff6464;
+        }
+        
+        .form-error p {
+            color: #ff6464;
+        }
+        
+        .form-note {
+            text-align: center;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-top: 15px;
+        }
+        
+        .form-success.show,
+        .form-error.show {
+            display: block;
+        }
+        
+        @media (max-width: 600px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+            .contact-form-wrapper {
+                padding: 25px;
+            }
+        }
+        
+        /* Footer */
+        footer {
+            background: var(--primary-dark);
+            border-top: 1px solid var(--border);
+            padding: 60px 0 30px;
+            margin-top: 100px;
+        }
+        
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 60px;
+            margin-bottom: 40px;
+        }
+        
+        .footer-brand .logo {
+            margin-bottom: 15px;
+            display: inline-block;
+        }
+        
+        .footer-brand p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+        
+        .footer-links h4 {
+            color: var(--text-light);
+            margin-bottom: 20px;
+            font-size: 1rem;
+        }
+        
+        .footer-links ul { list-style: none; }
+        
+        .footer-links li { margin-bottom: 10px; }
+        
+        .footer-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.3s;
+        }
+        
+        .footer-links a:hover { color: var(--accent-teal); }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid var(--border);
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+        
+        /* Tech Proof Section */
+        .tech-proof {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 30px;
+            margin-top: 40px;
+        }
+        
+        .tech-proof h3 {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            color: var(--accent-teal);
+        }
+        
+        .proof-items {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+        }
+        
+        .proof-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+        
+        .proof-item span { color: var(--accent-gold); }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.5rem; }
+            .about-grid { grid-template-columns: 1fr; }
+            .about-stats { grid-template-columns: 1fr; }
+            .footer-grid { grid-template-columns: 1fr; gap: 30px; }
+            .nav-links { display: none; }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="container">
+            <div class="logo">intelliGrowth by MiRA</div>
+            <ul class="nav-links">
+                <li><a href="#about">About</a></li>
+                <li><a href="#skills">Skills</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#ideas">Ideas</a></li>
+                <li><a href="#content">Content</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <p class="tagline">ACCT - AI's Missing Pieces...</p>
+            <h1>Building AI Systems That <span class="highlight">Solve Real Problems</span></h1>
+            <p class="subtitle">Artificial Contextual Cognitive Thinking + <strong>MIRA-oj: The Sovereign Mind</strong> — The missing layer between AI capability and business value. Now with complete data sovereignty. <em>"The sovereignty of mind is not given. It is built."</em></p>
+            <div class="hero-cta">
+                <a href="#projects" class="btn btn-primary">View My Work</a>
+                <a href="#about" class="btn btn-secondary">Learn More</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="about">
+        <div class="container">
+            <div class="section-header">
+                <h2>About Me</h2>
+                <p>AI Inventor & Systems Builder - creating the intelligence layer businesses need</p>
+            </div>
+            <div class="about-grid">
+                <div class="about-image">
+                    👨‍💼
+                </div>
+                <div class="about-text">
+                    <h3>Randolph Vusi Dube</h3>
+                    <p>I build AI systems that solve real business problems. After years in business analysis, I realized AI was missing something - the contextual understanding that comes from human experience.</p>
+                    <p>That's why I built <strong>MiRA</strong> - my ACCT framework (Artificial Contextual Cognitive Thinking) that gives AI systems persistent memory, learning capability, and business judgment.</p>
+                    <p>I don't just build AI tools. I invent systems that think, remember, and deliver results.</p>
+                    
+                    <div class="about-stats">
+                        <div class="stat-card">
+                            <div class="number">10+</div>
+                            <div class="label">Years Building</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="number">50+</div>
+                            <div class="label">AI Systems</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="number">52+</div>
+                            <div class="label">Skills Created</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="number">400+</div>
+                            <div class="label">Interactions</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="number">61+</div>
+                            <div class="label">Sessions</div>
+                        </div>
+                    </div>
+                    
+                    <div class="tech-proof">
+                        <h3>Built With</h3>
+                        <div class="proof-items">
+                            <div class="proof-item"><span>✓</span> Persistent memory systems</div>
+                            <div class="proof-item"><span>✓</span> Autonomous agents</div>
+                            <div class="proof-item"><span>✓</span> Local-first AI infrastructure</div>
+                            <div class="proof-item"><span>✓</span> Business automation</div>
+                            <div class="proof-item"><span>✓</span> Revenue tracking systems</div>
+                            <div class="proof-item"><span>✓</span> Custom web applications</div>
+                            <div class="proof-item"><span>✓</span> System monitoring dashboards</div>
+                            <div class="proof-item"><span>✓</span> Self-healing infrastructure</div>
+                            <div class="proof-item"><span>✓</span> Lead qualification pipelines</div>
+                            <div class="proof-item"><span>✓</span> Shadow Ops monetization</div>
+                            <div class="proof-item"><span>✓</span> HITL approval queues</div>
+                            <div class="proof-item"><span>✓</span> Intelligence research</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact">
+        <div class="container">
+            <div class="section-header">
+                <h2>Let's Connect</h2>
+                <p>Interested in what I'm building? Want to collaborate? Drop your details below.</p>
+            </div>
+            <div class="contact-form-wrapper">
+                <form id="contact-form" class="contact-form" onsubmit="handleEnquirySubmit(event)">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input type="text" id="name" name="name" required placeholder="Your name">
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email" required placeholder="your@email.com">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="company">Company (optional)</label>
+                            <input type="text" id="company" name="company" placeholder="Your company">
+                        </div>
+                        <div class="form-group">
+                            <label for="interest">I'm interested in</label>
+                            <select id="interest" name="interest">
+                                <option value="collaboration">Collaboration</option>
+                                <option value="consulting">Consulting</option>
+                                <option value="newsletter">Newsletter Updates</option>
+                                <option value="shadow-ops">Shadow Ops Inquiry</option>
+                                <option value="just-browsing">Just Browsing</option>
+                                <option value="other">Something Else</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group full-width">
+                        <label for="message">Message (optional)</label>
+                        <textarea id="message" name="message" rows="3" placeholder="Tell me a bit about what you're working on..."></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary submit-btn">
+                        <span class="btn-text">Send Message</span>
+                        <span class="btn-loading">Opening email...</span>
+                    </button>
+                    <div class="form-success" id="form-success">
+                        <span class="success-icon">✓</span>
+                        <p>Thanks! Your email client should have opened with the message. I'll be in touch soon.</p>
+                    </div>
+                </form>
+                <p class="form-note">💡 Your message will open in your email client. All enquiries are stored locally and used for outreach activities.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="skills">
+        <div class="container">
+            <div class="section-header">
+                <h2>Skills & Capabilities</h2>
+                <p>What I can build with AI - from automation to autonomous agents</p>
+            </div>
+            <div class="skills-grid">
+                <!-- MIRA-oj Skill -->
+                <div class="skill-card" style="border: 2px solid var(--accent-gold);">
+                    <div class="skill-icon">👑</div>
+                    <h3>MIRA-oj: Sovereign AI</h3>
+                    <p><strong>Complete AI independence.</strong> Local-first inference engine with self-improving capabilities. Privacy-first, offline-capable, cost-free after hardware.</p>
+                    <p><em>"What will you do with intelligence you own?"</em></p>
+                    <div class="skill-tags">
+                        <span class="skill-tag" style="background: var(--accent-gold); color: var(--primary-dark);">Crown Achievement</span>
+                        <span class="skill-tag">Local Inference</span>
+                        <span class="skill-tag">The Weave</span>
+                        <span class="skill-tag">Privacy</span>
+                        <span class="skill-tag">Self-Learning</span>
+                    </div>
+                </div>
+                <div class="skill-card">
+                    <div class="skill-icon">🧠</div>
+                    <h3>Persistent Memory Systems</h3>
+                    <p>AI that remembers context across sessions. Vector embeddings + SQLite for semantic search of your entire knowledge base.</p>
+                    <div class="skill-tags">
+                        <span class="skill-tag">Ollama</span>
+                        <span class="skill-tag">Vector DB</span>
+                        <span class="skill-tag">Memory Mesh</span>
+                    </div>
+                </div>
+                <div class="skill-card">
+                    <div class="skill-icon">⚡</div>
+                    <h3>Autonomous Agents</h3>
+                    <p>Self-directing AI agents that can research, build, and execute tasks with human oversight when needed.</p>
+                    <div class="skill-tags">
+                        <span class="skill-tag">Agent Architecture</span>
+                        <span class="skill-tag">Tool Use</span>
+                        <span class="skill-tag">HITL</span>
+                    </div>
+                </div>
+                <div class="skill-card">
+                    <div class="skill-icon">💰</div>
+                    <h3>Revenue Tracking</h3>
+                    <p>Complete financial tracking from prospect to paid. True profit calculation including AI costs.</p>
+                    <div class="skill-tags">
+                        <span class="skill-tag">SQLite</span>
+                        <span class="skill-tag">Financial Models</span>
+                        <span class="skill-tag">ROI Tracking</span>
+                    </div>
+                </div>
+                <div class="skill-card">
+                    <div class="skill-icon">🌐</div>
+                    <h3>Website Generation</h3>
+                    <p>AI that extracts brand identity from any URL and generates complete, custom websites in minutes.</p>
+                    <div class="skill-tags">
+                        <span class="skill-tag">Brand Analysis</span>
+                        <span class="skill-tag">Auto-Design</span>
+                        <span class="skill-tag">E-commerce</span>
+                    </div>
+                </div>
+                <div class="skill-card">
+                    <div class="skill-icon">📊</div>
+                    <h3>Business Automation</h3>
+                    <p>From KYC compliance to inventory management - automating repetitive business processes end-to-end.</p>
+                    <div class="skill-tags">
+                        <span class="skill-tag">Process Automation</span>
+                        <span class="skill-tag">Compliance</span>
+                        <span class="skill-tag">Integrations</span>
+                    </div>
+                </div>
+                <div class="skill-card">
+                    <div class="skill-icon">🔍</div>
+                    <h3>Deep Research</h3>
+                    <p>Two-pass AI research: Persona Council for diverse perspectives, then Specialization Layer for depth.</p>
+                    <div class="skill-tags">
+                        <span class="skill-tag">Multi-agent</span>
+                        <span class="skill-tag">Research</span>
+                        <span class="skill-tag">Analysis</span>
+                    </div>
+                </div>
+                <div class="skill-card">
+                    <div class="skill-icon">📊</div>
+                    <h3>System Monitoring & Alerts</h3>
+                    <p>Real-time system health monitoring with Telegram/Email alerts. Monitors RAM, Disk, Swap, Ollama status. Automatic optimization and incident response.</p>
+                    <div class="skill-tags">
+                        <span class="skill-tag">Textual TUI</span>
+                        <span class="skill-tag">SMTP</span>
+                        <span class="skill-tag">Self-Healing</span>
+                    </div>
+                </div>
+                <div class="skill-card">
+                    <div class="skill-icon">🤖</div>
+                    <h3>AI Agent Pipelines</h3>
+                    <p>End-to-end automation: Gmail polling → Lead scoring → Pain analysis → Telegram alerts. Full enquiry lifecycle management with qualified lead detection.</p>
+                    <div class="skill-tags">
+                        <span class="skill-tag">IMAP</span>
+                        <span class="skill-tag">Cron</span>
+                        <span class="skill-tag">Lead Scoring</span>
+                    </div>
+                </div>
+                <div class="skill-card">
+                    <div class="skill-icon">⚔️</div>
+                    <h3>Shadow Ops v5</h3>
+                    <p>Monetization engine with 14-stage Iman Gadzhi pipeline. HITL queue, deal tracker, autonomous outreach with human approval gates. System handles 90%, humans approve 10%.</p>
+                    <div class="skill-tags">
+                        <span class="skill-tag">SQLite</span>
+                        <span class="skill-tag">HITL</span>
+                        <span class="skill-tag">Deal Tracking</span>
+                    </div>
+                </div>
+                <div class="skill-card">
+                    <div class="skill-icon">🔎</div>
+                    <h3>Intelligence Hub</h3>
+                    <p>Autonomous research agent for contact/company intelligence. GitHub investigation, web search, pattern recognition. "Know before you approach. Intelligence before action."</p>
+                    <div class="skill-tags">
+                        <span class="skill-tag">Research</span>
+                        <span class="skill-tag">GitHub API</span>
+                        <span class="skill-tag">Verification</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="projects">
+        <div class="container">
+            <div class="section-header">
+                <h2>Client Projects</h2>
+                <p>Real problems solved with AI - case studies from my portfolio</p>
+            </div>
+            <div class="projects-grid">
+                <!-- MIRA-oj - Crown Achievement -->
+                <div class="project-card" style="grid-column: 1 / -1; border: 2px solid var(--accent-gold);">
+                    <div class="project-image" style="font-size: 4rem;">👑</div>
+                    <div class="project-content">
+                        <div class="industry" style="color: var(--accent-gold);">AI Infrastructure</div>
+                        <h3>MIRA-oj: The Sovereign Mind</h3>
+                        <p><strong>A declaration of digital independence.</strong> MIRA-oj transforms MIRA from a cloud-dependent orchestrator into a fully self-hosted autonomous agent. Built on Stanford's OpenJarvis framework with Ollama backend, it achieves data sovereignty, privacy-first operation, and complete infrastructure control.</p>
+                        <p><strong>The Philosophy:</strong> "The sovereignty of mind is not given. It is built." — Every question, every analysis, every decision happens locally. Your AI thoughts never leave your machine.</p>
+                        <div class="project-result">
+                            <strong>The Weave:</strong> A self-improving learning system that learns from 400+ interactions, 1,800+ keywords, and growing. It understands your patterns and becomes more helpful with every query.
+                        </div>
+                        <div style="margin-top: 15px;">
+                            <strong>Technical Stack:</strong>
+                            <div class="skill-tags" style="margin-top: 8px;">
+                                <span class="skill-tag">OpenJarvis</span>
+                                <span class="skill-tag">Ollama</span>
+                                <span class="skill-tag">qwen3:8b</span>
+                                <span class="skill-tag">Python</span>
+                                <span class="skill-tag">SQLite</span>
+                                <span class="skill-tag">Local-First</span>
+                                <span class="skill-tag">Privacy</span>
+                            </div>
+                        </div>
+                        <div style="margin-top: 15px;">
+                            <a href="https://github.com/intellimira/mira-oj" target="_blank" style="color: var(--accent-teal); margin-right: 20px;">📂 GitHub</a>
+                            <a href="https://intellimira.github.io/mira-portfolio/" target="_blank" style="color: var(--accent-teal);">🌐 Portfolio</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <div class="project-image">🏥</div>
+                    <div class="project-content">
+                        <div class="industry">Health & Wellness</div>
+                        <h3>Metaforce Labs Website</h3>
+                        <p>Complete e-commerce website built from brand materials. Extracted color palette from client's existing assets, generated dark-themed responsive site with product grid and wholesale integration.</p>
+                        <div class="project-result">
+                            <strong>Result:</strong> Client website delivered in hours, not weeks. Mobile-ready with QR code for wholesale inquiries.
+                        </div>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <div class="project-image">💼</div>
+                    <div class="project-content">
+                        <div class="industry">Financial Services</div>
+                        <h3>Compliance Automation</h3>
+                        <p>Automated document review and compliance checking for regulated businesses. AI-powered flagging and reporting.</p>
+                        <div class="project-result">
+                            <strong>Result:</strong> Reduced compliance review from 3 days to 20 minutes per quarter.
+                        </div>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <div class="project-image">🍳</div>
+                    <div class="project-content">
+                        <div class="industry">Food & Beverage</div>
+                        <h3>Ghost Kitchen Operations</h3>
+                        <p>Inventory sync and margin tracking for multi-brand kitchen operations. Real-time alerts and predictive ordering.</p>
+                        <div class="project-result">
+                            <strong>Result:</strong> Streamlined inventory across 3 brands, reduced waste by estimated 15%.
+                        </div>
+                    </div>
+                </div>
+                <!-- Enquiry Pipeline -->
+                <div class="project-card">
+                    <div class="project-image">📬</div>
+                    <div class="project-content">
+                        <div class="industry">Business Automation</div>
+                        <h3>AI-Powered Enquiry Pipeline</h3>
+                        <p>Automated lead capture and qualification system. Website forms route to Gmail, AI scores leads by pain level (1-10), Telegram alerts for qualified prospects. Full CRM integration with GitHub sync.</p>
+                        <div class="project-result">
+                            <strong>Features:</strong> Gmail polling, pain scoring, qualified lead alerts, multi-channel notifications (Telegram + Email), cron automation.
+                        </div>
+                    </div>
+                </div>
+                <!-- Shadow Ops v5 -->
+                <div class="project-card" style="border: 2px solid var(--accent-teal);">
+                    <div class="project-image">⚔️</div>
+                    <div class="project-content">
+                        <div class="industry">Revenue Automation</div>
+                        <h3>Shadow Ops v5</h3>
+                        <p>Monetization Proof-of-Work engine for systematic outreach. 14-stage Iman Gadzhi pipeline with HITL queue, deal tracker, pain scorer, and automated cron jobs. System identifies targets → researches → pitches → human approves → executes.</p>
+                        <div class="project-result">
+                            <strong>Key Insight:</strong> "The remaining 10% (sending messages) is 90% of the value." System handles 90%, humans approve 10%.
+                        </div>
+                        <div style="margin-top: 15px;">
+                            <strong>Pipeline Stages:</strong>
+                            <div class="skill-tags" style="margin-top: 8px;">
+                                <span class="skill-tag">Scout</span>
+                                <span class="skill-tag">Research</span>
+                                <span class="skill-tag">Ground</span>
+                                <span class="skill-tag">Pitch</span>
+                                <span class="skill-tag">Build</span>
+                                <span class="skill-tag">HITL Queue</span>
+                                <span class="skill-tag">Close</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="ideas">
+        <div class="container">
+            <div class="section-header">
+                <h2>What-If Ideas</h2>
+                <p>Experimental concepts and future possibilities - the seeds of tomorrow's projects</p>
+            </div>
+            <div class="ideas-grid">
+                <!-- MIRA-oj - Completed What-If -->
+                <div class="idea-card" style="border: 2px solid var(--accent-gold); background: rgba(201, 162, 39, 0.1);">
+                    <h3>👑 Sovereign AI: What If Your AI Thought For Itself?</h3>
+                    <p><strong>What if your AI assistant could think for itself—without ever leaving your machine?</strong></p>
+                    <p>MIRA-oj is the answer. Local-first inference, privacy-preserving, self-improving through The Weave. Every question, every answer, every lesson—stays on your hardware.</p>
+                    <p><em>"The sovereignty of mind is not given. It is built."</em></p>
+                    <span class="idea-status" style="background: var(--accent-gold); color: var(--primary-dark);">✅ ACHIEVED</span>
+                </div>
+                <div class="idea-card">
+                    <h3>AI That Remembers Everything</h3>
+                    <p>What if your AI had perfect memory? Every conversation, every decision, every lesson learned - instantly searchable. That's what I'm building with the Memory Mesh.</p>
+                    <span class="idea-status">In Progress</span>
+                </div>
+                <div class="idea-card" style="border: 2px solid var(--accent-teal); background: rgba(100, 181, 160, 0.1);">
+                    <h3>🛡️ Self-Healing Systems</h3>
+                    <p>What if AI systems could detect their own failures, diagnose the cause, and implement fixes automatically? <strong>Built the MIRA Dashboard + Alert System</strong> - monitors RAM, Disk, Swap, Ollama, sends Telegram/Email alerts on issues. Swap optimization reduced usage from 97% to 8%.</p>
+                    <span class="idea-status" style="background: var(--accent-teal); color: var(--primary-dark);">✅ ACHIEVED</span>
+                </div>
+                <div class="idea-card">
+                    <h3>Business-in-a-Box</h3>
+                    <p>What if you could spin up a complete business infrastructure - CRM, accounting, compliance - powered by AI agents?</p>
+                    <span class="idea-status">Concept</span>
+                </div>
+                <div class="idea-card">
+                    <h3>The Judgment Layer</h3>
+                    <p>What if AI could learn not just what to do, but when to escalate to humans? Building the boundary between automation and human insight.</p>
+                    <span class="idea-status">In Progress</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="content">
+        <div class="container">
+            <div class="section-header">
+                <h2>Content Library</h2>
+                <p>Thoughts on AI, business, and building systems that work. Ready to copy and share.</p>
+            </div>
+            <div class="content-grid">
+                <div class="content-card">
+                    <span class="category">Skill Showcase</span>
+                    <h3>Most people use AI to search. I built one that researches.</h3>
+                    <p class="hook">"Every new conversation means re-explaining your role, format, constraints..."</p>
+                    <button class="copy-btn" onclick="copyContent(0)">Copy Post</button>
+                </div>
+                <div class="content-card">
+                    <span class="category">Client Win</span>
+                    <h3>I built a client website in hours. Here's what most agencies miss.</h3>
+                    <p class="hook">"A client needed a website. Traditional quote: £3,000+, 4-week timeline. I built it in an afternoon."</p>
+                    <button class="copy-btn" onclick="copyContent(1)">Copy Post</button>
+                </div>
+                <div class="content-card">
+                    <span class="category">What-If</span>
+                    <h3>What if your AI agent had a memory that actually worked?</h3>
+                    <p class="hook">"Most AI conversations start from zero. Every prompt is groundhog day."</p>
+                    <button class="copy-btn" onclick="copyContent(2)">Copy Post</button>
+                </div>
+                <div class="content-card">
+                    <span class="category">System Build</span>
+                    <h3>I run my own AI infrastructure. Here's why it matters.</h3>
+                    <p class="hook">"Most people pay monthly for AI tools. Total: $70+/month. Forever. I run local AI instead..."</p>
+                    <button class="copy-btn" onclick="copyContent(3)">Copy Post</button>
+                </div>
+                <div class="content-card">
+                    <span class="category">Business</span>
+                    <h3>I stopped guessing about my income. Here's how.</h3>
+                    <p class="hook">"What's my actual profit on this project? Why does my bank account never match my invoices?"</p>
+                    <button class="copy-btn" onclick="copyContent(4)">Copy Post</button>
+                </div>
+                <div class="content-card">
+                    <span class="category">Framework</span>
+                    <h3>I monetised my AI experiments. Here's the system.</h3>
+                    <p class="hook">"The Shadow Ops Framework: Scout → Research → Ground → Pitch → Build → Monetise → Close"</p>
+                    <button class="copy-btn" onclick="copyContent(5)">Copy Post</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <div class="logo">intelliGrowth by MiRA</div>
+                    <p>Building AI systems that solve real business problems. ACCT - bridging the gap between AI capability and business value.</p>
+                </div>
+                <div class="footer-links">
+                    <h4>Navigation</h4>
+                    <ul>
+                        <li><a href="#about">About</a></li>
+                        <li><a href="#skills">Skills</a></li>
+                        <li><a href="#projects">Projects</a></li>
+                        <li><a href="#ideas">Ideas</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h4>Connect</h4>
+                    <ul>
+                        <li><a href="https://linkedin.com/in/randolphdube" target="_blank">LinkedIn</a></li>
+                        <li><a href="https://github.com/intellimira" target="_blank">GitHub</a></li>
+                        <li><a href="mailto:randolphdube@gmail.com">Email</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 intelliGrowth by MiRA. Built with ACCT - Artificial Contextual Cognitive Thinking.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const contentPosts = [
+            `Most people use AI to search. I built one that researches.\n\nMost people use AI like a search engine:\n- Prompt → answer → context disappears → repeat\n\nEvery new conversation means re-explaining:\n- Your role and expertise\n- Your preferred format\n- Your quality standards\n\nI built a skill that changes that.\n\nThe real AI advantage isn't better prompts.\nIt's building systems where intelligence persists.\n\nWhat's one task you repeat every week that could become a skill?`,
+            
+            `I built a client website in hours. Here's what most agencies miss.\n\nA client needed a website. Traditional quote: £3,000+, 4-week timeline.\n\nI built it in an afternoon.\n\nNot because I'm special. Because I used AI the way it was meant to be used - as a force multiplier.\n\nWhat I did:\n1. Extracted brand colors from their materials\n2. Used AI to generate site structure\n3. Built with pre-tested templates\n4. Added their specific content\n\nWhat most agencies miss:\nThe real value isn't the code. It's understanding what the client actually needs.\n\nTools are commoditized. Judgment is rare.\n\nWhat's one business task you're still doing manually?`,
+            
+            `What if your AI agent had a memory that actually works?\n\nMost AI conversations start from zero. Every prompt is groundhog day.\n\nBut what if your AI remembered:\n- Every project you've worked on\n- Every client decision and outcome\n- Every lesson learned\n\nI built that system. I call it MIRA - Memory Mesh with Agentic Reasoning.\n\nWe're moving from "AI as a tool" to "AI as a teammate."\n\nA teammate who never forgets. Who learns from every interaction.\n\nThat's not just productivity. That's a fundamental shift.\n\nWhat would you automate if your AI never forgot?`,
+            
+            `I run my own AI infrastructure. Here's why it matters.\n\nMost people pay monthly for AI tools:\n- ChatGPT: $20/month\n- Claude: $20/month\n- Perplexity: $20/month\n\nTotal: $70+/month. Forever.\n\nI run local AI instead:\n- Ollama for LLMs (offline, unlimited)\n- Local embeddings for memory\n- Self-hosted agents\n\nThe costs:\n- One-time server: ~£200\n- Works without internet\n- Complete privacy\n\nCloud AI is great for experimenting.\nLocal AI is great for production.\n\nI'm building toward the latter.\n\nWhat's stopping you from running AI locally?`,
+            
+            `I stopped guessing about my income. Here's how.\n\nEvery freelancer knows this feeling:\n- "Did that client pay?"\n- "What's my actual profit?"\n- "Why does my bank account never match?"\n\nI built an AI system that tracks every deal from prospect to paid.\n\nWhat it tracks:\n- Revenue per project\n- Development costs\n- AI costs\n- True profit margin\n\nThe result:\nI know exactly which projects are worth my time.\nI know my real ROI per client.\nI know when to fire a client.\n\nMost people run their business on vibes.\nI run mine on data.\n\nWhat's your biggest financial blind spot?`,
+            
+            `I monetised my AI experiments. Here's the system.\n\nMost people use AI to:\n- Write emails\n- Generate images\n- Summarise documents\n\nUseful. But not revenue-generating.\n\nI built a system that turns every experiment into potential income.\n\nThe Shadow Ops Framework:\n1. Scout → Identify a business pain point\n2. Research → AI-assisted deep dive\n3. Ground → Build a prototype\n4. Pitch → Value proposition\n5. Build → Delivery\n6. Monetise → Revenue track\n7. Close → Repeat\n\nEvery project becomes:\n- A case study (content)\n- A skill (reusable)\n- A potential service (revenue)\n\nWhat's one business problem you could solve with AI?`
+        ];
+        
+        function copyContent(index) {
+            navigator.clipboard.writeText(contentPosts[index]).then(() => {
+                alert('Copied to clipboard!');
+            });
+        }
+        
+        // Handle enquiry form submission (self-hosted, no external dependencies)
+        function handleEnquirySubmit(event) {
+            event.preventDefault();
+            
+            // Get form data
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const company = document.getElementById('company').value;
+            const interest = document.getElementById('interest').value;
+            const message = document.getElementById('message').value;
+            
+            // Create enquiry object
+            const enquiry = {
+                timestamp: new Date().toISOString(),
+                name: name,
+                email: email,
+                company: company || 'N/A',
+                interest: interest,
+                message: message || 'No message provided'
+            };
+            
+            // Save to localStorage (backup)
+            const enquiries = JSON.parse(localStorage.getItem('intelligrowth_enquiries') || '[]');
+            enquiries.push(enquiry);
+            localStorage.setItem('intelligrowth_enquiries', JSON.stringify(enquiries));
+            
+            // Build mailto link
+            const subject = encodeURIComponent(`[${interest.toUpperCase()}] New Enquiry from ${name}`);
+            const body = encodeURIComponent(
+                `Name: ${name}\n` +
+                `Email: ${email}\n` +
+                `Company: ${company || 'N/A'}\n` +
+                `Interest: ${interest}\n` +
+                `Message: ${message || 'No message provided'}\n\n` +
+                `--- Enquiry captured via intelliGrowth website ---`
+            );
+            
+            // Open email client
+            window.location.href = `mailto:intellimira@gmail.com?subject=${subject}&body=${body}`;
+            
+            // Show success
+            document.getElementById('form-success').style.display = 'block';
+            document.getElementById('contact-form').reset();
+            
+            // Hide success after 5 seconds
+            setTimeout(() => {
+                document.getElementById('form-success').style.display = 'none';
+            }, 5000);
+        }
+        
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if(target) target.scrollIntoView({ behavior: 'smooth' });
+            });
+        });
+    </script>
+</body>
+</html>
