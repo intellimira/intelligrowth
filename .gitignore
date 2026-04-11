@@ -64,3 +64,4 @@ open_notebook_local/
 # Claude-specific (user-specific)
 .claude/
 .local/
+skills/knowledge-base/references/memory_mesh/Session_History/
