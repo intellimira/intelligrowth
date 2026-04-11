@@ -1,0 +1,17 @@
+[
+  {
+    "name": "urgent_business_pain",
+    "text": "This is killing my business. Losing $5000/month on manual invoicing. Need a solution NOW.",
+    "platform": "reddit"
+  },
+  {
+    "name": "frustrated_workaround",
+    "text": "Spent 20 hours this week copying data between spreadsheets. So frustrated with this workaround.",
+    "platform": "hackernews"
+  },
+  {
+    "name": "curious_inquiry",
+    "text": "Anyone have recommendations for automation tools? Just looking to save some time.",
+    "platform": "indiehackers"
+  }
+]

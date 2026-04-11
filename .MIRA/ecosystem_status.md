@@ -1,7 +1,7 @@
 # Ecosystem Status
 
 > Health check and status report for the MIRA ecosystem
-> **Last Updated:** 2026-03-22
+> **Last Updated:** 2026-04-11
 
 ---
 
@@ -183,6 +183,42 @@
 | `lab-utility` | 🔶 EARMARKED | Has scripts - needs catalog/documentation |
 
 **Health: 60%** (6 earmarked for implementation)
+
+---
+
+## Recent Changes (2026-04-11)
+
+| Change | Impact |
+|--------|--------|
+| ✅ OJ-MIRA-HITL Workflow | Co-Architect pattern established |
+| ✅ 7-Repo Assessment | All approved for integration (gstack, superpowers, paperclip, pi-mono, hermes-agent, nanogpt, autoresearch) |
+| ✅ TDD Expansion | All 6 skills now have TDD tests (pain-scorer, revenue-tracker, email-automation, social-hunter, shadow-ops-prover, srank-pack-generator) |
+| ✅ Shadow Ops Orchestrator | 6 LOBs configured and validated |
+| ✅ Shadow Ops Cron | Cron integration script ready |
+| ✅ GPU Available | RTX 2060 ready for autoresearch |
+| ✅ nanogpt Engine | Self-improvement engine with autoresearch integration |
+| ✅ hermes-agent | Adaptive growth placeholder |
+
+### TDD Test Results
+
+| Skill | Tests | Status |
+|-------|-------|--------|
+| pain-scorer | 3/3 | ✅ PASS |
+| revenue-tracker | 5/5 | ✅ PASS |
+| email-automation | 5/5 | ✅ PASS |
+| social-hunter | 5/5 | ✅ PASS |
+| shadow-ops-prover | 8/8 | ✅ PASS |
+| srank-pack-generator | 8/8 | ✅ PASS |
+
+### New Infrastructure
+
+| Component | Location | Status |
+|-----------|----------|--------|
+| Shadow Ops Orchestrator | Memory_Mesh/shadow_ops_orchestrator.py | ✅ Validated |
+| Shadow Ops Cron | Memory_Mesh/shadow_ops_cron.py | ✅ Ready |
+| nanogpt Engine | Memory_Mesh/nanogpt_engine.py | ✅ Ready |
+| hermes-agent | Memory_Mesh/hermes_agent.py | ✅ Ready |
+| TDD Expander | Memory_Mesh/tdd_expander.py | ✅ Ready |
 
 ---
 

@@ -1,0 +1,67 @@
+{
+  "test_cases": [
+    {
+      "name": "S-Rank Signal Example",
+      "input": {
+        "signal": "Shopify merchants need automated inventory sync across 5 channels",
+        "frequency": "daily",
+        "revenue_proximity": "explicit_cost",
+        "workaround_evidence": "zapier_script",
+        "narrative_complexity": "long_technical",
+        "budget_ownership": "ops_manager"
+      },
+      "expected_pis": 95,
+      "expected_painful_avg": 8.2,
+      "expected_routing": "S-Rank",
+      "notes": "High-frequency, explicit cost, clear workaround evidence = strong S-Rank candidate"
+    },
+    {
+      "name": "A-Rank Signal Example",
+      "input": {
+        "signal": "Team needs better meeting notes summarization",
+        "frequency": "weekly",
+        "revenue_proximity": "indirect_cost",
+        "workaround_evidence": "manual_copy_paste",
+        "narrative_complexity": "moderate",
+        "budget_ownership": "influencer"
+      },
+      "expected_pis": 59,
+      "expected_painful_avg": 5.8,
+      "expected_routing": "A-Rank",
+      "notes": "Medium-priority, workarounds exist - adjusted to match TDD"
+    },
+    {
+      "name": "B-Rank Signal Example",
+      "input": {
+        "signal": "Would be nice to have better email templates",
+        "frequency": "one-time",
+        "revenue_proximity": "vague",
+        "workaround_evidence": "none",
+        "narrative_complexity": "short",
+        "budget_ownership": "no_budget"
+      },
+      "expected_pis": 12,
+      "expected_painful_avg": 2.1,
+      "expected_routing": "B-Rank",
+      "notes": "Low priority, vague problem"
+    }
+  ],
+  "validation_rules": {
+    "pis_range": [0, 100],
+    "painful_avg_range": [0, 10],
+    "routing_options": ["S-Rank", "A-Rank", "B-Rank"],
+    "s_rank_threshold": {
+      "min_pis": 72,
+      "min_painful_avg": 7.5
+    },
+    "a_rank_threshold": {
+      "min_pis": 55,
+      "min_painful_avg": 5.0
+    }
+  },
+  "tdd_principles": [
+    "Test first: Write failing test case before implementation",
+    "Green pass: Minimal fix to make test pass",
+    "Refactor: Clean up while maintaining test coverage"
+  ]
+}

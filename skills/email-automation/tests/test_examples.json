@@ -1,0 +1,17 @@
+[
+  {
+    "name": "urgent_automate",
+    "subject": "URGENT: Need help with automation ASAP",
+    "body": "Losing $10k/month due to manual processes"
+  },
+  {
+    "name": "workflow_automation",
+    "subject": "Want to automate our workflow",
+    "body": "We spend hours on manual data entry"
+  },
+  {
+    "name": "simple_question",
+    "subject": "Question about your services",
+    "body": "What do you offer?"
+  }
+]

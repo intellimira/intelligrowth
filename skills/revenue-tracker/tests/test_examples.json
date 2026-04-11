@@ -1,0 +1,30 @@
+[
+  {
+    "name": "PROSPECT deal test",
+    "deal_id": "test-prospect-001",
+    "status": "PROSPECT",
+    "total_revenue_gbp": 0,
+    "dev_cost_gbp": 0,
+    "gemini_cost_gbp": 0,
+    "infra_cost_gbp": 0
+  },
+  {
+    "name": "GO deal with revenue test",
+    "deal_id": "test-go-001",
+    "status": "GO",
+    "total_revenue_gbp": 0,
+    "dev_cost_gbp": 0,
+    "gemini_cost_gbp": 0,
+    "infra_cost_gbp": 0
+  },
+  {
+    "name": "MRR_ACTIVE with actual revenue",
+    "deal_id": "test-mrr-001",
+    "status": "MRR_ACTIVE",
+    "mrr_actual_gbp": 150,
+    "total_revenue_gbp": 150,
+    "dev_cost_gbp": 200,
+    "gemini_cost_gbp": 50,
+    "infra_cost_gbp": 25
+  }
+]
