@@ -1,0 +1,37 @@
+2026-04-11 18:30:28,633 | INFO | 🧪 Test mode - validating configuration only
+2026-04-11 18:30:28,633 | INFO |   ✓ enquiry_pipeline: email-automation
+2026-04-11 18:30:28,633 | INFO |   ✓ social_hunter: social-hunter
+2026-04-11 18:30:28,633 | INFO |   ✓ revenue_tracker: revenue-tracker
+2026-04-11 18:30:28,633 | INFO |   ✓ shadow_ops_prover: shadow-ops-prover
+2026-04-11 18:30:28,633 | INFO |   ✓ srank_generator: srank-pack-generator
+2026-04-11 18:30:28,634 | INFO |   ✓ pain_scorer: pain-scorer
+2026-04-11 18:30:28,634 | INFO |   ✓ Total LOBs: 6
+2026-04-11 18:33:05,940 | INFO | 🧪 Test mode - validating configuration only
+2026-04-11 18:33:05,940 | INFO |   ✓ enquiry_pipeline: email-automation
+2026-04-11 18:33:05,940 | INFO |   ✓ social_hunter: social-hunter
+2026-04-11 18:33:05,940 | INFO |   ✓ revenue_tracker: revenue-tracker
+2026-04-11 18:33:05,940 | INFO |   ✓ shadow_ops_prover: shadow-ops-prover
+2026-04-11 18:33:05,940 | INFO |   ✓ srank_generator: srank-pack-generator
+2026-04-11 18:33:05,940 | INFO |   ✓ pain_scorer: pain-scorer
+2026-04-11 18:33:05,940 | INFO |   ✓ Total LOBs: 6
+2026-04-11 19:00:05,744 | INFO | 🧪 Test mode - validating configuration only
+2026-04-11 19:00:05,744 | INFO |   ✓ enquiry_pipeline: email-automation
+2026-04-11 19:00:05,745 | INFO |   ✓ social_hunter: social-hunter
+2026-04-11 19:00:05,745 | INFO |   ✓ revenue_tracker: revenue-tracker
+2026-04-11 19:00:05,745 | INFO |   ✓ shadow_ops_prover: shadow-ops-prover
+2026-04-11 19:00:05,745 | INFO |   ✓ srank_generator: srank-pack-generator
+2026-04-11 19:00:05,745 | INFO |   ✓ pain_scorer: pain-scorer
+2026-04-11 19:00:05,745 | INFO |   ✓ Total LOBs: 6
+2026-04-11 19:00:15,662 | INFO | 🚀 Starting orchestrator in 'select' mode
+2026-04-11 19:00:15,662 | INFO | 📋 LOBs to run: ['pain_scorer']
+2026-04-11 19:00:15,662 | INFO | ▶ Running LOB: pain_scorer
+2026-04-11 19:00:15,663 | INFO | 📝 Weave logged: lob_execution
+2026-04-11 19:00:15,663 | INFO | 📝 Weave logged: orchestration_complete
+2026-04-11 19:09:37,827 | INFO | 🧪 Test mode - validating configuration only
+2026-04-11 19:09:37,827 | INFO |   ✓ enquiry_pipeline: email-automation
+2026-04-11 19:09:37,827 | INFO |   ✓ social_hunter: social-hunter
+2026-04-11 19:09:37,827 | INFO |   ✓ revenue_tracker: revenue-tracker
+2026-04-11 19:09:37,827 | INFO |   ✓ shadow_ops_prover: shadow-ops-prover
+2026-04-11 19:09:37,827 | INFO |   ✓ srank_generator: srank-pack-generator
+2026-04-11 19:09:37,827 | INFO |   ✓ pain_scorer: pain-scorer
+2026-04-11 19:09:37,828 | INFO |   ✓ Total LOBs: 6

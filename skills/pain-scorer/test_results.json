@@ -1,0 +1,39 @@
+{
+  "summary": {
+    "passed": 3,
+    "failed": 0,
+    "total": 3
+  },
+  "results": [
+    {
+      "test": "S-Rank Signal Example",
+      "pis_actual": 95,
+      "pis_expected": 95,
+      "pis_match": true,
+      "routing_actual": "S-Rank",
+      "routing_expected": "S-Rank",
+      "routing_match": true,
+      "passed": true
+    },
+    {
+      "test": "A-Rank Signal Example",
+      "pis_actual": 59,
+      "pis_expected": 59,
+      "pis_match": true,
+      "routing_actual": "A-Rank",
+      "routing_expected": "A-Rank",
+      "routing_match": true,
+      "passed": true
+    },
+    {
+      "test": "B-Rank Signal Example",
+      "pis_actual": 12,
+      "pis_expected": 12,
+      "pis_match": true,
+      "routing_actual": "B-Rank",
+      "routing_expected": "B-Rank",
+      "routing_match": true,
+      "passed": true
+    }
+  ]
+}

@@ -1,0 +1,4 @@
+{"event_type": "planning_session_start", "category": "office-hours", "topic": "Improve Shadow Ops orchestration", "timestamp": "2026-04-11T18:32:10.481654"}
+{"event_type": "plan_generated", "objective": "Improve Shadow Ops orchestration", "phases": 4, "timestamp": "2026-04-11T18:32:10.482277"}
+{"event_type": "plan_execution_started", "phases": 4, "timestamp": "2026-04-11T18:32:10.482411"}
+{"event_type": "planning_session_complete", "plan_objective": "Improve Shadow Ops orchestration", "timestamp": "2026-04-11T18:32:10.482469"}

@@ -1,0 +1,2 @@
+{"event_type": "lob_execution", "lob": "pain_scorer", "status": "ready", "timestamp": "2026-04-11T19:00:15.662760", "orchestrator": "mira_shadow_ops"}
+{"event_type": "orchestration_complete", "summary": {"total_lobs": 1, "success": 0, "failed": 0, "skipped": 0, "ready": 1, "hitl_alerts": 0, "alerts": []}, "timestamp": "2026-04-11T19:00:15.663312", "orchestrator": "mira_shadow_ops"}

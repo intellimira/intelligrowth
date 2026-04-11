@@ -1,0 +1,87 @@
+{
+  "timestamp": "2026-04-11T18:31:34.149343",
+  "total_skills": 6,
+  "passed": 1,
+  "failed": 0,
+  "pending": 5,
+  "skills": [
+    {
+      "skill": "pain-scorer",
+      "tdd_status": "\u2705 PASS (3/3)",
+      "timestamp": "2026-04-11T18:31:34.149093",
+      "tests": [
+        {
+          "name": "Existing TDD",
+          "result": "passed",
+          "details": "Already validated"
+        }
+      ],
+      "status": "passed"
+    },
+    {
+      "skill": "revenue-tracker",
+      "tdd_status": "\u23f3 Pending",
+      "timestamp": "2026-04-11T18:31:34.149110",
+      "tests": [
+        {
+          "name": "Test structure",
+          "result": "not_found",
+          "details": "No tests directory - TDD adoption needed"
+        }
+      ],
+      "status": "needs_tests"
+    },
+    {
+      "skill": "email-automation",
+      "tdd_status": "\u23f3 Pending",
+      "timestamp": "2026-04-11T18:31:34.149192",
+      "tests": [
+        {
+          "name": "Test structure",
+          "result": "not_found",
+          "details": "No tests directory - TDD adoption needed"
+        }
+      ],
+      "status": "needs_tests"
+    },
+    {
+      "skill": "social-hunter",
+      "tdd_status": "\u23f3 Pending",
+      "timestamp": "2026-04-11T18:31:34.149235",
+      "tests": [
+        {
+          "name": "Test structure",
+          "result": "not_found",
+          "details": "No tests directory - TDD adoption needed"
+        }
+      ],
+      "status": "needs_tests"
+    },
+    {
+      "skill": "shadow-ops-prover",
+      "tdd_status": "\u23f3 Pending",
+      "timestamp": "2026-04-11T18:31:34.149271",
+      "tests": [
+        {
+          "name": "Test structure",
+          "result": "not_found",
+          "details": "No tests directory - TDD adoption needed"
+        }
+      ],
+      "status": "needs_tests"
+    },
+    {
+      "skill": "srank-pack-generator",
+      "tdd_status": "\u23f3 Pending",
+      "timestamp": "2026-04-11T18:31:34.149310",
+      "tests": [
+        {
+          "name": "Test structure",
+          "result": "not_found",
+          "details": "No tests directory - TDD adoption needed"
+        }
+      ],
+      "status": "needs_tests"
+    }
+  ]
+}
