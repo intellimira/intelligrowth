@@ -1,0 +1,40 @@
+name: Sync to Project Board
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    types: [opened, closed, synchronize]
+
+jobs:
+  sync-project:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: read
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      
+      - name: Install dependencies
+        run: pip install requests
+      
+      - name: Run sync script
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+        run: python3 Memory_Mesh/sync_github_project.py
+      
+      - name: Report success
+        if: success()
+        run: echo "✅ Project board synced successfully"
+      
+      - name: Report failure
+        if: failure()
+        run: echo "❌ Project board sync failed"
