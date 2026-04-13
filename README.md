@@ -17,7 +17,12 @@
 
 *This is what makes us different. This is why we succeed.*
 
-**[📖 Read the full story →](https://github.com/intellimira/mira-portfolio/blob/main/sessions/showcase_mira_learns_to_be_wrong.md)**
+**Read the Story:**
+- **[📖 Markdown](https://github.com/intellimira/mira-portfolio/blob/main/sessions/showcase_mira_learns_to_be_wrong.md)** - Plain text version
+- **[🎨 MIRA Portfolio Style](https://github.com/intellimira/mira-portfolio/blob/main/showcase_mira_learns_to_be_wrong.html)** - Dark theme HTML
+- **[🌐 intelliGrowth Style](https://github.com/intellimira/intelligrowth/blob/main/showcase_mira_learns_to_be_wrong.html)** - Light theme HTML
+
+> **"When AI goes wrong, it hides. When MIRA goes wrong, it documents. It learns. It comes back stronger. That's not a bug - that's the feature."**
 
 > **"When AI goes wrong, it hides. When MIRA goes wrong, it documents. It learns. It comes back stronger. That's not a bug - that's the feature."**
 
